@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Eikon Ink — Assista antes que saia do ar</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --b1:#0D1F42;--b2:#1B3A6B;--b3:#2E5FA3;--b4:#4A7FD4;--b5:#7AAEE8;
+  --dark:#04070E;--dark2:#070C17;--dark3:#0A1120;
+  --text:#F2F4F8;--muted:#6B7A99;--subtle:#3A4560;
+  --red:#C0392B;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--text);font-family:-apple-system,'SF Pro Display','Segoe UI',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* TECH BG */
+.tech-bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.tech-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(74,127,212,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(74,127,212,0.035) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,#000 10%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,#000 10%,transparent 75%);}
+.tech-bg::after{content:'';position:absolute;top:-300px;left:50%;transform:translateX(-50%);width:1000px;height:600px;background:radial-gradient(ellipse at 50% 0%,rgba(30,70,160,0.09),transparent 70%);}
+.tech-line{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(74,127,212,0.35) 30%,rgba(120,170,230,0.55) 50%,rgba(74,127,212,0.35) 70%,transparent);}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;display:flex;align-items:center;justify-content:center;background:rgba(4,7,14,0.8);backdrop-filter:blur(20px);border-bottom:1px solid rgba(74,127,212,0.1);}
+.logo{font-size:15px;font-weight:800;letter-spacing:2.5px;display:flex;align-items:center;gap:9px;}
+.logo-mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--b2),var(--b3));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;}
+.logo-text{background:linear-gradient(90deg,var(--b4),var(--b5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* URGENCY BAR */
+.urgency-bar{background:linear-gradient(90deg,var(--b1),var(--b2));border-bottom:1px solid rgba(74,127,212,0.2);padding:10px 24px;text-align:center;font-size:12px;font-weight:600;color:var(--b5);letter-spacing:.5px;margin-top:60px;}
+.urgency-bar span{color:#fff;font-weight:800;}
+
+/* HERO */
+.hero{padding:60px 24px 80px;text-align:center;position:relative;z-index:1;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(27,58,107,0.18);border:1px solid rgba(74,127,212,0.25);border-radius:100px;padding:6px 16px 6px 8px;margin-bottom:28px;font-size:11px;font-weight:700;color:var(--b5);letter-spacing:1px;text-transform:uppercase;}
+.tag-dot{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--b3),var(--b4));display:flex;align-items:center;justify-content:center;}
+.tag-dot::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff;animation:pd 2s infinite;}
+@keyframes pd{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.5);opacity:.5;}}
+.hero h1{font-size:clamp(32px,5vw,66px);font-weight:900;line-height:1.04;letter-spacing:-2px;max-width:860px;margin:0 auto 16px;}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--b4),var(--b5),#fff);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:sh 5s linear infinite;}
+@keyframes sh{0%{background-position:200% center;}100%{background-position:-200% center;}}
+.hero p{font-size:clamp(14px,1.5vw,17px);color:var(--muted);max-width:580px;margin:0 auto 48px;line-height:1.85;font-weight:400;}
+.hero p strong{color:var(--text);font-weight:600;}
+
+/* VSL BOX */
+.vsl-section{max-width:860px;margin:0 auto 64px;position:relative;z-index:1;}
+.vsl-outer{position:relative;}
+.vsl-outer::before{content:'';position:absolute;inset:-1px;border-radius:20px;background:linear-gradient(135deg,rgba(74,127,212,0.4),rgba(27,58,107,0.1) 50%,rgba(74,127,212,0.25));}
+.vsl-wrap{position:relative;z-index:1;background:var(--dark3);border-radius:19px;overflow:hidden;box-shadow:0 0 100px rgba(27,58,107,0.35),0 40px 80px rgba(0,0,0,0.6);}
+.vsl-inner{padding:56px 24px;text-align:center;border:1.5px dashed rgba(74,127,212,0.25);border-radius:17px;margin:10px;}
+.vsl-inner strong{display:block;font-size:16px;font-weight:700;margin-bottom:6px;background:linear-gradient(90deg,var(--b4),var(--b5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.vsl-inner span{font-size:13px;color:var(--muted);}
+.vsl-inner code{display:block;margin-top:14px;background:#020407;padding:12px 18px;border-radius:8px;font-size:11px;color:var(--b4);border:1px solid rgba(74,127,212,0.15);text-align:left;}
+.vsl-caption{text-align:center;margin-top:18px;font-size:13px;color:var(--muted);font-style:italic;}
+.vsl-caption strong{color:var(--b5);}
+
+/* PROOF STRIP */
+.proof-strip{display:flex;justify-content:center;gap:0;max-width:720px;margin:0 auto 72px;border:1px solid rgba(74,127,212,0.1);border-radius:14px;background:rgba(10,17,32,0.55);backdrop-filter:blur(16px);overflow:hidden;position:relative;z-index:1;}
+.ps-item{flex:1;padding:22px 16px;text-align:center;border-right:1px solid rgba(74,127,212,0.08);}
+.ps-item:last-child{border-right:none;}
+.ps-n{font-size:28px;font-weight:900;letter-spacing:-1px;background:linear-gradient(135deg,var(--b4),var(--b5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ps-l{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.5;font-weight:500;}
+
+/* WHAT YOU'LL LEARN */
+.learn-section{padding:80px 24px;position:relative;z-index:1;}
+.container{max-width:960px;margin:0 auto;}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--b4);margin-bottom:14px;}
+.eyebrow::before{content:'';width:20px;height:1.5px;background:linear-gradient(90deg,var(--b4),transparent);}
+h2.sec-title{font-size:clamp(26px,3.5vw,48px);font-weight:900;letter-spacing:-1.5px;line-height:1.06;margin-bottom:16px;}
+.grad{background:linear-gradient(90deg,var(--b4),var(--b5));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.sec-sub{font-size:15px;color:var(--muted);line-height:1.8;max-width:520px;}
+.center{text-align:center;}.center .sec-sub{margin:0 auto;}
+
+.learn-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:52px;}
+.learn-card{background:var(--dark3);border:1px solid rgba(74,127,212,0.1);border-radius:16px;padding:32px 28px;display:flex;gap:18px;align-items:flex-start;transition:border-color .3s,transform .3s;}
+.learn-card:hover{border-color:rgba(74,127,212,0.28);transform:translateY(-3px);}
+.lc-num{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--b1),var(--b2));border:1px solid rgba(74,127,212,0.25);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--b5);flex-shrink:0;font-family:monospace;}
+.lc-t strong{display:block;font-size:15px;font-weight:700;color:var(--text);margin-bottom:5px;}
+.lc-t span{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* WHO */
+.who-section{padding:80px 24px;background:linear-gradient(180deg,var(--dark) 0%,var(--dark2) 100%);position:relative;z-index:1;}
+.who-inner{display:grid;grid-template-columns:1fr 1.6fr;gap:60px;align-items:center;max-width:960px;margin:0 auto;}
+.who-avatar{background:var(--dark3);border:1px solid rgba(74,127,212,0.15);border-radius:20px;padding:44px 32px;text-align:center;position:relative;overflow:hidden;}
+.who-avatar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--b4),transparent);}
+.avatar-placeholder{width:100px;height:100px;border-radius:20px;background:linear-gradient(135deg,var(--b2),var(--b3));margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900;color:#fff;box-shadow:0 8px 32px rgba(27,58,107,0.4);}
+.avatar-name{font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;}
+.avatar-role{font-size:12px;color:var(--muted);letter-spacing:1px;}
+.who-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px;}
+.badge{font-size:10px;font-weight:700;padding:4px 12px;border-radius:100px;background:rgba(27,58,107,0.2);border:1px solid rgba(74,127,212,0.2);color:var(--b5);letter-spacing:.5px;}
+.who-content h3{font-size:clamp(22px,3vw,36px);font-weight:900;letter-spacing:-1px;margin-bottom:16px;line-height:1.1;}
+.who-content p{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:14px;}
+.who-content p strong{color:var(--text);}
+
+/* CTA BLOCK */
+.cta-section{padding:80px 24px;text-align:center;position:relative;z-index:1;}
+.cta-box{max-width:640px;margin:0 auto;background:var(--dark3);border:1px solid rgba(74,127,212,0.15);border-radius:24px;padding:56px 48px;position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;inset:-1px;border-radius:25px;background:linear-gradient(135deg,rgba(74,127,212,0.18),transparent 50%,rgba(74,127,212,0.12));z-index:-1;}
+.cta-box::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(74,127,212,0.5) 40%,rgba(120,170,230,0.7) 50%,rgba(74,127,212,0.5) 60%,transparent);}
+.cta-box h3{font-size:clamp(22px,3vw,34px);font-weight:900;letter-spacing:-1px;margin-bottom:12px;}
+.cta-box p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:36px;max-width:440px;margin-left:auto;margin-right:auto;}
+.btn-main{position:relative;display:inline-flex;align-items:center;gap:10px;padding:17px 44px;border-radius:12px;font-size:15px;font-weight:800;text-decoration:none;overflow:hidden;border:1px solid rgba(74,127,212,0.4);transition:transform .25s,box-shadow .25s;width:100%;justify-content:center;max-width:420px;}
+.btn-main::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--b1),var(--b2),var(--b3));z-index:0;}
+.btn-main::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--b2),var(--b3),var(--b4));opacity:0;transition:opacity .35s;z-index:0;}
+.btn-main:hover::after{opacity:1;}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 20px 60px rgba(27,58,107,0.55);}
+.btn-t{position:relative;z-index:1;background:linear-gradient(90deg,#fff,#d0e8ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.btn-a{position:relative;z-index:1;color:#fff;transition:transform .3s;}
+.btn-main:hover .btn-a{transform:translateX(5px);}
+.bs{position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);transform:skewX(-18deg);animation:bsh 3.5s infinite;z-index:1;}
+@keyframes bsh{0%{left:-100%;}60%,100%{left:150%;}}
+.cta-note{font-size:11px;color:var(--subtle);margin-top:14px;text-align:center;}
+.scarcity{display:inline-flex;align-items:center;gap:6px;background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.2);border-radius:100px;padding:6px 14px;font-size:11px;font-weight:700;color:#e05555;margin-bottom:20px;letter-spacing:.5px;}
+.scarcity::before{content:'';width:6px;height:6px;border-radius:50%;background:#e05555;animation:pd 1.5s infinite;}
+
+/* FOOTER */
+footer{padding:40px 24px;text-align:center;border-top:1px solid rgba(74,127,212,0.07);position:relative;z-index:1;}
+footer p{font-size:11px;color:rgba(74,127,212,0.3);line-height:1.8;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.on{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:720px){
+  .proof-strip{flex-wrap:wrap;}
+  .ps-item{min-width:50%;border-right:none;border-bottom:1px solid rgba(74,127,212,0.08);}
+  .learn-grid{grid-template-columns:1fr;}
+  .who-inner{grid-template-columns:1fr;}
+  .cta-box{padding:36px 22px;}
+}
+</style>
+</head>
+<body>
+
+<div class="tech-bg"><div class="tech-line"></div></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-mark">E</div>
+    <span class="logo-text">EIKON INK MARKETING</span>
+  </div>
+</nav>
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar">
+  Atenção tatuador: <span>este vídeo sai do ar em breve.</span> Assista agora antes que feche.
+</div>
+
+<!-- HERO -->
+<section class="hero" style="z-index:1;position:relative;">
+  <div class="container">
+    <div class="hero-tag"><div class="tag-dot"></div>Revelação exclusiva para tatuadores</div>
+    <h1>O segredo que fez <em>107 tatuadores</em><br/>lotarem a agenda sem pedir indicação</h1>
+    <p>Assista ao vídeo abaixo e descubra o <strong>Sistema VPE</strong> — a metodologia que está transformando tatuadores talentosos em estúdios de R$30k, R$50k e R$80k por mês em menos de 90 dias.</p>
+  </div>
+</section>
+
+<!-- VSL -->
+<div class="vsl-section reveal">
+  <div class="vsl-outer">
+    <div class="vsl-wrap">
+      <!-- ✏️ COLE AQUI O EMBED DO VTURB -->
+      <div class="vsl-inner">
+        <strong>Cole aqui o embed da sua VSL</strong>
+        <span>Substitua este bloco pelo iframe ou script do VTurb</span>
+        <code>&lt;iframe src="https://vturb.com/..." width="100%" height="480" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;</code>
+      </div>
+    </div>
+  </div>
+  <p class="vsl-caption">Assista até o final — a melhor parte está nos últimos minutos. <strong>Duração: ~18 min.</strong></p>
+</div>
+
+<!-- PROOF STRIP -->
+<div class="proof-strip reveal">
+  <div class="ps-item"><div class="ps-n">107+</div><div class="ps-l">Parceiros ativos<br/>na Eikon hoje</div></div>
+  <div class="ps-item"><div class="ps-n">33</div><div class="ps-l">Países — Brasil,<br/>EUA e Europa</div></div>
+  <div class="ps-item"><div class="ps-n">4+</div><div class="ps-l">Anos exclusivos<br/>no mercado tattoo</div></div>
+  <div class="ps-item"><div class="ps-n">&lt;30D</div><div class="ps-l">Para lotar agenda<br/>com o Sistema VPE</div></div>
+</div>
+
+<!-- WHAT YOU'LL DISCOVER -->
+<section class="learn-section">
+  <div class="container">
+    <div class="center reveal">
+      <div class="eyebrow">O que você vai descobrir</div>
+      <h2 class="sec-title">Neste vídeo você vai ver <span class="grad">ao vivo</span></h2>
+      <p class="sec-sub">A verdade que nenhuma agência genérica te conta sobre crescer no mercado de tattoo.</p>
+    </div>
+    <div class="learn-grid">
+      <div class="learn-card reveal">
+        <div class="lc-num">01</div>
+        <div class="lc-t"><strong>Por que tráfego pago genérico não funciona para tatuador</strong><span>A diferença de uma campanha feita por quem entende do mercado de tattoo vs. qualquer agência generalista.</span></div>
+      </div>
+      <div class="learn-card reveal">
+        <div class="lc-num">02</div>
+        <div class="lc-t"><strong>O sistema que lota agenda em menos de 30 dias</strong><span>O método VPE explicado passo a passo — Visibilidade, Posicionamento e Experiência trabalhando juntos.</span></div>
+      </div>
+      <div class="learn-card reveal">
+        <div class="lc-num">03</div>
+        <div class="lc-t"><strong>Como cobrar R$500 a R$1.500 por sessão sem perder cliente</strong><span>Posicionamento de marca que atrai o cliente certo e elimina quem barganha pelo preço.</span></div>
+      </div>
+      <div class="learn-card reveal">
+        <div class="lc-num">04</div>
+        <div class="lc-t"><strong>O script de WhatsApp que converte lead em agendado</strong><span>A sequência exata que nossos parceiros usam para fechar clientes sem ficar horas no celular.</span></div>
+      </div>
+      <div class="learn-card reveal">
+        <div class="lc-num">05</div>
+        <div class="lc-t"><strong>Por que 9 em cada 10 tatuadores travam no mesmo faturamento</strong><span>O erro invisível que impede tatuadores talentosos de escalar — e como virar essa chave.</span></div>
+      </div>
+      <div class="learn-card reveal">
+        <div class="lc-num">06</div>
+        <div class="lc-t"><strong>O que os 107 parceiros da Eikon têm em comum</strong><span>O perfil exato de tatuador que escala rápido com o Sistema VPE e como saber se você se encaixa.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IS JOÃO -->
+<section class="who-section">
+  <div class="who-inner">
+    <div class="who-avatar reveal">
+      <div class="avatar-placeholder">JF</div>
+      <div class="avatar-name">João Flávio</div>
+      <div class="avatar-role">CEO · Eikon Ink Marketing</div>
+      <div class="who-badges">
+        <span class="badge">107+ Parceiros</span>
+        <span class="badge">33 Países</span>
+        <span class="badge">4+ Anos tattoo</span>
+        <span class="badge">América Latina</span>
+      </div>
+    </div>
+    <div class="who-content reveal">
+      <div class="eyebrow">Quem está te ensinando</div>
+      <h3>O especialista que só atende <span class="grad">tatuadores</span></h3>
+      <p>João Flávio construiu a <strong>Eikon Ink Marketing</strong> com um princípio simples: marketing para tatuador é diferente de tudo. Agência genérica não entende o seu cliente, não fala a sua língua, não conhece o seu mercado.</p>
+      <p>Nos últimos <strong>4 anos</strong>, a Eikon se tornou a <strong>maior agência de marketing exclusiva para tatuadores da América Latina</strong> — com parceiros ativos no Brasil, Estados Unidos e por toda a Europa.</p>
+      <p>O resultado: mais de <strong>107 tatuadores e donos de estúdio</strong> com agenda lotada, faturamento previsível e liberdade para focar no que amam: tatuar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-box reveal">
+      <div class="scarcity">Vagas limitadas esta semana</div>
+      <h3>Quer que a gente faça isso<br/><span class="grad">pela você?</span></h3>
+      <p>Se você assistiu o vídeo e quer saber se o Sistema VPE funciona para o seu estúdio, clique abaixo e solicite um diagnóstico gratuito com nossa equipe.</p>
+      <a href="#" class="btn-main">
+        <div class="bs"></div>
+        <span class="btn-t">Quero meu diagnóstico gratuito</span>
+        <span class="btn-a">→</span>
+      </a>
+      <p class="cta-note">100% gratuito. Sem compromisso. Nossa equipe entra em contato em até 24h.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Eikon Ink Marketing · Todos os direitos reservados</p>
+  <p>Marketing exclusivo para tatuadores · Brasil · Estados Unidos · Europa</p>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach((el,i)=>{if(el.isIntersecting){setTimeout(()=>el.target.classList.add('on'),(el.target.dataset.d||0));obs.unobserve(el.target);}});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.dataset.d=i%3*100;obs.observe(el);});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});});});
+</script>
+</body>
+</html>
