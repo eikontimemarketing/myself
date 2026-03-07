@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Eikon Ink — Webinário Gratuito para Tatuadores</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --b1:#0D1F42;--b2:#1B3A6B;--b3:#2E5FA3;--b4:#4A7FD4;--b5:#7AAEE8;
+  --white:#ffffff;--off:#F7F9FC;--off2:#EEF2F8;
+  --text:#0A0F1E;--muted:#5A6A8A;--subtle:#9AAAC0;
+  --border:#DDE5F0;--green:#1a8a45;--green2:#25b85c;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--white);color:var(--text);font-family:-apple-system,'SF Pro Display','Segoe UI',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* TECH BG */
+.tech-bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.tech-bg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(74,127,212,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(74,127,212,0.05) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,#000 10%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 0%,#000 10%,transparent 70%);}
+.tech-bg::after{content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);width:900px;height:500px;background:radial-gradient(ellipse at 50% 0%,rgba(74,127,212,0.07),transparent 70%);}
+.tech-line{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(74,127,212,0.3) 30%,rgba(74,127,212,0.55) 50%,rgba(74,127,212,0.3) 70%,transparent);}
+
+/* GRAD TEXT */
+.gt{background:linear-gradient(135deg,#0A1F4E 0%,#1B3A6B 30%,#2E5FA3 60%,#4A7FD4 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 1px 2px rgba(27,58,107,0.15));}
+.gt-light{background:linear-gradient(135deg,#1B3A6B 0%,#2E5FA3 45%,#4A7FD4 75%,#7AAEE8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.gt-sub{background:linear-gradient(135deg,#3A4E70 0%,#4A6A9A 50%,#5A80B8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-size:15px;font-weight:800;letter-spacing:2.5px;display:flex;align-items:center;gap:9px;}
+.logo-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--b2),var(--b3));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#fff;box-shadow:0 2px 12px rgba(27,58,107,0.2);}
+.logo-text{background:linear-gradient(90deg,var(--b2),var(--b3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-btn{position:relative;padding:9px 22px;border-radius:8px;font-size:13px;font-weight:700;color:#fff;text-decoration:none;overflow:hidden;border:none;transition:box-shadow .3s,transform .2s;}
+.nav-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--b2),var(--b3));z-index:0;}
+.nav-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--b3),var(--b4));opacity:0;transition:opacity .3s;z-index:0;}
+.nav-btn:hover::after{opacity:1;}
+.nav-btn:hover{box-shadow:0 4px 20px rgba(27,58,107,0.3);transform:translateY(-1px);}
+.nav-btn span{position:relative;z-index:1;}
+
+/* URGENCY BAR */
+.urgency-bar{background:linear-gradient(90deg,var(--b1),var(--b2));padding:10px 24px;text-align:center;font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:.4px;margin-top:62px;position:relative;z-index:1;}
+.urgency-bar strong{color:#fff;}
+.ub-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#4cde80;margin-right:8px;animation:blink 1.5s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* HERO */
+.hero{padding:80px 24px 0;position:relative;z-index:1;background:linear-gradient(180deg,var(--off) 0%,var(--white) 100%);}
+.hero-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:start;padding-bottom:80px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(27,58,107,0.07);border:1px solid rgba(74,127,212,0.22);border-radius:100px;padding:6px 16px 6px 8px;margin-bottom:24px;font-size:11px;font-weight:700;color:var(--b2);letter-spacing:1.2px;text-transform:uppercase;}
+.ey-dot{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,var(--b3),var(--b4));display:flex;align-items:center;justify-content:center;}
+.ey-dot::after{content:'';width:5px;height:5px;border-radius:50%;background:#fff;animation:pd 2s infinite;}
+@keyframes pd{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.5);opacity:.5;}}
+.hero h1{font-size:clamp(28px,3.8vw,56px);font-weight:900;line-height:1.04;letter-spacing:-2px;margin-bottom:20px;}
+.hero-sub{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:20px;}
+.hero-sub strong{color:var(--text);font-weight:700;}
+.free-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(22,160,80,0.07);border:1px solid rgba(22,160,80,0.2);border-radius:100px;padding:5px 13px;font-size:11px;font-weight:700;color:var(--green);letter-spacing:1px;text-transform:uppercase;margin-bottom:18px;}
+
+/* WEBINAR DATE BOX */
+.date-box{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:16px;margin-bottom:28px;box-shadow:0 2px 16px rgba(27,58,107,0.07);}
+.date-icon{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--b1),var(--b2));display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.date-icon svg{width:22px;height:22px;stroke:#fff;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.date-info strong{display:block;font-size:14px;font-weight:800;color:var(--text);}
+.date-info span{font-size:12px;color:var(--muted);}
+.seats-bar{background:var(--off);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin-bottom:28px;}
+.seats-label{font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:600;}
+.seats-track{height:6px;background:var(--off2);border-radius:100px;overflow:hidden;}
+.seats-fill{height:100%;width:78%;background:linear-gradient(90deg,var(--b3),var(--b4));border-radius:100px;}
+.seats-count{font-size:11px;color:var(--b3);margin-top:6px;font-weight:700;}
+
+/* FORM CARD */
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:24px;padding:36px 30px;box-shadow:0 8px 48px rgba(27,58,107,0.1);position:relative;overflow:hidden;}
+.form-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--b3) 30%,var(--b4) 50%,var(--b3) 70%,transparent);}
+.form-card-title{font-size:18px;font-weight:900;letter-spacing:-.5px;margin-bottom:4px;}
+.form-card-sub{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.6;}
+.fi{display:flex;flex-direction:column;gap:10px;}
+.fi-input{background:var(--off);border:1px solid var(--border);color:var(--text);padding:12px 15px;border-radius:10px;font-size:14px;outline:none;transition:border .25s,box-shadow .25s;width:100%;-webkit-appearance:none;}
+.fi-input::placeholder{color:var(--subtle);}
+.fi-input:focus{border-color:var(--b3);box-shadow:0 0 0 3px rgba(46,95,163,0.1);}
+.fi-btn{position:relative;padding:15px;border:none;border-radius:10px;font-size:15px;font-weight:800;overflow:hidden;transition:transform .25s,box-shadow .25s;width:100%;}
+.fi-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--b1),var(--b2),var(--b3));z-index:0;}
+.fi-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--b2),var(--b3),var(--b4));opacity:0;transition:opacity .35s;z-index:0;}
+.fi-btn:hover::after{opacity:1;}
+.fi-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(27,58,107,0.3);}
+.fi-btn span{position:relative;z-index:1;color:#fff;font-weight:800;}
+.fi-note{font-size:10.5px;color:var(--subtle);text-align:center;}
+.form-guarantees{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap;}
+.fg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);font-weight:600;}
+.fg-dot{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.success-wrap{display:none;text-align:center;padding:32px 12px;}
+.s-icon{width:60px;height:60px;border-radius:16px;background:linear-gradient(135deg,var(--b2),var(--b3));display:flex;align-items:center;justify-content:center;margin:0 auto 14px;box-shadow:0 6px 24px rgba(27,58,107,0.25);}
+.s-icon svg{width:28px;height:28px;stroke:#fff;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.success-wrap h3{font-size:20px;font-weight:800;margin-bottom:7px;}
+.success-wrap p{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* SECTIONS */
+section.sec{padding:96px 24px;position:relative;z-index:1;}
+.container{max-width:1000px;margin:0 auto;}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--b3);margin-bottom:14px;}
+.eyebrow::before{content:'';width:20px;height:1.5px;background:linear-gradient(90deg,var(--b3),transparent);}
+h2.st{font-size:clamp(26px,3.5vw,50px);font-weight:900;letter-spacing:-1.5px;line-height:1.06;margin-bottom:16px;}
+.sec-sub{font-size:15.5px;line-height:1.8;max-width:540px;}
+.center{text-align:center;}.center .sec-sub{margin:0 auto;}
+.divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--border) 20%,var(--border) 80%,transparent);position:relative;z-index:1;}
+
+/* WHAT YOU LEARN */
+.learn-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:52px;border:1px solid var(--border);border-radius:20px;overflow:hidden;}
+.lc{background:var(--white);padding:32px 28px;display:flex;gap:18px;align-items:flex-start;transition:background .3s;position:relative;}
+.lc:hover{background:var(--off);}
+.lc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:var(--border);}
+.lc:nth-last-child(-n+2)::after{display:none;}
+.lc-num{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--b1),var(--b2));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--b5);flex-shrink:0;font-family:monospace;}
+.lc-body strong{display:block;font-size:15px;font-weight:800;margin-bottom:5px;}
+.lc-body span{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* OFFER SECTION */
+.offer-section{background:var(--off);}
+.offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:52px;align-items:start;}
+.offer-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:36px 30px;position:relative;overflow:hidden;}
+.offer-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.offer-card.base::before{background:linear-gradient(90deg,var(--b3),var(--b4));}
+.offer-card.premium::before{background:linear-gradient(90deg,#B8860B,#DAA520,#FFD700);}
+.offer-card.premium{border-color:rgba(218,165,32,0.3);box-shadow:0 8px 40px rgba(218,165,32,0.12);}
+.offer-badge{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:16px;}
+.offer-card.base .offer-badge{background:rgba(27,58,107,0.08);color:var(--b2);border:1px solid rgba(74,127,212,0.2);}
+.offer-card.premium .offer-badge{background:rgba(218,165,32,0.1);color:#8B6914;border:1px solid rgba(218,165,32,0.3);}
+.offer-title{font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:8px;}
+.offer-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:20px;}
+.offer-price{margin-bottom:24px;}
+.price-tag{font-size:38px;font-weight:900;letter-spacing:-1px;line-height:1;}
+.price-desc{font-size:12px;color:var(--muted);margin-top:4px;}
+.offer-list{list-style:none;display:flex;flex-direction:column;gap:2px;margin-bottom:28px;}
+.offer-list li{font-size:13.5px;color:var(--muted);padding:9px 0;border-bottom:1px solid var(--border);display:flex;gap:10px;align-items:flex-start;line-height:1.5;}
+.offer-list li:last-child{border-bottom:none;}
+.ck{width:17px;height:17px;border-radius:5px;background:linear-gradient(135deg,var(--b2),var(--b3));display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.ck svg{width:9px;height:9px;stroke:#fff;stroke-width:2.8;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.ck-gold{background:linear-gradient(135deg,#B8860B,#DAA520);}
+.offer-btn{position:relative;display:block;width:100%;padding:14px;border:none;border-radius:10px;font-size:14px;font-weight:800;overflow:hidden;transition:transform .25s,box-shadow .25s;text-align:center;text-decoration:none;}
+.offer-btn::before{content:'';position:absolute;inset:0;z-index:0;}
+.offer-card.base .offer-btn::before{background:linear-gradient(135deg,var(--b1),var(--b2),var(--b3));}
+.offer-card.premium .offer-btn::before{background:linear-gradient(135deg,#8B6914,#B8860B,#DAA520);}
+.offer-btn::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .35s;z-index:0;}
+.offer-card.base .offer-btn::after{background:linear-gradient(135deg,var(--b2),var(--b3),var(--b4));}
+.offer-card.premium .offer-btn::after{background:linear-gradient(135deg,#B8860B,#DAA520,#FFD700);}
+.offer-btn:hover::after{opacity:1;}
+.offer-btn:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(27,58,107,0.25);}
+.offer-btn span{position:relative;z-index:1;color:#fff;font-weight:800;}
+.popular-tag{position:absolute;top:18px;right:18px;background:linear-gradient(135deg,#B8860B,#DAA520);color:#fff;font-size:10px;font-weight:800;padding:4px 10px;border-radius:100px;letter-spacing:.5px;}
+
+/* TESTIMONIALS */
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px;}
+.test-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px 24px;transition:box-shadow .3s,transform .3s;}
+.test-card:hover{box-shadow:0 8px 32px rgba(27,58,107,0.1);transform:translateY(-3px);}
+.test-stars{display:flex;gap:3px;margin-bottom:14px;}
+.star{width:13px;height:13px;background:var(--b3);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
+.test-text{font-size:13.5px;color:var(--muted);line-height:1.75;margin-bottom:18px;font-style:italic;}
+.test-author{display:flex;align-items:center;gap:10px;}
+.test-av{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--b2),var(--b3));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;}
+.test-name{font-size:13px;font-weight:700;color:var(--text);}
+.test-role{font-size:11px;color:var(--subtle);}
+
+/* WHO */
+.who-inner{display:grid;grid-template-columns:1fr 1.6fr;gap:56px;align-items:center;max-width:900px;margin:0 auto;}
+.who-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:36px 28px;text-align:center;box-shadow:0 4px 24px rgba(27,58,107,0.08);position:relative;overflow:hidden;}
+.who-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--b3),transparent);}
+.who-av{width:80px;height:80px;border-radius:18px;background:linear-gradient(135deg,var(--b2),var(--b3));margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:#fff;box-shadow:0 6px 22px rgba(27,58,107,0.3);}
+.who-name{font-size:17px;font-weight:800;margin-bottom:3px;}
+.who-role{font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:16px;}
+.who-badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.w-badge{font-size:10px;font-weight:700;padding:4px 11px;border-radius:100px;background:rgba(27,58,107,0.07);border:1px solid rgba(74,127,212,0.18);color:var(--b2);}
+.who-text h3{font-size:clamp(22px,3vw,36px);font-weight:900;letter-spacing:-1px;margin-bottom:14px;line-height:1.08;}
+.who-text p{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:12px;}
+.who-text p strong{color:var(--text);}
+
+/* BOTTOM CTA */
+.bcta-section{background:var(--off);}
+.bcta-box{max-width:620px;margin:0 auto;background:var(--white);border:1px solid var(--border);border-radius:24px;padding:56px 44px;box-shadow:0 8px 56px rgba(27,58,107,0.1);position:relative;overflow:hidden;}
+.bcta-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--b3) 30%,var(--b4) 50%,var(--b3) 70%,transparent);}
+.bcta-box h3{font-size:clamp(22px,3vw,34px);font-weight:900;letter-spacing:-1px;margin-bottom:10px;}
+.bcta-box p{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:28px;}
+
+/* FOOTER */
+footer{background:var(--white);border-top:1px solid var(--border);padding:40px 24px;text-align:center;position:relative;z-index:1;}
+footer p{font-size:11px;color:var(--subtle);line-height:1.8;}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.on{opacity:1;transform:translateY(0);}
+
+/* COUNTDOWN */
+.countdown{display:flex;gap:12px;justify-content:center;margin:28px 0;}
+.cd-block{text-align:center;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 18px;min-width:68px;box-shadow:0 2px 12px rgba(27,58,107,0.07);}
+.cd-num{font-size:28px;font-weight:900;letter-spacing:-1px;line-height:1;}
+.cd-label{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+
+@media(max-width:900px){
+  nav{padding:0 16px;}.nav-links-d{display:none;}
+  .hero-inner{grid-template-columns:1fr;gap:36px;padding-bottom:60px;}
+  .learn-grid{grid-template-columns:1fr;}
+  .offer-grid{grid-template-columns:1fr;}
+  .test-grid{grid-template-columns:1fr 1fr;}
+  .who-inner{grid-template-columns:1fr;gap:36px;}
+  .bcta-box{padding:36px 22px;}
+}
+@media(max-width:560px){
+  .test-grid{grid-template-columns:1fr;}
+  section.sec{padding:64px 16px!important;}
+  .countdown{gap:8px;}.cd-block{min-width:56px;padding:12px 14px;}
+  .cd-num{font-size:22px;}
+}
+</style>
+</head>
+<body>
+<div class="tech-bg"><div class="tech-line"></div></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-mark">E</div>
+    <span class="logo-text">EIKON INK MARKETING</span>
+  </div>
+  <a href="#inscricao" class="nav-btn"><span>Garantir minha vaga</span></a>
+</nav>
+
+<!-- URGENCY BAR -->
+<div class="urgency-bar">
+  <span class="ub-dot"></span>
+  <strong>Webinário ao vivo</strong> — Vagas se encerrando. Garanta a sua antes que feche.
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="reveal">
+      <div class="free-pill">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Evento ao vivo — gratuito
+      </div>
+      <div class="hero-eyebrow"><div class="ey-dot"></div>Treinamento exclusivo para tatuadores</div>
+      <h1>
+        <span class="gt">Como lotar sua agenda</span><br/>
+        <span class="gt-light">e dobrar o faturamento</span><br/>
+        <span class="gt">em menos de 30 dias</span>
+      </h1>
+      <p class="hero-sub" style="margin-top:20px;">No maior webinário gratuito de marketing para tatuadores da América Latina, João Flávio revela ao vivo o <strong>Sistema VPE completo</strong> — o método que transformou mais de 107 tatuadores em negócios de R$30k, R$50k e R$80k/mês.</p>
+      <div class="date-box">
+        <div class="date-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <div class="date-info">
+          <strong>Próxima turma — ao vivo pelo Zoom</strong>
+          <span>Data e horário enviados por WhatsApp após inscrição</span>
+        </div>
+      </div>
+      <div class="seats-bar">
+        <div class="seats-label">Vagas preenchidas</div>
+        <div class="seats-track"><div class="seats-fill"></div></div>
+        <div class="seats-count">78% das vagas já reservadas</div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="reveal" id="inscricao">
+      <div class="form-card">
+        <p class="form-card-title gt">Reserve sua vaga gratuita</p>
+        <p class="form-card-sub">Preencha abaixo e receba o link do webinário direto no seu WhatsApp.</p>
+        <div class="fi" id="wForm">
+          <input class="fi-input" type="text" id="nome" placeholder="Seu nome completo"/>
+          <input class="fi-input" type="text" id="whatsapp" placeholder="WhatsApp (11) 99999-9999"/>
+          <input class="fi-input" type="email" id="email" placeholder="Seu melhor e-mail"/>
+          <select class="fi-input" id="fat">
+            <option value="">Faturamento mensal atual</option>
+            <option>Abaixo de R$5.000</option>
+            <option>R$5.000 – R$10.000</option>
+            <option>R$10.000 – R$15.000</option>
+            <option>R$15.000 – R$25.000</option>
+            <option>Acima de R$25.000</option>
+          </select>
+          <button class="fi-btn" onclick="submitWeb()"><span>Garantir minha vaga gratuita →</span></button>
+          <p class="fi-note">100% gratuito. Link enviado por WhatsApp.</p>
+        </div>
+        <div class="success-wrap" id="wSuccess">
+          <div class="s-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h3 class="gt">Vaga garantida!</h3>
+          <p>Você receberá o link do webinário no WhatsApp informado. Fique atento — a turma fecha em breve.</p>
+        </div>
+        <div class="form-guarantees">
+          <div class="fg-item"><div class="fg-dot"></div>100% gratuito</div>
+          <div class="fg-item"><div class="fg-dot"></div>Sem spam</div>
+          <div class="fg-item"><div class="fg-dot"></div>Vagas limitadas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- WHAT YOU LEARN -->
+<section class="sec">
+  <div class="container">
+    <div class="center reveal">
+      <div class="eyebrow">Conteúdo do webinário</div>
+      <h2 class="st"><span class="gt">O que você vai aprender</span><br/><span class="gt-light">ao vivo</span></h2>
+      <p class="sec-sub gt-sub">Conteúdo aplicável. Sai do webinário com um plano de ação pronto.</p>
+    </div>
+    <div class="learn-grid">
+      <div class="lc reveal">
+        <div class="lc-num">01</div>
+        <div class="lc-body"><strong class="gt">Por que tatuadores talentosos não escalam</strong><span>O bloqueio invisível que impede 9 em cada 10 tatuadores de passar de R$15k/mês — e como quebrar ele.</span></div>
+      </div>
+      <div class="lc reveal">
+        <div class="lc-num">02</div>
+        <div class="lc-body"><strong class="gt">O Sistema VPE ao vivo</strong><span>Visibilidade, Posicionamento e Experiência explicados do zero com exemplos reais dos nossos 107 parceiros.</span></div>
+      </div>
+      <div class="lc reveal">
+        <div class="lc-num">03</div>
+        <div class="lc-body"><strong class="gt">Tráfego pago que funciona para tattoo</strong><span>Como configurar Meta Ads e Google Ads para atrair o cliente certo — sem desperdiçar verba com quem não vai pagar.</span></div>
+      </div>
+      <div class="lc reveal">
+        <div class="lc-num">04</div>
+        <div class="lc-body"><strong class="gt">Posicionamento de marca premium</strong><span>Como ser reconhecido como referência no seu estilo e cobrar R$500 a R$1.500 por sessão sem perder cliente.</span></div>
+      </div>
+      <div class="lc reveal">
+        <div class="lc-num">05</div>
+        <div class="lc-body"><strong class="gt">O script de WhatsApp que fecha sozinho</strong><span>A sequência exata que nossos parceiros usam para transformar lead em agendado em menos de 24h.</span></div>
+      </div>
+      <div class="lc reveal">
+        <div class="lc-num">06</div>
+        <div class="lc-body"><strong class="gt">Plano de ação 30 dias</strong><span>Ao vivo, João Flávio vai montar com você um plano personalizado para lotar sua agenda no próximo mês.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- OFFER -->
+<section class="sec offer-section">
+  <div class="container">
+    <div class="center reveal">
+      <div class="eyebrow">Ao final do webinário</div>
+      <h2 class="st"><span class="gt">Duas formas de continuar</span><br/><span class="gt-light">crescendo com a Eikon</span></h2>
+      <p class="sec-sub gt-sub">Quem quiser ir além do webinário terá acesso exclusivo a duas ofertas apresentadas ao vivo.</p>
+    </div>
+    <div class="offer-grid">
+      <div class="offer-card base reveal">
+        <div class="offer-badge">Curso Online</div>
+        <div class="offer-title gt">Sistema VPE Completo</div>
+        <p class="offer-sub">O curso completo com todos os módulos, templates, scripts e materiais para implementar o Sistema VPE no seu estúdio.</p>
+        <div class="offer-price">
+          <div class="price-tag gt">R$ 497</div>
+          <div class="price-desc">Pagamento único · Acesso vitalício</div>
+        </div>
+        <ul class="offer-list">
+          <li><div class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Módulo completo de Tráfego Pago para Tattoo</li>
+          <li><div class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Módulo de Posicionamento e Marca</li>
+          <li><div class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Scripts validados de WhatsApp</li>
+          <li><div class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Templates de anúncios prontos</li>
+          <li><div class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Comunidade exclusiva de tatuadores</li>
+        </ul>
+        <button class="offer-btn" onclick="document.getElementById('inscricao').scrollIntoView({behavior:'smooth'})"><span>Quero o curso por R$497</span></button>
+      </div>
+      <div class="offer-card premium reveal">
+        <div class="popular-tag">Mais completo</div>
+        <div class="offer-badge">Mentoria + Curso</div>
+        <div class="offer-title" style="background:linear-gradient(135deg,#8B6914,#B8860B,#DAA520);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:22px;font-weight:900;letter-spacing:-.5px;margin-bottom:8px;">Mentoria VPE Premium</div>
+        <p class="offer-sub">Tudo do curso + acompanhamento direto com a equipe Eikon. Para quem quer resultado em 30 dias com suporte real.</p>
+        <div class="offer-price">
+          <div class="price-tag" style="background:linear-gradient(135deg,#8B6914,#B8860B,#DAA520);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">R$ 1.000 – 2.000</div>
+          <div class="price-desc">Parcelado · Condições no webinário</div>
+        </div>
+        <ul class="offer-list">
+          <li><div class="ck ck-gold"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Tudo do curso Sistema VPE</li>
+          <li><div class="ck ck-gold"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Mentoria individual com equipe Eikon</li>
+          <li><div class="ck ck-gold"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Gestão de tráfego supervisionada</li>
+          <li><div class="ck ck-gold"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Revisão de copy e posicionamento</li>
+          <li><div class="ck ck-gold"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Suporte WhatsApp prioritário 30 dias</li>
+          <li><div class="ck ck-gold"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>Garantia de resultado ou reembolso</li>
+        </ul>
+        <button class="offer-btn" onclick="document.getElementById('inscricao').scrollIntoView({behavior:'smooth'})"><span>Quero a mentoria premium</span></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section class="sec">
+  <div class="container">
+    <div class="center reveal">
+      <div class="eyebrow">Quem já passou pelo webinário</div>
+      <h2 class="st"><span class="gt">Resultados de quem</span><br/><span class="gt-light">assistiu e aplicou</span></h2>
+    </div>
+    <div class="test-grid">
+      <div class="test-card reveal">
+        <div class="test-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="test-text">"Assisti ao webinário numa quinta-feira. Na semana seguinte já tinha mudado meu posicionamento e fechado 4 clientes novos cobrando R$800 cada."</p>
+        <div class="test-author"><div class="test-av">LM</div><div><div class="test-name">Lucas M.</div><div class="test-role">Tatuador Fineline · Florianópolis</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="test-text">"O webinário foi melhor que cursos que paguei R$2.000. João entende o mercado de tattoo de um jeito que ninguém mais entende. Fui direto para a mentoria."</p>
+        <div class="test-author"><div class="test-av">AC</div><div><div class="test-name">Ana C.</div><div class="test-role">Donos de Estúdio · Belo Horizonte</div></div></div>
+      </div>
+      <div class="test-card reveal">
+        <div class="test-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="test-text">"Em 45 dias depois do webinário passei de R$8k para R$22k. O script de WhatsApp sozinho mudou completamente minha taxa de conversão."</p>
+        <div class="test-author"><div class="test-av">FO</div><div><div class="test-name">Felipe O.</div><div class="test-role">Tatuador Blackwork · Porto Alegre</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHO -->
+<section class="sec">
+  <div class="container">
+    <div class="who-inner">
+      <div class="who-card reveal">
+        <div class="who-av">JF</div>
+        <div class="who-name gt">João Flávio</div>
+        <div class="who-role">CEO · Eikon Ink Marketing</div>
+        <div class="who-badges">
+          <span class="w-badge">107+ Parceiros</span>
+          <span class="w-badge">33 Países</span>
+          <span class="w-badge">4+ Anos tattoo</span>
+          <span class="w-badge">América Latina</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="eyebrow">Seu mentor no webinário</div>
+        <h3><span class="gt">O especialista nº1</span><br/><span class="gt-light">em marketing para tattoo</span></h3>
+        <p>João Flávio fundou a <strong>Eikon Ink Marketing</strong> com um único foco: marketing exclusivo para tatuadores e donos de estúdio. Em 4 anos, construiu a maior operação do segmento na América Latina.</p>
+        <p>Mais de <strong>107 parceiros ativos</strong> em 33 países — Brasil, Estados Unidos e toda a Europa. Todos usando o mesmo Sistema VPE que João vai ensinar ao vivo no webinário.</p>
+        <p>Você não vai aprender teoria. Vai aprender o que funciona <strong>hoje, no mercado real, com tatuadores reais.</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BOTTOM CTA -->
+<section class="sec bcta-section">
+  <div class="container center">
+    <div class="reveal">
+      <div class="eyebrow">Garanta sua vaga</div>
+      <h2 class="st"><span class="gt">Inscreva-se agora —</span><br/><span class="gt-light">é totalmente gratuito</span></h2>
+      <p class="sec-sub" style="margin:0 auto 48px;">As vagas são limitadas e fecham assim que atingirmos o limite de participantes. Não deixe para depois.</p>
+    </div>
+    <div class="bcta-box reveal">
+      <h3><span class="gt">Reserve sua vaga</span><br/><span class="gt-light">no webinário ao vivo</span></h3>
+      <p>Gratuito. Ao vivo. Com João Flávio. Link enviado por WhatsApp.</p>
+      <div class="fi" id="wForm2">
+        <input class="fi-input" type="text" id="nome2" placeholder="Seu nome completo"/>
+        <input class="fi-input" type="text" id="whatsapp2" placeholder="WhatsApp (11) 99999-9999"/>
+        <input class="fi-input" type="email" id="email2" placeholder="Seu melhor e-mail"/>
+        <button class="fi-btn" onclick="submitWeb2()"><span>Garantir minha vaga gratuita →</span></button>
+        <p class="fi-note">100% gratuito. Sem spam. Link enviado por WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Eikon Ink Marketing · Todos os direitos reservados</p>
+  <p>Marketing exclusivo para tatuadores · Brasil · Estados Unidos · Europa</p>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting){setTimeout(()=>el.target.classList.add('on'),el.target.dataset.d||0);obs.unobserve(el.target);}});},{threshold:.08});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.dataset.d=i%4*80;obs.observe(el);});
+
+function mask(id){const el=document.getElementById(id);if(!el)return;el.addEventListener('input',function(){let v=this.value.replace(/\D/g,'');if(v.length<=11)v=v.replace(/^(\d{2})(\d{5})(\d{4})$/,'($1) $2-$3');this.value=v;});}
+mask('whatsapp');mask('whatsapp2');
+
+function validate(ids){for(let id of ids){const el=document.getElementById(id);if(!el||!el.value.trim()){if(el){el.style.borderColor='#c0392b';el.focus();setTimeout(()=>el.style.borderColor='',1500);}return false;}}return true;}
+
+function submitWeb(){
+  if(!validate(['nome','whatsapp','email','fat']))return;
+  document.getElementById('wForm').style.display='none';
+  document.getElementById('wSuccess').style.display='block';
+}
+function submitWeb2(){
+  if(!validate(['nome2','whatsapp2','email2']))return;
+  document.getElementById('wForm2').innerHTML='<p style="color:var(--b3);font-weight:700;font-size:15px;padding:20px 0;text-align:center;">Vaga garantida! Link enviado por WhatsApp.</p>';
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});});});
+</script>
+</body>
+</html>
