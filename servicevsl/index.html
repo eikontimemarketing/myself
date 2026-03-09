@@ -35,6 +35,36 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;}
   z-index:9999;transition:width .08s linear;
 }
 
+/* ===== URGENCY BAR ===== */
+.urgency-top{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  background:linear-gradient(90deg,#07091C,#0D1F40,#07091C);
+  padding:9px 24px;text-align:center;
+  font-size:12px;font-weight:600;
+  color:rgba(168,206,255,0.75);letter-spacing:.25px;
+  border-bottom:1px solid rgba(59,130,246,0.1);
+}
+.urgency-top strong{color:var(--text);}
+.utop-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#34D399;margin-right:7px;vertical-align:middle;box-shadow:0 0 8px rgba(52,211,153,0.8);animation:blink 1.5s infinite;}
+
+/* ===== FLOATING NOTIF ===== */
+.float-notif{
+  position:fixed;bottom:28px;left:28px;z-index:400;
+  background:rgba(4,7,22,0.95);
+  border:1px solid rgba(59,130,246,0.22);border-radius:14px;
+  padding:14px 18px;display:flex;align-items:center;gap:12px;
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  box-shadow:0 8px 44px rgba(0,0,0,0.5);
+  transform:translateY(120px);opacity:0;
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1),opacity .4s;
+  max-width:295px;pointer-events:none;
+}
+.float-notif.show{transform:translateY(0);opacity:1;}
+.fn-av{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,var(--b800),var(--b500));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:800;color:#fff;}
+.fn-name{font-family:'Space Grotesk',sans-serif;font-size:12.5px;font-weight:700;color:var(--text);}
+.fn-action{font-family:'Inter',sans-serif;font-size:11px;color:var(--muted);margin-top:2px;}
+.fn-live{width:7px;height:7px;border-radius:50%;background:#34D399;flex-shrink:0;box-shadow:0 0 8px rgba(52,211,153,0.7);animation:blink 1.5s infinite;}
+
 /* ===== CUSTOM CURSOR ===== */
 *{cursor:none!important;}
 #cr{position:fixed;top:0;left:0;width:36px;height:36px;border:1.5px solid rgba(59,130,246,0.65);border-radius:50%;pointer-events:none;z-index:99999;margin:-18px 0 0 -18px;transition:width .22s,height .22s,background .22s,border-color .22s,margin .22s;}
@@ -74,51 +104,10 @@ h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;}
 }
 @keyframes shine{0%{background-position:260% center;}100%{background-position:-260% center;}}
 
-/* ===== NAV ===== */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:200;
-  background:rgba(4,6,15,0.45);
-  backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);
-  border-bottom:1px solid rgba(59,130,246,0.08);
-  box-shadow:none;
-  padding:0 44px;height:70px;
-  display:flex;justify-content:space-between;align-items:center;
-  transition:background .4s ease, border-color .4s ease, box-shadow .4s ease, backdrop-filter .4s ease;
-}
-nav.scrolled{
-  background:rgba(4,6,15,0.78);
-  backdrop-filter:blur(32px) saturate(200%);-webkit-backdrop-filter:blur(32px) saturate(200%);
-  border-bottom:1px solid rgba(59,130,246,0.16);
-  box-shadow:0 4px 32px rgba(0,0,0,0.45), 0 1px 0 rgba(59,130,246,0.08) inset;
-}
-.logo{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:800;letter-spacing:2.5px;display:flex;align-items:center;gap:7px;}
-.logo-dot{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,var(--b400),var(--c400));flex-shrink:0;animation:logoPulse 2.2s ease infinite;}
-@keyframes logoPulse{0%,100%{opacity:1;transform:scale(1);box-shadow:0 0 0 0 rgba(59,130,246,0.4);}50%{opacity:.6;transform:scale(.75);box-shadow:0 0 0 4px rgba(59,130,246,0);}}
-.logo-e{background:linear-gradient(135deg,var(--b300),var(--c400));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.logo-ink{color:rgba(255,255,255,0.88);}
-.nav-links{display:flex;gap:34px;align-items:center;}
-nav a{color:var(--muted);text-decoration:none;font-size:13.5px;font-weight:500;transition:color .2s;}
-nav a:hover{color:#fff;}
-.nav-cta{
-  padding:9px 22px;border-radius:8px;
-  font-weight:700;font-size:13px!important;color:#fff!important;
-  background:linear-gradient(135deg,rgba(30,64,175,0.75),rgba(59,130,246,0.65));
-  border:1px solid rgba(59,130,246,0.38);
-  box-shadow:0 0 18px rgba(59,130,246,0.15), 0 1px 0 rgba(255,255,255,0.06) inset;
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  transition:all .3s;
-}
-.nav-cta:hover{
-  background:linear-gradient(135deg,rgba(37,99,235,0.9),rgba(6,182,212,0.75));
-  box-shadow:0 0 32px rgba(59,130,246,0.4), 0 1px 0 rgba(255,255,255,0.1) inset;
-  transform:translateY(-1px);
-  border-color:rgba(99,179,237,0.5);
-}
-
 /* ===== HERO ===== */
 .hero{
   min-height:100vh;display:flex;align-items:center;justify-content:center;
-  text-align:center;padding:130px 24px 90px;
+  text-align:center;padding:96px 24px 90px;
   position:relative;z-index:1;overflow:hidden;
 }
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 15%,rgba(30,58,138,0.14),transparent 65%);}
@@ -180,18 +169,19 @@ nav a:hover{color:#fff;}
 .btn-primary{
   display:inline-flex;align-items:center;gap:12px;
   position:relative;font-family:'Space Grotesk',sans-serif;
-  font-weight:700;font-size:16px;padding:18px 50px;
+  font-weight:800;font-size:16px;padding:18px 50px;
   border-radius:12px;text-decoration:none;overflow:hidden;
-  border:1px solid rgba(59,130,246,0.35);transition:transform .3s,box-shadow .3s;
+  border:none;transition:transform .3s,box-shadow .3s;
+  box-shadow:0 8px 32px rgba(245,158,11,0.38);
 }
-.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--b900),var(--b700),var(--b500));z-index:0;}
-.btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--b600),var(--b400),var(--c400));opacity:0;transition:opacity .4s;z-index:0;}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#D97706,#F59E0B 50%,#FBBF24);z-index:0;}
+.btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#B45309,#D97706 50%,#F59E0B);opacity:0;transition:opacity .4s;z-index:0;}
 .btn-primary:hover::after{opacity:1;}
-.btn-primary:hover{transform:translateY(-3px);box-shadow:0 22px 65px rgba(59,130,246,0.38);}
-.btn-text{position:relative;z-index:1;color:#fff;letter-spacing:.3px;}
-.btn-arrow{position:relative;z-index:1;color:#93C5FD;font-size:18px;transition:transform .3s;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 22px 65px rgba(245,158,11,0.45);}
+.btn-text{position:relative;z-index:1;color:#0D1A2D;letter-spacing:.3px;}
+.btn-arrow{position:relative;z-index:1;color:#78350F;font-size:18px;transition:transform .3s;}
 .btn-primary:hover .btn-arrow{transform:translateX(7px);}
-.btn-shine{position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.16),transparent);transform:skewX(-20deg);animation:btnShine 3.5s 1.5s infinite;z-index:1;}
+.btn-shine{position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);transform:skewX(-20deg);animation:btnShine 3.5s 1.5s infinite;z-index:1;}
 @keyframes btnShine{0%{left:-100%;}60%,100%{left:160%;}}
 .btn-secondary{
   display:inline-flex;align-items:center;gap:10px;
@@ -243,12 +233,26 @@ section{padding:100px 24px;position:relative;z-index:1;}
 .section-sub{font-size:17px;color:var(--muted);line-height:1.8;max-width:600px;}
 .center{text-align:center;}.center .section-sub{margin:0 auto;}
 
-/* ===== BEFORE/AFTER ===== */
+/* ===== BEFORE/AFTER WHITE ===== */
 .ba-section{
-  background:linear-gradient(180deg,var(--dark),var(--dark2) 50%,var(--dark));
+  background:#ffffff;
   position:relative;overflow:hidden;
 }
-.ba-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:600px;background:radial-gradient(ellipse,rgba(59,130,246,0.05),transparent 65%);pointer-events:none;}
+.ba-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:600px;background:radial-gradient(ellipse,rgba(59,130,246,0.04),transparent 65%);pointer-events:none;}
+.ba-section .section-badge{color:var(--b600);}
+.ba-section .section-title{color:#1e293b;}
+.ba-section .grad-text{filter:none;}
+.ba-divider span{color:#64748b;}
+.ba-divider-line{background:linear-gradient(90deg,transparent,rgba(59,130,246,0.22));}
+.ba-divider-line.r{background:linear-gradient(270deg,transparent,rgba(59,130,246,0.22));}
+.ba-grid{border:1px solid rgba(59,130,246,0.1);box-shadow:0 4px 60px rgba(59,130,246,0.07);}
+.ba-col.before{background:linear-gradient(150deg,#fff5f5,#fef2f2);}
+.ba-col.after{background:linear-gradient(150deg,#eff6ff,#f0f9ff);}
+.ba-col h3{color:#1e293b;}
+.ba-col ul li{color:#475569;border-bottom:1px solid rgba(0,0,0,0.05);}
+.before .ba-tag{background:rgba(239,68,68,0.08);color:#DC2626;border:1px solid rgba(239,68,68,0.2);}
+.after .ba-tag{background:rgba(59,130,246,0.08);color:#2563EB;border:1px solid rgba(59,130,246,0.2);}
+.after .ba-tag::before{color:#0891B2;}
 .ba-divider{
   display:flex;align-items:center;justify-content:center;gap:20px;
   margin:20px 0 52px;
@@ -306,40 +310,44 @@ section{padding:100px 24px;position:relative;z-index:1;}
 .step h3{font-size:21px;font-weight:700;margin-bottom:13px;color:#DDE8F8;}
 .step p{font-size:14px;color:var(--muted);line-height:1.78;}
 
-/* ===== VPE ===== */
-.vpe-section{background:linear-gradient(180deg,var(--dark3),var(--dark));}
+/* ===== VPE WHITE ===== */
+.vpe-section{background:#f8faff;}
+.vpe-section .section-badge{color:var(--b600);}
+.vpe-section .section-title{color:#1e293b;}
+.vpe-section .section-sub{color:#64748b;}
 .vpe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:66px;}
 .vpe-card{
-  background:linear-gradient(145deg,rgba(9,16,43,0.98),rgba(13,21,55,0.95));
-  border:1px solid var(--bord);border-radius:20px;padding:42px 34px;
+  background:#ffffff;
+  border:1px solid rgba(59,130,246,0.12);border-radius:20px;padding:42px 34px;
   text-align:left;transition:all .42s;position:relative;overflow:hidden;
+  box-shadow:0 2px 20px rgba(59,130,246,0.06);
 }
-.vpe-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--b900),var(--b600),var(--c400));transform:scaleX(0);transition:transform .42s;transform-origin:left;}
-.vpe-card::after{content:'';position:absolute;inset:0;background:linear-gradient(145deg,rgba(30,58,138,0.06),transparent);opacity:0;transition:opacity .42s;}
-.vpe-card:hover{border-color:rgba(59,130,246,0.32);transform:translateY(-7px);box-shadow:0 28px 90px rgba(30,58,138,0.28);}
+.vpe-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--b800),var(--b500),var(--c400));transform:scaleX(0);transition:transform .42s;transform-origin:left;}
+.vpe-card::after{content:'';position:absolute;inset:0;background:linear-gradient(145deg,rgba(59,130,246,0.03),transparent);opacity:0;transition:opacity .42s;}
+.vpe-card:hover{border-color:rgba(59,130,246,0.25);transform:translateY(-7px);box-shadow:0 20px 60px rgba(59,130,246,0.13);}
 .vpe-card:hover::before{transform:scaleX(1);}
 .vpe-card:hover::after{opacity:1;}
 .vpe-letter{
   font-family:'Space Grotesk',sans-serif;font-size:96px;font-weight:900;
   position:absolute;top:-8px;right:18px;line-height:1;
-  background:linear-gradient(180deg,rgba(59,130,246,0.1),rgba(6,182,212,0.03));
+  background:linear-gradient(180deg,rgba(59,130,246,0.07),rgba(6,182,212,0.02));
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   pointer-events:none;user-select:none;
 }
 .vpe-badge{
   display:inline-flex;align-items:center;justify-content:center;
   width:50px;height:50px;border-radius:14px;
-  background:linear-gradient(135deg,var(--b900),var(--b700));
-  border:1px solid rgba(59,130,246,0.25);
+  background:linear-gradient(135deg,var(--b700),var(--b500));
+  border:1px solid rgba(59,130,246,0.2);
   font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:#fff;
-  margin-bottom:24px;box-shadow:0 4px 20px rgba(30,58,138,0.45);
+  margin-bottom:24px;box-shadow:0 4px 20px rgba(30,58,138,0.25);
   position:relative;z-index:1;
 }
-.vpe-card h3{font-size:23px;font-weight:800;margin-bottom:13px;background:linear-gradient(90deg,var(--b300),var(--c400));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:1;}
-.vpe-card > p{font-size:14px;color:var(--muted);line-height:1.78;margin-bottom:24px;position:relative;z-index:1;}
-.vpe-card ul{list-style:none;border-top:1px solid var(--bord);padding-top:18px;position:relative;z-index:1;}
-.vpe-card ul li{font-size:13.5px;color:#8898B8;padding:8px 0 8px 20px;position:relative;border-bottom:1px solid rgba(255,255,255,0.04);line-height:1.5;}
-.vpe-card ul li::before{content:'↗';position:absolute;left:0;color:var(--b400);font-size:11px;margin-top:2px;}
+.vpe-card h3{font-size:23px;font-weight:800;margin-bottom:13px;background:linear-gradient(90deg,var(--b700),var(--b500));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;z-index:1;}
+.vpe-card > p{font-size:14px;color:#64748b;line-height:1.78;margin-bottom:24px;position:relative;z-index:1;}
+.vpe-card ul{list-style:none;border-top:1px solid rgba(59,130,246,0.1);padding-top:18px;position:relative;z-index:1;}
+.vpe-card ul li{font-size:13.5px;color:#475569;padding:8px 0 8px 20px;position:relative;border-bottom:1px solid rgba(0,0,0,0.04);line-height:1.5;}
+.vpe-card ul li::before{content:'↗';position:absolute;left:0;color:var(--b500);font-size:11px;margin-top:2px;}
 .vpe-card ul li:last-child{border-bottom:none;}
 
 /* ===== RESULTS ===== */
@@ -359,30 +367,106 @@ section{padding:100px 24px;position:relative;z-index:1;}
 .result-n{font-family:'Space Grotesk',sans-serif;font-size:50px;font-weight:800;background:linear-gradient(135deg,var(--b300),var(--c400));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;position:relative;z-index:1;}
 .result-l{font-size:12.5px;color:var(--muted);margin-top:12px;line-height:1.5;position:relative;z-index:1;}
 
-/* ===== TESTIMONIALS ===== */
-.testimonials-section{background:linear-gradient(180deg,var(--dark3),var(--dark2));position:relative;}
-.testimonials-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.22),rgba(34,211,238,0.22),transparent);}
-.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:66px;}
-.testimonial-card{
-  background:rgba(9,16,43,0.7);border:1px solid var(--bord);border-radius:20px;
-  padding:38px 32px;position:relative;overflow:hidden;transition:all .38s;
+/* ===== TESTIMONIALS VIDEO + TEXT ===== */
+.testimonials-section{
+  background:linear-gradient(180deg,var(--dark),var(--dark3));
+  position:relative;
+  overflow:hidden;
 }
-.testimonial-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--b800),var(--b500),var(--c500));opacity:0;transition:opacity .35s;}
-.testimonial-card:hover{border-color:rgba(59,130,246,0.28);transform:translateY(-5px);box-shadow:0 20px 60px rgba(30,58,138,0.2);}
-.testimonial-card:hover::before{opacity:1;}
-.t-stars{display:flex;gap:3px;margin-bottom:22px;}
-.t-stars svg{width:15px;height:15px;fill:var(--gold);stroke:none;}
-.t-quote{font-size:14px;color:#B8C4D8;line-height:1.8;margin-bottom:28px;font-style:italic;position:relative;padding-left:4px;}
-.t-quote::before{content:'\201C';font-size:60px;font-style:normal;font-family:Georgia,serif;color:rgba(59,130,246,0.14);position:absolute;top:-16px;left:-6px;line-height:1;pointer-events:none;}
-.t-author{display:flex;align-items:center;gap:14px;border-top:1px solid var(--bord);padding-top:20px;}
-.t-avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--b800),var(--b500));border:2px solid rgba(59,130,246,0.28);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;}
-.t-name{font-weight:700;font-size:14.5px;color:#DDE8F8;margin-bottom:3px;}
-.t-meta{font-size:12px;color:var(--muted2);font-weight:500;}
-.t-result{margin-left:auto;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.2);border-radius:6px;padding:4px 11px;font-size:11px;font-weight:700;color:var(--b300);white-space:nowrap;}
+.testimonials-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--bord2),transparent);
+}
+.testimonials-section::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--bord2),transparent);
+  pointer-events:none;
+}
+.testimonials-section .section-badge{color:rgba(255,255,255,0.72);}
+.testimonials-section .section-title{color:#fff;max-width:920px;margin-left:auto;margin-right:auto;}
+.testimonials-section .section-sub{color:rgba(255,255,255,0.68);max-width:760px;}
+.testimonial-videos-grid{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;
+  margin-top:58px;
+}
+.testimonial-video-card{
+  background:#050607;border-radius:28px;padding:16px;position:relative;
+  border:1px solid rgba(255,255,255,0.07);
+  box-shadow:0 24px 70px rgba(0,0,0,0.35);
+  transition:transform .35s,box-shadow .35s,border-color .35s;
+}
+.testimonial-video-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,0.16);box-shadow:0 32px 90px rgba(0,0,0,0.42);}
+.testimonial-video-frame{
+  position:relative;border-radius:26px;overflow:hidden;background:#000;
+  aspect-ratio:9 / 16;
+}
+.testimonial-video-frame video{
+  width:100%;height:100%;object-fit:cover;display:block;background:#000;
+}
+.testimonial-video-frame::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:28%;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,0.6));pointer-events:none;
+}
+.testimonial-video-meta{padding:16px 6px 4px;text-align:center;}
+.testimonial-video-name{
+  font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:#fff;
+}
+.testimonial-video-role{
+  margin-top:5px;font-size:12px;line-height:1.5;color:rgba(255,255,255,0.62);
+}
+.testimonial-text-wrap{margin-top:42px;}
+.testimonial-text-label{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.12);
+  background:rgba(255,255,255,0.04);color:#fff;font-size:11px;font-weight:800;
+  letter-spacing:2.8px;text-transform:uppercase;margin-bottom:22px;
+}
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;}
+.testimonial-card{
+  position:relative;padding:38px 30px 28px;border-radius:24px;overflow:hidden;
+  background:radial-gradient(circle at 50% 0%,rgba(255,255,255,0.08),rgba(255,255,255,0.02) 38%,rgba(255,255,255,0.015) 100%);
+  border:1px solid rgba(255,255,255,0.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 18px 50px rgba(0,0,0,0.22);
+  backdrop-filter:blur(12px);
+  transition:transform .35s,border-color .35s,box-shadow .35s;
+}
+.testimonial-card:hover{transform:translateY(-6px);border-color:rgba(255,255,255,0.24);box-shadow:inset 0 1px 0 rgba(255,255,255,0.12),0 28px 80px rgba(0,0,0,0.3);}
+.testimonial-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.06),transparent 28%,transparent 72%,rgba(255,255,255,0.03));
+  pointer-events:none;
+}
+.t-stars{display:flex;gap:6px;justify-content:center;margin-bottom:28px;}
+.t-stars svg{width:24px;height:24px;fill:#f7c948;stroke:none;filter:drop-shadow(0 4px 10px rgba(247,201,72,0.2));}
+.t-quote{
+  font-size:15px;color:rgba(255,255,255,0.84);line-height:1.9;margin-bottom:28px;
+  text-align:center;min-height:210px;
+}
+.t-author{
+  display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;
+  border-top:1px solid rgba(255,255,255,0.12);padding-top:22px;
+}
+.t-avatar{
+  width:52px;height:52px;border-radius:18px;background:linear-gradient(135deg,#444,#222);
+  border:1px solid rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:16px;color:#fff;flex-shrink:0;
+}
+.t-name{font-weight:700;font-size:16px;color:#fff;margin-bottom:4px;}
+.t-meta{font-size:13px;color:rgba(255,255,255,0.62);line-height:1.55;}
+.t-result{
+  grid-column:1 / -1;margin-top:16px;display:inline-flex;justify-self:start;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);
+  border-radius:999px;padding:8px 14px;font-size:12px;font-weight:800;color:#fff;
+  letter-spacing:.3px;
+}
 
-/* ===== AUDIENCE ===== */
+/* ===== SECTION DIVIDERS ===== */
+.divider-to-white{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.15),rgba(99,179,237,0.2),rgba(59,130,246,0.15),transparent);position:relative;z-index:1;}
+.divider-to-dark{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.18),rgba(99,179,237,0.25),rgba(59,130,246,0.18),transparent);position:relative;z-index:1;}
+
+/* ===== AUDIENCE (single col after sidebar removal) ===== */
 .audience-section{background:linear-gradient(180deg,var(--dark2),var(--dark));}
-.audience-inner{display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:start;}
+.audience-inner{display:grid;grid-template-columns:1fr;gap:0;align-items:start;max-width:760px;margin:0 auto;}
 .aud-list{margin-top:38px;display:flex;flex-direction:column;}
 .aud-item{display:flex;gap:18px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--bord);}
 .aud-item:last-child{border-bottom:none;}
@@ -493,14 +577,21 @@ label{font-size:11px;font-weight:700;color:var(--muted2);letter-spacing:1.5px;te
 .form-submit-btn{
   display:flex;align-items:center;justify-content:center;gap:10px;
   position:relative;width:100%;font-family:'Space Grotesk',sans-serif;
-  font-weight:700;font-size:17px;padding:21px;border-radius:13px;
+  font-weight:900;font-size:17px;padding:21px;border-radius:13px;
   overflow:hidden;text-decoration:none;transition:transform .3s,box-shadow .3s;letter-spacing:.3px;
-  background:linear-gradient(135deg,var(--b900),var(--b700),var(--b500));
+  border:none;box-shadow:0 8px 36px rgba(245,158,11,0.4);
 }
-.form-submit-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--b600),var(--b400),var(--c400));opacity:0;transition:opacity .4s;}
+.form-submit-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#D97706,#F59E0B 50%,#FBBF24);z-index:0;}
+.form-submit-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#B45309,#D97706 50%,#F59E0B);opacity:0;transition:opacity .4s;}
 .form-submit-btn:hover::after{opacity:1;}
-.form-submit-btn:hover{transform:translateY(-2px);box-shadow:0 18px 55px rgba(59,130,246,0.38);}
-.form-submit-btn span{position:relative;z-index:1;color:#fff;}
+.form-submit-btn:hover{transform:translateY(-2px);box-shadow:0 18px 55px rgba(245,158,11,0.5);}
+.form-submit-btn span{position:relative;z-index:1;color:#0D1A2D;}
+/* seats bar */
+.seats-wrap{background:rgba(255,255,255,0.03);border:1px solid rgba(59,130,246,0.1);border-radius:12px;padding:14px 18px;margin-bottom:20px;}
+.seats-label{font-size:10px;font-weight:700;color:var(--muted);margin-bottom:9px;letter-spacing:.8px;text-transform:uppercase;}
+.seats-track{height:5px;background:rgba(255,255,255,0.05);border-radius:100px;overflow:hidden;}
+.seats-fill{height:100%;width:0%;background:linear-gradient(90deg,#EF4444,#F97316);border-radius:100px;box-shadow:0 0 12px rgba(239,68,68,0.4);transition:width 1.4s cubic-bezier(.25,.46,.45,.94);}
+.seats-count{font-size:11px;color:#F87171;margin-top:8px;font-weight:700;}
 
 /* ===== SUCCESS ===== */
 .success-msg{display:none;text-align:center;padding:52px 20px;position:relative;z-index:1;}
@@ -513,21 +604,21 @@ label{font-size:11px;font-weight:700;color:var(--muted2);letter-spacing:1.5px;te
 /* ===== FOOTER ===== */
 footer{background:#020407;border-top:1px solid rgba(59,130,246,0.07);padding:52px 24px 32px;text-align:center;position:relative;z-index:1;}
 .foot-logo{font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:900;letter-spacing:3px;display:inline-block;margin-bottom:18px;}
+.foot-logo .logo-e{background:linear-gradient(135deg,var(--b300),var(--c400));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.foot-logo .logo-ink{color:rgba(255,255,255,0.7);}
 .foot-line{width:60px;height:1.5px;background:linear-gradient(90deg,transparent,var(--b500),var(--c400),transparent);margin:0 auto 20px;}
 .foot-links{display:flex;justify-content:center;gap:30px;margin-bottom:24px;flex-wrap:wrap;}
 .foot-links a{font-size:12.5px;color:var(--muted2);text-decoration:none;transition:color .2s;}
 .foot-links a:hover{color:var(--b300);}
-footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
+footer p{font-size:12px;color:rgba(59,130,246,0.25);line-height:1.85;}
 
 /* ===== STICKY MOBILE CTA ===== */
-.sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;padding:12px 16px 20px;background:linear-gradient(0deg,rgba(4,6,15,0.98),rgba(4,6,15,0.82));backdrop-filter:blur(14px);border-top:1px solid var(--bord);}
-.sticky-cta a{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,var(--b800),var(--b500));color:#fff;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15.5px;padding:15px 24px;border-radius:12px;width:100%;border:1px solid rgba(59,130,246,0.28);box-shadow:0 4px 32px rgba(30,58,138,0.45);}
-
 /* ===== RESPONSIVE ===== */
 @media(max-width:960px){
   .steps-grid{grid-template-columns:1fr;}
   .vpe-grid{grid-template-columns:1fr 1fr;}
   .results-grid{grid-template-columns:1fr 1fr;}
+  .testimonial-videos-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .testimonials-grid{grid-template-columns:1fr;}
   .audience-inner{grid-template-columns:1fr;gap:44px;}
   .audience-sidebar{position:static;}
@@ -536,38 +627,123 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
   .stat-item:nth-child(3){border-top:1px solid var(--bord);}
   .stat-item:nth-child(4){border-top:1px solid var(--bord);border-right:none;}
 }
-@media(max-width:640px){
-  nav{padding:0 16px;}
-  nav a:not(.nav-cta){display:none;}
-  .hero{padding:96px 16px 64px;}
+@media(max-width:768px){
+  .testimonial-videos-grid{grid-template-columns:1fr 1fr;gap:16px;margin-top:42px;}
+  .testimonial-video-card{padding:12px;border-radius:22px;}
+  .testimonial-video-frame{border-radius:20px;}
+  .testimonial-video-name{font-size:16px;}
+  .testimonial-text-wrap{margin-top:30px;}
+  .testimonial-text-label{margin-bottom:18px;}
+  body{padding-bottom:0;}
+  .urgency-top{font-size:10.5px;padding:8px 12px;line-height:1.5;}
+  nav{padding:0 18px;top:0;height:58px;}
+  .logo{font-size:17px;}
+  .nav-cta{padding:8px 16px;font-size:12px!important;}
+  .hero{padding:118px 16px 64px;}
   .hero h1{letter-spacing:-1.5px;}
+  .hero-sub{font-size:16px;}
+  .hero-badge{font-size:10.5px;padding:7px 16px;}
+  .vsl-outer{margin-bottom:32px;}
+  .hero-btns{gap:10px;}
+  .btn-primary{padding:15px 30px;font-size:14.5px;}
+  .btn-secondary{display:none;}
+  .trust-bar{gap:16px;padding:16px 18px;}
+  .trust-div{display:none;}
+  .trust-item{font-size:12px;}
+  .stats-section{padding:24px 16px;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);}
+  .stat-item{padding:26px 16px;}
+  .stat-n{font-size:34px;}
+  section{padding:64px 16px;}
+  .section-title{font-size:clamp(24px,6.5vw,44px);letter-spacing:-1.2px;}
+  .section-sub{font-size:15px;}
   .ba-grid{grid-template-columns:1fr;}
+  .ba-col{padding:30px 20px;}
+  .ba-col h3{font-size:17px;}
+  .ba-col ul li{font-size:13.5px;}
   .vpe-grid{grid-template-columns:1fr;}
   .results-grid{grid-template-columns:1fr 1fr;}
+  .result-card{padding:28px 14px;}
+  .result-n{font-size:38px;}
+  .testimonials-grid{grid-template-columns:1fr;}
+  .testimonial-card{padding:28px 20px;}
+  .audience-box{padding:28px 24px;}
+  .faq-q{padding:18px 20px;font-size:14px;}
+  .faq-a p{padding:4px 20px 20px;font-size:13.5px;}
+  .form-wrap{padding:32px 22px;border-radius:18px;}
+  .form-header h3{font-size:24px;}
   .form-grid{grid-template-columns:1fr;}
-  .form-wrap{padding:36px 22px;}
-  section{padding:72px 16px;}
-  .ba-col{padding:36px 24px;}
+  .form-submit-btn{font-size:15.5px;padding:18px;}
+  footer{padding:36px 16px 24px;}
+  .foot-links{gap:20px;}
+  .float-notif{display:none;}
   *{cursor:auto!important;}
   #cr,#cd{display:none;}
-  .sticky-cta{display:block;}
-  .btn-secondary{display:none;}
-  .trust-div{display:none;}
 }
-@media(max-width:420px){
-  .results-grid{grid-template-columns:1fr;}
-  .stats-inner{grid-template-columns:1fr 1fr;}
+@media(max-width:480px){
+  .testimonial-videos-grid{grid-template-columns:1fr;}
+  .t-quote{min-height:auto;}
+  .urgency-top{font-size:10px;padding:7px 10px;}
+  nav{top:0;height:54px;}
+  .hero{padding:108px 14px 52px;}
+  .hero h1{font-size:clamp(28px,9vw,44px);letter-spacing:-1.2px;}
+  .hero-sub{font-size:14.5px;}
+  .btn-primary{padding:14px 22px;font-size:14px;width:100%;justify-content:center;}
+  .hero-btns{flex-direction:column;align-items:stretch;}
+  .trust-bar{gap:10px;padding:14px;}
+  section{padding:52px 14px;}
+  .stat-item{padding:20px 12px;}
+  .stat-n{font-size:28px;}
+  .stat-l{font-size:11px;}
+  .ba-col{padding:24px 16px;}
+  .vpe-card{padding:28px 22px;}
+  .results-grid{grid-template-columns:1fr 1fr;}
+  .result-n{font-size:30px;}
+  .testimonial-card{padding:22px 16px;}
+  .t-quote{font-size:13px;}
+  .audience-box{padding:22px 16px;}
+  .fat-range{font-size:24px;}
+  .form-wrap{padding:24px 16px;}
+  .form-submit-btn{font-size:14.5px;padding:16px;}
+  footer{padding:28px 14px 20px;}
+  .foot-links{gap:14px;}
 }
 @keyframes ripOut{0%{width:0;height:0;opacity:1;}100%{width:88px;height:88px;opacity:0;}}
+
+/* ===== TIMED REVEAL FOR VSL ===== */
+body.vsl-locked .hero-btns,
+body.vsl-locked .trust-bar,
+body.vsl-locked .ba-section,
+body.vsl-locked .how-section,
+body.vsl-locked .vpe-section,
+body.vsl-locked .results-section,
+body.vsl-locked .testimonials-section,
+body.vsl-locked footer,
+body.vsl-locked #floatNotif{
+  display:none !important;
+}
+
+
+
 </style>
 </head>
-<body>
+<body class="vsl-locked">
 
 <!-- SCROLL PROGRESS -->
 <div id="progress"></div>
 
 <!-- CURSOR -->
 <div id="cr"></div><div id="cd"></div>
+
+<!-- FLOATING SOCIAL PROOF -->
+<div class="float-notif" id="floatNotif">
+  <div class="fn-av" id="fnAv">LM</div>
+  <div>
+    <div class="fn-name" id="fnName">Lucas M.</div>
+    <div class="fn-action" id="fnAction">acabou de lotar a agenda em 30 dias</div>
+  </div>
+  <div class="fn-live"></div>
+</div>
 
 <!-- FIXED BACKGROUND -->
 <div class="bg-fixed">
@@ -578,20 +754,6 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
   <div class="bg-glow3"></div>
   <div class="bg-line"></div>
 </div>
-
-<!-- NAV -->
-<nav id="nav">
-  <div class="logo">
-    <span class="logo-dot"></span>
-    <span class="logo-e">EIKON</span>
-    <span class="logo-ink">INK</span>
-  </div>
-  <div class="nav-links">
-    <a href="#sistema">Sistema VPE</a>
-    <a href="#resultados">Resultados</a>
-    <a href="#cadastro" class="nav-cta">Quero minha agenda cheia</a>
-  </div>
-</nav>
 
 <!-- HERO -->
 <section class="hero">
@@ -620,8 +782,7 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
         </div>
       </div>
     </div>
-
-    <div class="hero-btns">
+<div class="hero-btns">
       <a href="#cadastro" class="btn-primary">
         <div class="btn-shine"></div>
         <span class="btn-text">Quero lotar minha agenda</span>
@@ -654,17 +815,8 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-section">
-  <div class="stats-inner">
-    <div class="stat-item"><div class="stat-n" data-count="100" data-suffix="+">0</div><div class="stat-l">Tatuadores ativos hoje</div></div>
-    <div class="stat-item"><div class="stat-n" data-count="200" data-suffix="+">0</div><div class="stat-l">Atendidos em 4 anos</div></div>
-    <div class="stat-item"><div class="stat-n" data-count="300" data-suffix="%">0</div><div class="stat-l">Crescimento em 90 dias</div></div>
-    <div class="stat-item"><div class="stat-n" data-count="3" data-suffix="">0</div><div class="stat-l">Continentes atendidos</div></div>
-  </div>
-</div>
-
 <!-- BEFORE/AFTER -->
+<div class="divider-to-white"></div>
 <section class="ba-section">
   <div class="container">
     <div class="center">
@@ -705,6 +857,8 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
   </div>
 </section>
 
+<div class="divider-to-dark"></div>
+
 <!-- HOW IT WORKS -->
 <section class="how-section" id="como-funciona">
   <div class="container center">
@@ -739,6 +893,8 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
     </div>
   </div>
 </section>
+
+<div class="divider-to-white"></div>
 
 <!-- VPE SYSTEM -->
 <section class="vpe-section" id="sistema">
@@ -784,6 +940,8 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
   </div>
 </section>
 
+<div class="divider-to-dark"></div>
+
 <!-- RESULTS -->
 <section class="results-section" id="resultados">
   <div class="container center">
@@ -814,210 +972,118 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
   </div>
 </section>
 
+<div class="divider-to-white"></div>
+
 <!-- TESTIMONIALS -->
 <section class="testimonials-section">
   <div class="container center">
     <div class="section-badge">O que nossos clientes dizem</div>
-    <h2 class="section-title"><span class="grad-text">Tatuadores que transformaram</span><br/>seus negócios</h2>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="t-stars">
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <h2 class="section-title">Veja o que <span class="grad-text">tatuadores parceiros</span><br/>da Eikon comentam</h2>
+    <p class="section-sub">Vídeos reais de clientes e, logo abaixo, os depoimentos em texto com a mesma proposta visual da referência que você enviou.</p>
+
+    <div class="testimonial-videos-grid">
+      <div class="testimonial-video-card">
+        <div class="testimonial-video-frame">
+          <video autoplay muted loop playsinline preload="metadata" controls>
+            <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/01/Video-editado-variante-Danilo-Santos.mp4" type="video/mp4" />
+          </video>
         </div>
-        <p class="t-quote">Em 60 dias minha agenda foi lotada para os próximos 3 meses. Antes eu ficava o dia inteiro no Instagram tentando chamar clientes. Hoje o sistema trabalha por mim e eu só tatuo.</p>
-        <div class="t-author">
-          <div class="t-avatar">LM</div>
-          <div>
-            <div class="t-name">Lucas Mendes</div>
-            <div class="t-meta">Realismo · São Paulo, SP</div>
-          </div>
-          <div class="t-result">+R$14k/mês</div>
+        <div class="testimonial-video-meta">
+          <div class="testimonial-video-name">Depoimento 01</div>
+          <div class="testimonial-video-role">Cliente Eikon Ink</div>
         </div>
       </div>
-      <div class="testimonial-card">
-        <div class="t-stars">
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <div class="testimonial-video-card">
+        <div class="testimonial-video-frame">
+          <video autoplay muted loop playsinline preload="metadata" controls>
+            <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/01/Edit-1-Para-Post.mp4" type="video/mp4" />
+          </video>
         </div>
-        <p class="t-quote">Saí de R$12k para R$28k em 90 dias. O que mais me impressionou foi a qualidade dos clientes — eles chegam já valorizando o trabalho, sem pechinchar. A Eikon mudou meu negócio.</p>
-        <div class="t-author">
-          <div class="t-avatar">AC</div>
-          <div>
-            <div class="t-name">Andressa Carvalho</div>
-            <div class="t-meta">Fineline · Rio de Janeiro, RJ</div>
-          </div>
-          <div class="t-result">+R$16k/mês</div>
+        <div class="testimonial-video-meta">
+          <div class="testimonial-video-name">Depoimento 02</div>
+          <div class="testimonial-video-role">Cliente Eikon Ink</div>
         </div>
       </div>
-      <div class="testimonial-card">
-        <div class="t-stars">
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <div class="testimonial-video-card">
+        <div class="testimonial-video-frame">
+          <video autoplay muted loop playsinline preload="metadata" controls>
+            <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/01/copy_4D42AD65-3042-440E-A742-A4F6B8646B16.mp4" type="video/mp4" />
+          </video>
         </div>
-        <p class="t-quote">Parei de aceitar qualquer cliente e agora cobro R$1.200 por sessão sem constrangimento. A Eikon não só lotou minha agenda — me ajudou a me posicionar como referência no blackwork.</p>
-        <div class="t-author">
-          <div class="t-avatar">RK</div>
-          <div>
-            <div class="t-name">Rafael Kozan</div>
-            <div class="t-meta">Blackwork · Florianópolis, SC</div>
-          </div>
-          <div class="t-result">R$1.200/sessão</div>
+        <div class="testimonial-video-meta">
+          <div class="testimonial-video-name">Depoimento 03</div>
+          <div class="testimonial-video-role">Cliente Eikon Ink</div>
+        </div>
+      </div>
+      <div class="testimonial-video-card">
+        <div class="testimonial-video-frame">
+          <video autoplay muted loop playsinline preload="metadata" controls>
+            <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/01/Prova-social-Aryel-Edit-original.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="testimonial-video-meta">
+          <div class="testimonial-video-name">Depoimento 04</div>
+          <div class="testimonial-video-role">Cliente Eikon Ink</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- AUDIENCE -->
-<section class="audience-section">
-  <div class="container">
-    <div class="audience-inner">
-      <div>
-        <div class="section-badge">Para quem é</div>
-        <h2 class="section-title"><span class="grad-text">Este sistema</span><br/>é para você?</h2>
-        <div class="aud-list">
-          <div class="aud-item">
-            <div class="aud-num">01</div>
-            <div class="aud-text">
-              <strong>Você já fatura entre R$10k e R$25k/mês</strong>
-              <span>Tem base sólida, mas quer crescimento previsível e consistente mês após mês</span>
+    <div class="testimonial-text-wrap">
+      <div class="testimonial-text-label">Depoimento Texto</div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="t-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="t-quote">Em 60 dias minha agenda foi lotada para os próximos 3 meses. Antes eu ficava o dia inteiro no Instagram tentando chamar clientes. Hoje o sistema trabalha por mim e eu só tatuo.</p>
+          <div class="t-author">
+            <div class="t-avatar">LM</div>
+            <div>
+              <div class="t-name">Lucas Mendes</div>
+              <div class="t-meta">Realismo · São Paulo, SP</div>
             </div>
+            <div class="t-result">+R$14k/mês</div>
           </div>
-          <div class="aud-item">
-            <div class="aud-num">02</div>
-            <div class="aud-text">
-              <strong>Quer lotar a agenda com previsibilidade</strong>
-              <span>Sem depender de sorte, humor das redes ou indicações de amigos</span>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="t-quote">Saí de R$12k para R$28k em 90 dias. O que mais me impressionou foi a qualidade dos clientes — eles chegam já valorizando o trabalho, sem pechinchar. A Eikon mudou meu negócio.</p>
+          <div class="t-author">
+            <div class="t-avatar">AC</div>
+            <div>
+              <div class="t-name">Andressa Carvalho</div>
+              <div class="t-meta">Fineline · Rio de Janeiro, RJ</div>
             </div>
+            <div class="t-result">+R$16k/mês</div>
           </div>
-          <div class="aud-item">
-            <div class="aud-num">03</div>
-            <div class="aud-text">
-              <strong>Quer cobrar R$500 a R$1.500 por sessão</strong>
-              <span>E ter clientes que pagam sem barganha e valorizam seu trabalho</span>
+        </div>
+        <div class="testimonial-card">
+          <div class="t-stars">
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <p class="t-quote">Parei de aceitar qualquer cliente e agora cobro R$1.200 por sessão sem constrangimento. A Eikon não só lotou minha agenda — me ajudou a me posicionar como referência no blackwork.</p>
+          <div class="t-author">
+            <div class="t-avatar">RK</div>
+            <div>
+              <div class="t-name">Rafael Kozan</div>
+              <div class="t-meta">Blackwork · Florianópolis, SC</div>
             </div>
+            <div class="t-result">R$1.200/sessão</div>
           </div>
-          <div class="aud-item">
-            <div class="aud-num">04</div>
-            <div class="aud-text">
-              <strong>Quer parar de fazer marketing sozinho</strong>
-              <span>E focar 100% no que você faz de melhor: criar arte na pele</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="audience-sidebar">
-        <div class="audience-box">
-          <h3>Só atendemos tatuadores.</h3>
-          <p>Enquanto outras agências atendem academias, restaurantes e lojas, a <strong style="color:#93C5FD;">Eikon Ink é 100% especializada no mercado de tattoo</strong>. Conhecemos seu cliente, seu mercado e seus desafios melhor do que qualquer outra agência do Brasil.</p>
-          <p style="margin-top:16px;color:#A8B8D4;">Não vendemos consultoria — <strong style="color:#93C5FD;">fazemos a execução completa por você.</strong></p>
-          <div class="fat-box">
-            <div class="fat-label">Público que atendemos</div>
-            <div class="fat-range">R$10k – R$25k / mês</div>
-          </div>
-        </div>
-        <div class="exclusivity-box">
-          <div class="excl-icon">⚡</div>
-          <div>
-            <h4>Vagas limitadas por região</h4>
-            <p>Trabalhamos com exclusividade por estilo e localização. Quando as vagas da sua cidade fecham, você fica de fora.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section">
-  <div class="container center">
-    <div class="section-badge">Tire suas dúvidas</div>
-    <h2 class="section-title">Perguntas <span class="grad-text">frequentes</span></h2>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Preciso ter experiência com marketing para começar?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>Não. Nossa proposta é justamente cuidar de <strong>todo o marketing por você</strong>. Você só precisa ser bom no que faz — tatuar. Nossa equipe cuida de tráfego, posicionamento, scripts e automações do início ao fim.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Quanto tempo leva para ver os primeiros resultados?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>A maioria dos nossos clientes começa a receber novos contatos qualificados em <strong>2 a 4 semanas</strong>. A agenda costuma lotar em 30 a 90 dias, dependendo do estilo, localização e ticket médio atual.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Funciona para qualquer estilo de tatuagem?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>Sim. Já atendemos tatuadores de realismo, fineline, blackwork, oriental, neo traditional e outros estilos no Brasil, EUA e Europa. A estratégia é sempre <strong>personalizada para o seu nicho</strong> e mercado específico.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Vocês trabalham com tatuadores fora do Brasil?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>Sim. Temos clientes ativos nos <strong>EUA e na Europa</strong>. Adaptamos toda a estratégia para o mercado local — idioma, plataformas, comportamento do consumidor e precificação em moeda local.</p></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
-          Como funciona o processo depois que me cadastro?
-          <span class="faq-icon">+</span>
-        </button>
-        <div class="faq-a"><p>Nossa equipe analisa seu perfil em até 24h e entra em contato pelo WhatsApp para uma reunião de diagnóstico. Nessa conversa entendemos sua situação e apresentamos como o Sistema VPE pode funcionar para você — <strong>sem compromisso nenhum</strong>.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FORM -->
-<section class="form-section" id="cadastro">
-  <div class="container center">
-    <div class="section-badge">Primeiro passo</div>
-    <h2 class="section-title"><span class="grad-text">Quero lotar minha agenda</span></h2>
-    <p class="section-sub">Preencha o cadastro. Nossa equipe analisa seu perfil e entra em contato para apresentar como o Sistema VPE pode funcionar para você.</p>
-
-    <div class="urgency-bar">
-      <div class="urgency-dot"></div>
-      <p>Atenção: <strong>vagas limitadas por região.</strong> Não garantimos disponibilidade após o fechamento da sua cidade.</p>
-    </div>
-
-    <div class="form-wrap" id="formWrap">
-      <div class="form-header">
-        <h3 class="grad-text">Cadastre-se agora</h3>
-        <p>Apenas tatuadores qualificados são aceitos no sistema.</p>
-      </div>
-      <div class="form-cta-wrap">
-        <a href="https://form.respondi.app/uAUC0yJx" target="_blank" rel="noopener noreferrer" class="form-submit-btn">
-          <div class="form-shine"></div>
-          <span>Quero lotar minha agenda →</span>
-        </a>
-      </div>
-      <div class="form-trust">
-        <div class="form-trust-item">
-          <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Dados 100% protegidos
-        </div>
-        <div class="form-trust-item">
-          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Sem spam
-        </div>
-        <div class="form-trust-item">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Resposta em até 24h
         </div>
       </div>
     </div>
@@ -1028,7 +1094,7 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
 <footer>
   <div class="foot-logo">
     <span class="logo-e">EIKON</span>
-    <span style="color:#1a2840;"> INK MARKETING</span>
+    <span class="logo-ink"> INK MARKETING</span>
   </div>
   <div class="foot-line"></div>
   <div class="foot-links">
@@ -1042,10 +1108,6 @@ footer p{font-size:12px;color:#1B2B44;line-height:1.85;}
 </footer>
 
 <!-- STICKY MOBILE CTA -->
-<div class="sticky-cta">
-  <a href="#cadastro">Quero lotar minha agenda →</a>
-</div>
-
 <script>
 // SCROLL PROGRESS
 const prog = document.getElementById('progress');
@@ -1148,16 +1210,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-// PHONE MASK
-document.getElementById('whatsapp').addEventListener('input', function () {
-  let v = this.value.replace(/\D/g, '');
-  if (v.length <= 2) v = v;
-  else if (v.length <= 7) v = `(${v.slice(0, 2)}) ${v.slice(2)}`;
-  else if (v.length <= 11) v = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
-  else v = `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7, 11)}`;
-  this.value = v;
-});
-
 // FAQ
 function toggleFaq(btn) {
   const ans = btn.nextElementSibling;
@@ -1169,33 +1221,91 @@ function toggleFaq(btn) {
   if (!isOpen) { ans.classList.add('open'); btn.classList.add('active'); }
 }
 
-// FORM
-function submitForm() {
-  const fields = ['nome', 'whatsapp', 'instagram', 'cidade', 'faturamento', 'estilo'];
-  let ok = true;
-  fields.forEach(f => {
-    const el = document.getElementById(f);
-    if (!el.value.trim()) {
-      el.style.borderColor = '#EF4444';
-      el.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.1)';
-      if (ok) { el.focus(); ok = false; }
-      setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 1800);
-    }
-  });
-  if (!ok) return;
-  document.getElementById('theForm').style.display = 'none';
-  document.getElementById('successMsg').style.display = 'block';
-}
+// SEATS BAR
+setTimeout(() => { const sf = document.getElementById('seatsFill'); if (sf) sf.style.width = '73%'; }, 700);
 
-// NAV SCROLL
-const navEl = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
-    navEl.classList.add('scrolled');
-  } else {
-    navEl.classList.remove('scrolled');
-  }
-});
+// FLOATING NOTIF
+const vslNotifs = [
+  {av:'LM',name:'Lucas M.',action:'lotou a agenda em 30 dias'},
+  {av:'AC',name:'Andressa C.',action:'saiu de R$12k para R$28k'},
+  {av:'RK',name:'Rafael K.',action:'cobra R$1.200/sessão agora'},
+  {av:'JP',name:'Julia P.',action:'acabou de se cadastrar'},
+  {av:'MB',name:'Marcos B.',action:'fechou vaga na sua cidade'},
+  {av:'TS',name:'Thiago S.',action:'agenda cheia para 3 meses'},
+];
+let vni = 0;
+function showVslNotif() {
+  const n = vslNotifs[vni % vslNotifs.length]; vni++;
+  const el = document.getElementById('floatNotif');
+  document.getElementById('fnAv').textContent = n.av;
+  document.getElementById('fnName').textContent = n.name;
+  document.getElementById('fnAction').textContent = n.action;
+  el.classList.add('show');
+  setTimeout(() => { el.classList.remove('show'); setTimeout(showVslNotif, 7000); }, 5000);
+}
+setTimeout(showVslNotif, 4000);
 </script>
+
+<script>
+(function(){
+  var TOTAL_SECONDS = 8 * 60 + 25;
+  var timerEl = document.getElementById('vslTimer');
+  var startKey = 'eikon_vsl_started_at';
+  var revealedKey = 'eikon_vsl_offer_revealed';
+
+  function formatTime(total){
+    var m = Math.floor(total / 60);
+    var s = total % 60;
+    return String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }
+
+  function revealOffer(){
+    document.body.classList.remove('vsl-locked');
+    document.body.classList.add('offer-revealed');
+    try { localStorage.setItem(revealedKey, '1'); } catch(e){}
+  }
+
+  function initTimer(){
+    var now = Date.now();
+    var startAt = null;
+
+    try {
+      if (localStorage.getItem(revealedKey) === '1') {
+        revealOffer();
+        return;
+      }
+      startAt = parseInt(localStorage.getItem(startKey), 10);
+      if (!startAt || isNaN(startAt)) {
+        startAt = now;
+        localStorage.setItem(startKey, String(startAt));
+      }
+    } catch(e){
+      startAt = now;
+    }
+
+    function tick(){
+      var elapsed = Math.floor((Date.now() - startAt) / 1000);
+      var remaining = Math.max(0, TOTAL_SECONDS - elapsed);
+
+      if (timerEl) timerEl.textContent = formatTime(remaining);
+
+      if (remaining <= 0) {
+        revealOffer();
+        clearInterval(interval);
+      }
+    }
+
+    tick();
+    var interval = setInterval(tick, 1000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTimer);
+  } else {
+    initTimer();
+  }
+})();
+</script>
+
 </body>
 </html>
