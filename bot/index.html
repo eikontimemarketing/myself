@@ -116,7 +116,9 @@ nav{
     -webkit-backdrop-filter .45s cubic-bezier(.4,0,.2,1),
     border-color .45s cubic-bezier(.4,0,.2,1),
     box-shadow .45s cubic-bezier(.4,0,.2,1),
-    height .35s cubic-bezier(.4,0,.2,1);
+    height .35s cubic-bezier(.4,0,.2,1),
+    transform .4s cubic-bezier(.4,0,.2,1),
+    opacity .4s cubic-bezier(.4,0,.2,1);
 }
 
 /* linha brilhante no topo — aparece ao scrollar */
@@ -167,6 +169,7 @@ nav.scrolled{
 }
 nav.scrolled::before{opacity:1;}
 nav.scrolled::after{opacity:1;}
+nav.nav-hidden{transform:translateY(-120%);opacity:0;}
 
 /* logo-mark pulsa suavemente ao scrollar */
 nav.scrolled .logo-mark{
@@ -533,6 +536,140 @@ footer{background:#020407;border-top:1px solid rgba(59,130,246,0.07);padding:52p
 .foot-right{text-align:right;}
 footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 
+/* ===== WHATSAPP DEMO ===== */
+.demo-section{background:linear-gradient(180deg,var(--dark),var(--dark2));position:relative;overflow:hidden;}
+.demo-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(37,99,235,0.07),transparent 65%);pointer-events:none;}
+.demo-wrap{max-width:780px;margin:0 auto;}
+.demo-left{}
+.demo-left h2{font-size:clamp(28px,3.5vw,52px);font-weight:800;line-height:1.06;letter-spacing:-1.8px;margin-bottom:20px;}
+.demo-left p{font-size:16px;color:var(--muted);line-height:1.85;margin-bottom:32px;}
+.demo-bullets{list-style:none;display:flex;flex-direction:column;gap:14px;}
+.demo-bullets li{display:flex;align-items:flex-start;gap:13px;font-size:14px;color:rgba(240,244,255,0.72);line-height:1.6;}
+.db-ico{width:22px;height:22px;border-radius:7px;background:linear-gradient(135deg,rgba(37,99,235,0.6),rgba(6,182,212,0.5));display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.db-ico svg{width:11px;height:11px;stroke:#fff;stroke-width:2.8;fill:none;}
+
+/* WhatsApp mock */
+.wa-mock{
+  background:linear-gradient(145deg,rgba(4,8,22,0.98),rgba(8,14,36,0.98));
+  border:1px solid rgba(59,130,246,0.16);border-radius:24px;
+  overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,0.7),0 0 0 1px rgba(255,255,255,0.02) inset;
+  position:relative;
+}
+.wa-header{
+  background:linear-gradient(90deg,rgba(7,20,50,0.98),rgba(10,25,60,0.98));
+  border-bottom:1px solid rgba(59,130,246,0.1);
+  padding:14px 20px;display:flex;align-items:center;gap:12px;
+}
+.wa-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--b800),var(--b500));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:14px;color:#fff;border:2px solid rgba(59,130,246,0.3);flex-shrink:0;}
+.wa-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;color:#E0EAFF;}
+.wa-status{font-size:11px;color:#34D399;font-weight:600;display:flex;align-items:center;gap:5px;}
+.wa-status::before{content:'';width:6px;height:6px;border-radius:50%;background:#34D399;box-shadow:0 0 8px rgba(52,211,153,0.7);animation:blink 1.5s infinite;}
+.wa-body{padding:20px 16px;display:flex;flex-direction:column;gap:10px;min-height:320px;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233B82F6' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.wa-msg{max-width:78%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.6;animation:msgIn .4s cubic-bezier(.34,1.56,.64,1) both;}
+.wa-msg.client{background:rgba(255,255,255,0.06);color:#C8D8F0;border-bottom-left-radius:4px;align-self:flex-start;border:1px solid rgba(255,255,255,0.05);}
+.wa-msg.bot{background:linear-gradient(135deg,rgba(30,64,175,0.7),rgba(37,99,235,0.6));color:#E8F0FF;border-bottom-right-radius:4px;align-self:flex-end;border:1px solid rgba(59,130,246,0.25);}
+.wa-msg .wa-time{font-size:10px;color:rgba(255,255,255,0.35);margin-top:5px;text-align:right;}
+.wa-msg.bot .wa-time{text-align:right;}
+.wa-msg.client .wa-time{text-align:left;}
+@keyframes msgIn{from{opacity:0;transform:scale(0.88) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.wa-typing{display:flex;align-items:center;gap:5px;padding:10px 14px;background:rgba(255,255,255,0.04);border-radius:14px;border-bottom-left-radius:4px;align-self:flex-start;max-width:70px;border:1px solid rgba(255,255,255,0.04);}
+.wa-typing span{width:6px;height:6px;border-radius:50%;background:var(--b400);animation:typeDot 1.2s infinite;}
+.wa-typing span:nth-child(2){animation-delay:.2s;}
+.wa-typing span:nth-child(3){animation-delay:.4s;}
+@keyframes typeDot{0%,60%,100%{transform:translateY(0);opacity:.5;}30%{transform:translateY(-5px);opacity:1;}}
+
+/* animation delays for chat messages */
+.wa-m1{animation-delay:.3s;}
+.wa-m2{animation-delay:1.2s;}
+.wa-m3{animation-delay:2.4s;}
+.wa-m4{animation-delay:3.6s;}
+.wa-m5{animation-delay:4.8s;}
+.wa-m6{animation-delay:6s;}
+
+/* ===== AUTHORITY SECTION ===== */
+.authority-section{background:linear-gradient(180deg,var(--dark3),var(--dark));position:relative;}
+.authority-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:72px;align-items:center;max-width:1100px;margin:0 auto;}
+.auth-left .section-tag{justify-content:flex-start;display:inline-flex;}
+.auth-left h2{font-size:clamp(28px,3.5vw,50px);font-weight:800;line-height:1.06;letter-spacing:-1.8px;margin-bottom:18px;}
+.auth-left p{font-size:15.5px;color:var(--muted);line-height:1.88;margin-bottom:28px;}
+.auth-stats{display:flex;gap:28px;flex-wrap:wrap;margin-top:10px;}
+.auth-stat{text-align:center;}
+.auth-stat-n{font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:900;letter-spacing:-1.5px;background:linear-gradient(135deg,var(--b300),var(--c400));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.auth-stat-l{font-size:11px;color:var(--muted);margin-top:3px;font-weight:600;letter-spacing:.5px;}
+.auth-card{
+  background:linear-gradient(145deg,rgba(6,10,24,0.98),rgba(10,18,50,0.95));
+  border:1px solid rgba(59,130,246,0.18);border-radius:24px;padding:44px 40px;
+  position:relative;overflow:hidden;
+  box-shadow:0 40px 100px rgba(0,0,0,0.5);
+}
+.auth-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.5) 30%,rgba(34,211,238,0.7) 50%,rgba(59,130,246,0.5) 70%,transparent);}
+.auth-profile{display:flex;align-items:center;gap:16px;margin-bottom:24px;}
+.auth-av{width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,var(--b800),var(--b500),var(--c500));display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:900;color:#fff;border:2px solid rgba(59,130,246,0.3);box-shadow:0 8px 32px rgba(30,58,138,0.5);flex-shrink:0;}
+.auth-info strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:800;color:#E0EAFF;margin-bottom:3px;}
+.auth-info span{font-size:13px;color:var(--b400);font-weight:600;}
+.auth-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,0.09);border:1px solid rgba(245,158,11,0.2);border-radius:6px;padding:3px 12px;font-size:11px;font-weight:700;color:var(--gold2);margin-top:6px;letter-spacing:.5px;}
+.auth-quote{font-size:14.5px;color:var(--muted);line-height:1.82;font-style:italic;position:relative;padding-left:20px;border-left:2px solid rgba(59,130,246,0.35);}
+.auth-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;}
+.auth-tag{background:rgba(30,58,138,0.25);border:1px solid rgba(59,130,246,0.18);border-radius:6px;padding:4px 13px;font-size:11.5px;font-weight:700;color:var(--b300);letter-spacing:.3px;}
+
+/* ===== PRICING SECTION ===== */
+.pricing-section{background:linear-gradient(180deg,var(--dark3),var(--dark4) 50%,var(--dark3));position:relative;overflow:hidden;}
+.pricing-section::before{content:'';position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);width:900px;height:700px;background:radial-gradient(ellipse,rgba(245,158,11,0.05),transparent 60%);pointer-events:none;}
+.pricing-wrap{max-width:760px;margin:0 auto;}
+.pricing-card{
+  background:linear-gradient(145deg,rgba(6,10,24,0.98),rgba(9,15,40,0.99));
+  border:1px solid rgba(245,158,11,0.28);border-radius:28px;
+  overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,0.02) inset,0 60px 160px rgba(0,0,0,0.6),0 0 120px rgba(245,158,11,0.06);
+  position:relative;
+}
+.pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(245,158,11,0.6) 25%,rgba(252,211,77,0.9) 50%,rgba(245,158,11,0.6) 75%,transparent);}
+.pc-top{padding:44px 52px 36px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.pc-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.25);border-radius:100px;padding:6px 18px;font-size:11px;font-weight:800;color:var(--gold2);letter-spacing:2px;text-transform:uppercase;margin-bottom:22px;}
+.pc-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(245,158,11,0.7);animation:blink 1.2s infinite;}
+.pc-name{font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.pc-price-wrap{display:flex;align-items:flex-end;gap:14px;margin-bottom:10px;flex-wrap:wrap;}
+.pc-old{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;color:rgba(107,127,168,0.55);text-decoration:line-through;align-self:center;}
+.pc-price{font-family:'Space Grotesk',sans-serif;font-size:56px;font-weight:900;letter-spacing:-3px;background:linear-gradient(135deg,var(--gold2),var(--gold),#F97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;}
+.pc-period{font-size:15px;color:var(--muted);font-weight:600;align-self:flex-end;margin-bottom:6px;}
+.pc-economy{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:6px;padding:4px 14px;font-size:12px;font-weight:700;color:#34D399;margin-bottom:24px;}
+.pc-scarcity{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:14px 18px;margin-bottom:0;}
+.pcs-label{font-size:11px;font-weight:700;color:#F87171;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:7px;}
+.pcs-label::before{content:'';width:7px;height:7px;border-radius:50%;background:#EF4444;box-shadow:0 0 8px rgba(239,68,68,0.6);animation:blink 1s infinite;flex-shrink:0;}
+.pcs-track{height:6px;background:rgba(255,255,255,0.05);border-radius:100px;overflow:hidden;margin-bottom:8px;}
+.pcs-fill{height:100%;width:66%;background:linear-gradient(90deg,#EF4444,#F97316);border-radius:100px;box-shadow:0 0 12px rgba(239,68,68,0.4);}
+.pcs-text{font-size:12px;color:rgba(248,113,113,0.7);font-weight:600;}
+.pc-mid{padding:36px 52px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.pc-feat{display:flex;align-items:flex-start;gap:11px;font-size:13.5px;color:rgba(240,244,255,0.72);line-height:1.55;}
+.pc-feat svg{width:18px;height:18px;stroke:var(--c400);stroke-width:2;fill:none;flex-shrink:0;margin-top:1px;}
+.pc-bot{padding:0 52px 44px;display:flex;flex-direction:column;gap:14px;align-items:center;}
+.pc-cta{
+  width:100%;padding:20px;border:none;border-radius:15px;
+  font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:900;letter-spacing:.3px;
+  position:relative;overflow:hidden;transition:transform .25s,box-shadow .25s;cursor:none;
+}
+.pc-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#D97706,#F59E0B 50%,#FBBF24);z-index:0;}
+.pc-cta::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#B45309,#D97706 50%,#F59E0B);opacity:0;transition:opacity .3s;z-index:0;}
+.pc-cta:hover::after{opacity:1;}
+.pc-cta:hover{transform:translateY(-2px);box-shadow:0 20px 60px rgba(245,158,11,0.45);}
+.pc-cta span{position:relative;z-index:1;color:#0D1A2D;font-weight:900;}
+.pc-shine{position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);transform:skewX(-18deg);animation:bshine 3s infinite;z-index:1;}
+.pc-guarantee{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--muted);font-weight:600;text-align:center;justify-content:center;}
+.pc-guarantee svg{width:16px;height:16px;stroke:var(--green);stroke-width:2;fill:none;flex-shrink:0;}
+
+@media(max-width:1100px){
+  .demo-wrap{grid-template-columns:1fr;gap:44px;}
+  .authority-wrap{grid-template-columns:1fr;gap:44px;}
+  .pc-mid{grid-template-columns:1fr;}
+  .pc-top,.pc-mid,.pc-bot{padding-left:32px;padding-right:32px;}
+}
+@media(max-width:720px){
+  .demo-wrap,.authority-wrap{gap:32px;}
+  .pc-top,.pc-mid,.pc-bot{padding-left:24px;padding-right:24px;}
+  .pc-price{font-size:44px;}
+  .auth-stats{gap:20px;}
+  .wa-body{min-height:260px;}
+}
+
 /* ===== STICKY MOBILE CTA ===== */
 .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;padding:12px 16px 20px;background:linear-gradient(0deg,rgba(3,5,14,0.98),rgba(3,5,14,0.82));backdrop-filter:blur(14px);border-top:1px solid var(--bord);}
 .sticky-cta a{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#D97706,#F59E0B 50%,#FBBF24);color:#0D1A2D;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:15.5px;padding:15px 24px;border-radius:12px;width:100%;}
@@ -612,7 +749,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <!-- URGENCY BAR -->
 <div class="urgency-bar">
   <span class="ub-dot"></span>
-  Demonstracao gratuita disponivel agora — <strong>vagas limitadas esta semana</strong>
+  Melhor Bot Atendimento do mercado com 50% de desconto — <strong>apenas 17 vagas restantes neste mes</strong>
 </div>
 
 <!-- NAV -->
@@ -621,7 +758,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
     <div class="logo-mark">B</div>
     <span class="logo-text">BOT INK IA</span>
   </a>
-  <a href="#demo" class="nav-btn"><span>Agendar demonstracao</span></a>
+  <a href="https://form.respondi.app/4YNKvaCi" class="nav-btn" target="_blank"><span>Agendar demonstracao</span></a>
 </nav>
 
 <!-- HERO -->
@@ -630,7 +767,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   <div class="hero-left reveal">
     <div class="hero-eyebrow">
       <div class="ey-dot"></div>
-      Exclusivo para Estudios de Tattoo
+      +100 Estudios em 30 Paises ja usam
     </div>
 
     <h1>
@@ -640,7 +777,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
     </h1>
 
     <p class="hero-sub">
-      Quantos leads voce perdeu hoje porque estava com a agulha na pele e nao conseguiu responder o WhatsApp?
+      Tatuadores perdem em media <strong>3 a 5 clientes por semana</strong> por demora de resposta.
       O <strong>Bot Ink IA</strong> atende, qualifica e agenda com a sua personalidade —
       <strong>24 horas, 7 dias, sem parar.</strong>
     </p>
@@ -690,54 +827,14 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
         Demo gratuita — acesso imediato
       </div>
 
-      <div class="form-header-tag">Primeiro passo</div>
-      <p class="fc-title">Agende sua <span class="gt">demo gratuita</span></p>
-      <p class="fc-desc">Nosso time vai mostrar na pratica como o Bot Ink IA funciona para o seu estudio.</p>
+      <p class="fc-title">Veja o Bot Ink IA<br/><span class="gt">funcionando ao vivo</span></p>
+      <p class="fc-desc" style="margin-bottom:28px;">Nosso time mostra na pratica como o bot vai funcionar no seu estudio — em 30 minutos voce decide se faz sentido, sem compromisso.</p>
 
-      <div class="fi" id="theForm">
-        <div class="fi-group">
-          <label class="fi-label">Seu nome</label>
-          <input class="fi-input" type="text" id="nome" placeholder="Como posso te chamar?" autocomplete="name"/>
-        </div>
-        <div class="fi-group">
-          <label class="fi-label">WhatsApp</label>
-          <input class="fi-input" type="tel" id="whatsapp" placeholder="(11) 99999-9999" autocomplete="tel"/>
-        </div>
-        <div class="fi-group">
-          <label class="fi-label">Instagram do estudio</label>
-          <input class="fi-input" type="text" id="instagram" placeholder="@seuestudio"/>
-        </div>
-        <div class="fi-group">
-          <label class="fi-label">Faturamento mensal atual</label>
-          <select class="fi-input" id="fat">
-            <option value="">Selecione uma faixa</option>
-            <option>Abaixo de R$5.000</option>
-            <option>R$5.000 – R$10.000</option>
-            <option>R$10.000 – R$20.000</option>
-            <option>R$20.000 – R$40.000</option>
-            <option>Acima de R$40.000</option>
-          </select>
-        </div>
-        <button class="fi-btn" onclick="submitForm()" id="submitBtn">
-          <div class="fi-shine"></div>
-          <span class="fi-btn-text">QUERO MINHA DEMO GRATUITA &rarr;</span>
-        </button>
-        <p class="fi-note">Seus dados estao seguros. Sem spam, jamais.</p>
-      </div>
-
-      <div class="success-state" id="successState">
-        <div class="s-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        <h3>Voce esta dentro!</h3>
-        <p>Nosso time vai entrar em contato pelo WhatsApp em breve para agendar a sua demonstracao.</p>
-        <div class="next-steps">
-          <div class="ns-title">Proximos passos</div>
-          <ul class="ns-steps">
-            <li><div class="ns-num">1</div><span>Confira o WhatsApp — entraremos em contato em breve</span></li>
-            <li><div class="ns-num">2</div><span>Demonstracao ao vivo do Bot funcionando no seu perfil</span></li>
-            <li><div class="ns-num">3</div><span>Setup completo em 7 dias e agenda enchendo</span></li>
-          </ul>
-        </div>
-      </div>
+      <a href="https://form.respondi.app/4YNKvaCi" class="fi-btn" style="display:block;text-decoration:none;">
+        <div class="fi-shine"></div>
+        <span class="fi-btn-text">QUERO MINHA DEMONSTRAÇÃO GRATUITA &rarr;</span>
+      </a>
+      <p class="fi-note" style="margin-top:14px;">100% gratuito · Sem compromisso · Resposta em minutos</p>
 
       <div class="trust-row">
         <div class="trust-item">
@@ -782,6 +879,36 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
     </div>
   </div>
 </div>
+
+<div class="divider"></div>
+
+<!-- BOT EM AÇÃO -->
+<section class="sec demo-section">
+  <div class="demo-wrap">
+    <div class="demo-left reveal">
+      <div class="section-tag">Veja funcionando</div>
+      <h2><span style="color:rgba(240,244,255,0.92)">O bot que parece</span><br/><span class="grad-text">exatamente voce.</span></h2>
+      <p>Enquanto voce tatua, ele responde em segundos, qualifica o cliente e ja agenda — tudo com a sua linguagem, o seu tom e os seus precos. Nenhum cliente percebe que nao e voce.</p>
+      <ul class="demo-bullets">
+        <li>
+          <div class="db-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Resposta media de <strong style="color:var(--b300)">8 segundos</strong> — enquanto concorrentes demoram horas</span>
+        </li>
+        <li>
+          <div class="db-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Quebra de objecao de preco <strong style="color:var(--b300)">antes de voce ver a mensagem</strong></span>
+        </li>
+        <li>
+          <div class="db-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Atendimento ativo <strong style="color:var(--b300)">de madrugada, no feriado, durante sessoes longas</strong></span>
+        </li>
+        <li>
+          <div class="db-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span>Agenda confirmada com <strong style="color:var(--b300)">lembrete automatico</strong> — zero falta de cliente</span>
+        </li>
+      </ul>
+  </div>
+</section>
 
 <div class="divider"></div>
 
@@ -979,6 +1106,55 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 
 <div class="divider"></div>
 
+<!-- AUTORIDADE -->
+<section class="sec authority-section">
+  <div class="authority-wrap">
+    <div class="auth-left reveal">
+      <div class="section-tag">Por tras do Bot Ink IA</div>
+      <h2>
+        <span style="color:rgba(240,244,255,0.9)">Construido por quem</span><br/>
+        <span class="grad-text">vive o mercado tattoo.</span>
+      </h2>
+      <p>O Bot Ink IA nao nasceu de uma startup generica. Nasceu da Eikon Ink Marketing — uma agencia especializada <strong style="color:var(--text)">exclusivamente no mercado de estudios de tattoo</strong> ha mais de 4 anos. Conhecemos as objecoes, a linguagem e os clientes do nicho porque trabalhamos com eles todos os dias.</p>
+      <div class="auth-stats">
+        <div class="auth-stat">
+          <div class="auth-stat-n" data-target="4" data-suffix="+ anos">4+ anos</div>
+          <div class="auth-stat-l">No mercado tattoo</div>
+        </div>
+        <div class="auth-stat">
+          <div class="auth-stat-n" data-target="100" data-suffix="+">100+</div>
+          <div class="auth-stat-l">Estudios atendidos</div>
+        </div>
+        <div class="auth-stat">
+          <div class="auth-stat-n" data-target="30">30</div>
+          <div class="auth-stat-l">Paises com o bot</div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-card reveal">
+      <div class="auth-profile">
+        <div class="auth-av">EI</div>
+        <div class="auth-info">
+          <strong>Eikon Ink Marketing</strong>
+          <span>Especialistas em Tattoo desde 2021</span>
+          <div class="auth-badge">✦ Verificado no segmento tattoo</div>
+        </div>
+      </div>
+      <p class="auth-quote">
+        "Depois de ver centenas de tatuadores perdendo clientes por falta de atendimento rapido, decidimos criar a solucao que nos proprios usariamos. O Bot Ink IA e fruto de 2 anos testando em estudios reais — com erros, ajustes e resultados reais."
+      </p>
+      <div class="auth-tags">
+        <span class="auth-tag">Marketing para Tattoo</span>
+        <span class="auth-tag">IA Aplicada</span>
+        <span class="auth-tag">Automacao de Vendas</span>
+        <span class="auth-tag">WhatsApp Business</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- TESTIMONIALS -->
 <section class="sec testimonials-section">
   <div class="container">
@@ -991,13 +1167,13 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
     <div class="testimonials-grid reveal">
       <div class="t-card">
         <div class="t-stars"><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div></div>
-        <div class="t-result-pill">Agenda lotada em 18 dias</div>
+        <div class="t-result-pill">+R$11.400 em 18 dias</div>
         <p class="t-quote">Antes eu ficava olhando pro celular no meio do trabalho. Agora o bot responde tudo enquanto eu tatuo. Em 18 dias minha agenda encheu e eu parei de perder cliente por demora de resposta. Parece idiota de tao simples que e.</p>
         <div class="t-author">
           <div class="t-av">RM</div>
           <div>
             <div class="t-name">Rafael M.</div>
-            <div class="t-meta">Tatuador Fineline — Sao Paulo</div>
+            <div class="t-meta">Tatuador Fineline — Sao Paulo · <span style="color:var(--b400)">@rafaelm.tattoo</span></div>
           </div>
         </div>
       </div>
@@ -1010,7 +1186,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
           <div class="t-av">AC</div>
           <div>
             <div class="t-name">Ana C.</div>
-            <div class="t-meta">Dona de estudio — Rio de Janeiro</div>
+            <div class="t-meta">Dona de estudio — Rio de Janeiro · <span style="color:var(--b400)">@acstudiotattoo</span></div>
           </div>
         </div>
       </div>
@@ -1023,7 +1199,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
           <div class="t-av">CT</div>
           <div>
             <div class="t-name">Carlos T.</div>
-            <div class="t-meta">Tatuador Blackwork — Belo Horizonte</div>
+            <div class="t-meta">Tatuador Blackwork — Belo Horizonte · <span style="color:var(--b400)">@carlos.blackwork</span></div>
           </div>
         </div>
       </div>
@@ -1116,26 +1292,11 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   <p class="final-sub reveal">Agende a demonstracao gratuita e veja na pratica como o Bot Ink IA vai mudar a operacao do seu estudio a partir de hoje.</p>
 
   <div class="final-form-wrap reveal">
-    <div class="fi" id="finalForm">
-      <div class="fi-group">
-        <label class="fi-label">Seu nome</label>
-        <input class="fi-input" type="text" id="fn" placeholder="Como posso te chamar?"/>
-      </div>
-      <div class="fi-group">
-        <label class="fi-label">WhatsApp</label>
-        <input class="fi-input" type="tel" id="fw" placeholder="(11) 99999-9999"/>
-      </div>
-      <button class="fi-btn" onclick="submitFinal()" style="margin-top:8px;">
-        <div class="fi-shine"></div>
-        <span class="fi-btn-text">AGENDAR MINHA DEMO GRATUITA &rarr;</span>
-      </button>
-      <p class="fi-note" style="margin-top:10px;">100% gratuito. Sem compromisso. Nossa equipe entra em contato pelo WhatsApp.</p>
-    </div>
-    <div style="display:none;text-align:center;padding:32px 16px;" id="finalSuccess">
-      <div class="s-icon" style="animation:none;"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      <h3 style="font-size:20px;font-weight:800;margin-bottom:8px;background:linear-gradient(90deg,var(--b300),var(--c400));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Demo agendada!</h3>
-      <p style="font-size:13.5px;color:var(--muted);line-height:1.75;">Nosso time vai entrar em contato pelo WhatsApp em breve. Fique de olho na sua tela.</p>
-    </div>
+    <a href="https://form.respondi.app/4YNKvaCi" class="fi-btn" style="display:block;text-decoration:none;">
+      <div class="fi-shine"></div>
+      <span class="fi-btn-text">QUERO MINHA DEMONSTRAÇÃO GRATUITA &rarr;</span>
+    </a>
+    <p class="fi-note" style="margin-top:14px;">100% gratuito · Sem compromisso · Nossa equipe entra em contato pelo WhatsApp</p>
   </div>
 
   <div class="trust-row reveal" style="margin-top:32px;">
@@ -1172,9 +1333,9 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 
 <!-- STICKY MOBILE CTA -->
 <div class="sticky-cta">
-  <a href="#demo">
+  <a href="https://form.respondi.app/4YNKvaCi" target="_blank">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    Agendar Demo Gratuita
+    Quero Minha Demonstração Gratuita
   </a>
 </div>
 
@@ -1289,14 +1450,26 @@ const cObs=new IntersectionObserver(entries=>{
 },{threshold:.5});
 document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
 
-/* ===== NAV SCROLL — GLASS ===== */
+/* ===== NAV SCROLL — GLASS + HIDE ===== */
 (function(){
   const nav=document.getElementById('mainNav');
+  let lastY=window.scrollY;
   let ticking=false;
 
   function updateNav(){
-    const scrolled=window.scrollY>40;
+    const currentY=window.scrollY;
+    const scrolled=currentY>40;
+    const goingDown=currentY>lastY;
+
     nav.classList.toggle('scrolled',scrolled);
+
+    if(currentY>120){
+      nav.classList.toggle('nav-hidden',goingDown);
+    } else {
+      nav.classList.remove('nav-hidden');
+    }
+
+    lastY=currentY;
     ticking=false;
   }
 
@@ -1304,7 +1477,6 @@ document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
     if(!ticking){requestAnimationFrame(updateNav);ticking=true;}
   },{passive:true});
 
-  /* inicia correto caso a pagina recarregue ja scrollada */
   updateNav();
 })();
 
