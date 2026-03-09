@@ -27,6 +27,7 @@ body{
   font-family:'Inter',system-ui,sans-serif;
   overflow-x:hidden;-webkit-font-smoothing:antialiased;
 }
+
 h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif;}
 
 /* ===== SCROLL PROGRESS ===== */
@@ -374,13 +375,27 @@ section.sec{padding:100px 80px;position:relative;z-index:2;}
 .section-sub{font-size:16.5px;color:var(--muted);line-height:1.85;max-width:580px;}
 .center{text-align:center;}.center .section-sub{margin:0 auto;}.center .section-tag{justify-content:center;}
 .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.1) 20%,rgba(59,130,246,0.1) 80%,transparent);position:relative;z-index:2;}
+.divider-light{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(37,99,235,0.15) 20%,rgba(37,99,235,0.15) 80%,transparent);position:relative;z-index:2;}
 
 /* ===== BEFORE / AFTER ===== */
 .ba-section{
-  background:linear-gradient(180deg,var(--dark),var(--dark2) 50%,var(--dark));
+  background:#ffffff;
   position:relative;overflow:hidden;
 }
-.ba-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:600px;background:radial-gradient(ellipse,rgba(59,130,246,0.05),transparent 65%);pointer-events:none;}
+.ba-section::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:600px;background:radial-gradient(ellipse,rgba(59,130,246,0.04),transparent 65%);pointer-events:none;}
+.ba-section .section-tag{color:#2563EB;}
+.ba-section .section-tag::before{background:linear-gradient(90deg,#2563EB,transparent);}
+.ba-section .section-title{color:#0C1432;}
+.ba-section .section-sub{color:#4A5880;}
+.ba-section .ba-divider span{color:#6B7FA8;}
+.ba-section .ba-divider-line{background:linear-gradient(90deg,transparent,rgba(37,99,235,0.25));}
+.ba-section .ba-divider-line.r{background:linear-gradient(270deg,transparent,rgba(37,99,235,0.25));}
+.ba-section .ba-grid{border-color:rgba(37,99,235,0.12);box-shadow:0 0 60px rgba(12,20,50,0.08);}
+.ba-section .ba-col.before{background:linear-gradient(150deg,#fff5f5,#fff0f0);}
+.ba-section .ba-col.after{background:linear-gradient(150deg,#f0f5ff,#eef2ff);}
+.ba-section .ba-col h3{color:#1e293b;}
+.ba-section .ba-col ul li{color:#475569;border-bottom-color:rgba(0,0,0,0.05);}
+.ba-section .grad-text{background:linear-gradient(120deg,#1D4ED8 0%,#2563EB 40%,#0891b2 70%,#1D4ED8 100%);background-size:260% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .ba-divider{display:flex;align-items:center;justify-content:center;gap:20px;margin:20px 0 52px;}
 .ba-divider-line{flex:1;max-width:220px;height:1px;background:linear-gradient(90deg,transparent,var(--bord2));}
 .ba-divider-line.r{background:linear-gradient(270deg,transparent,var(--bord2));}
@@ -451,7 +466,18 @@ section.sec{padding:100px 80px;position:relative;z-index:2;}
 .step p{font-size:13.5px;color:var(--muted);line-height:1.78;}
 
 /* ===== DIFERENCIAIS ===== */
-.diff-section{background:linear-gradient(180deg,var(--dark),var(--dark2));}
+.diff-section{background:#ffffff;}
+.diff-section .section-tag{color:#2563EB;}
+.diff-section .section-tag::before{background:linear-gradient(90deg,#2563EB,transparent);}
+.diff-section .section-title{color:#0C1432;}
+.diff-section .section-sub{color:#4A5880;}
+.diff-section .diff-grid{border-color:rgba(37,99,235,0.12);background:rgba(37,99,235,0.06);}
+.diff-section .diff-item{background:#ffffff;}
+.diff-section .diff-item:hover{background:#f8faff;}
+.diff-section .diff-num{background:linear-gradient(135deg,#1e3a8a,#2563EB);color:#bfdbfe;border-color:rgba(37,99,235,0.3);}
+.diff-section .diff-body strong{color:#1e293b;}
+.diff-section .diff-body span{color:#475569;}
+.diff-section .grad-text{background:linear-gradient(120deg,#1D4ED8 0%,#2563EB 40%,#0891b2 70%,#1D4ED8 100%);background-size:260% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-top:56px;border:1px solid var(--bord);border-radius:22px;overflow:hidden;background:var(--bord);}
 .diff-item{background:var(--dark3);padding:34px 30px;display:flex;gap:20px;align-items:flex-start;transition:background .3s;position:relative;}
 .diff-item:hover{background:rgba(8,14,38,0.98);}
@@ -460,8 +486,22 @@ section.sec{padding:100px 80px;position:relative;z-index:2;}
 .diff-body span{font-size:13px;color:var(--muted);line-height:1.7;}
 
 /* ===== TESTIMONIALS ===== */
-.testimonials-section{background:linear-gradient(180deg,var(--dark2),var(--dark3));position:relative;}
-.testimonials-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(59,130,246,0.22),rgba(34,211,238,0.2),transparent);}
+.testimonials-section{background:#ffffff;position:relative;}
+.testimonials-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(37,99,235,0.15),rgba(8,145,178,0.12),transparent);}
+.testimonials-section .section-tag{color:#2563EB;}
+.testimonials-section .section-tag::before{background:linear-gradient(90deg,#2563EB,transparent);}
+.testimonials-section .section-title{color:#0C1432;}
+.testimonials-section .section-sub{color:#4A5880;}
+.testimonials-section .t-card{background:#f8faff;border-color:rgba(37,99,235,0.12);}
+.testimonials-section .t-card:hover{border-color:rgba(37,99,235,0.3);box-shadow:0 22px 60px rgba(37,99,235,0.1);}
+.testimonials-section .t-card::before{background:linear-gradient(90deg,#1d4ed8,#2563eb,#0891b2);}
+.testimonials-section .t-quote{color:#475569;}
+.testimonials-section .t-quote::before{color:rgba(37,99,235,0.1);}
+.testimonials-section .t-name{color:#1e293b;}
+.testimonials-section .t-meta{color:#6B7FA8;}
+.testimonials-section .t-author{border-top-color:rgba(37,99,235,0.1);}
+.testimonials-section .t-av{background:linear-gradient(135deg,#1e3a8a,#2563EB);border-color:rgba(37,99,235,0.3);}
+.testimonials-section .grad-text{background:linear-gradient(120deg,#1D4ED8 0%,#2563EB 40%,#0891b2 70%,#1D4ED8 100%);background-size:260% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px;}
 .t-card{
   background:rgba(7,11,30,0.75);border:1px solid var(--bord);border-radius:20px;
@@ -656,20 +696,6 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 .pc-guarantee{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--muted);font-weight:600;text-align:center;justify-content:center;}
 .pc-guarantee svg{width:16px;height:16px;stroke:var(--green);stroke-width:2;fill:none;flex-shrink:0;}
 
-@media(max-width:1100px){
-  .demo-wrap{grid-template-columns:1fr;gap:44px;}
-  .authority-wrap{grid-template-columns:1fr;gap:44px;}
-  .pc-mid{grid-template-columns:1fr;}
-  .pc-top,.pc-mid,.pc-bot{padding-left:32px;padding-right:32px;}
-}
-@media(max-width:720px){
-  .demo-wrap,.authority-wrap{gap:32px;}
-  .pc-top,.pc-mid,.pc-bot{padding-left:24px;padding-right:24px;}
-  .pc-price{font-size:44px;}
-  .auth-stats{gap:20px;}
-  .wa-body{min-height:260px;}
-}
-
 /* ===== STICKY MOBILE CTA ===== */
 .sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:500;padding:12px 16px 20px;background:linear-gradient(0deg,rgba(3,5,14,0.98),rgba(3,5,14,0.82));backdrop-filter:blur(14px);border-top:1px solid var(--bord);}
 .sticky-cta a{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#D97706,#F59E0B 50%,#FBBF24);color:#0D1A2D;text-decoration:none;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:15.5px;padding:15px 24px;border-radius:12px;width:100%;}
@@ -679,41 +705,172 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 .reveal.on{opacity:1;transform:translateY(0);}
 
 /* ===== RESPONSIVE ===== */
+
+/* --- TABLET 1100px --- */
 @media(max-width:1100px){
-  .hero{grid-template-columns:1fr;gap:52px;padding:140px 48px 80px;}
+  nav{padding:0 24px;}
+  .hero{grid-template-columns:1fr;gap:44px;padding:140px 48px 80px;}
   .hero::after{display:none;}
+  .hero h1{font-size:clamp(38px,6vw,64px);}
+  .hero-sub{max-width:100%;}
   .features-grid{grid-template-columns:1fr 1fr;}
   .steps-grid{grid-template-columns:1fr;}
   .testimonials-grid{grid-template-columns:1fr 1fr;}
   .diff-grid{grid-template-columns:1fr;}
+  .demo-wrap{grid-template-columns:1fr;gap:44px;}
+  .authority-wrap{grid-template-columns:1fr;gap:44px;}
   section.sec,.final-section{padding:72px 48px;}
   .proof-wrap{padding:0 48px 72px;}
   footer{padding:40px 48px;flex-direction:column;gap:14px;text-align:center;}
   .foot-right{text-align:center;}
-  nav{padding:0 24px;}
 }
-@media(max-width:720px){
-  nav{padding:0 20px;}
-  .hero{padding:130px 20px 64px;}
-  .form-card{padding:32px 22px;}
-  .ba-grid{grid-template-columns:1fr;}
-  .features-grid{grid-template-columns:1fr;}
-  .testimonials-grid{grid-template-columns:1fr;}
-  section.sec,.final-section{padding:64px 20px;}
-  .proof-wrap{padding:0 20px 64px;}
-  .proof-strip{flex-wrap:wrap;}
+
+/* --- MOBILE 768px --- */
+@media(max-width:768px){
+  /* Urgency bar */
+  .urgency-bar{font-size:10.5px;padding:8px 14px;}
+
+  /* Nav */
+  nav{padding:0 18px;height:58px;}
+  nav.scrolled{height:52px;}
+  .logo-text{font-size:12px;letter-spacing:1.8px;}
+  .nav-btn{padding:8px 16px;font-size:11.5px;}
+
+  /* Hero */
+  .hero{grid-template-columns:1fr;gap:36px;padding:120px 20px 56px;}
+  .hero h1{font-size:clamp(34px,9vw,52px);letter-spacing:-2px;line-height:1.0;}
+  .hero-sub{font-size:15px;line-height:1.8;}
+  .hero-bullets li{font-size:13px;}
+  .hero-eyebrow{font-size:10.5px;padding:5px 14px 5px 6px;}
+  .scarcity-strip{font-size:11.5px;padding:9px 14px;flex-wrap:wrap;}
+  .seats-box{padding:12px 14px;}
+  .form-card{padding:28px 20px;}
+  .fc-title{font-size:19px;}
+  .fi-btn{padding:16px;font-size:14px;}
+
+  /* Proof strip */
+  .proof-wrap{padding:0 20px 52px;}
+  .proof-strip{flex-wrap:wrap;border-radius:14px;}
   .ps-item{min-width:50%;border-right:none;border-bottom:1px solid rgba(59,130,246,0.07);}
   .ps-item:nth-child(odd){border-right:1px solid rgba(59,130,246,0.07);}
-  .ps-item:last-child,.ps-item:nth-last-child(2){border-bottom:none;}
-  .final-form-wrap{padding:32px 22px;}
-  .sticky-cta{display:block;}
-  *{cursor:auto!important;}#cr{display:none;}
+  .ps-item:last-child,.ps-item:nth-last-child(2):not(:nth-child(odd)){border-bottom:none;}
+  .ps-item:last-child{border-bottom:none;}
+  .ps-n{font-size:26px;}
+
+  /* Sections */
+  section.sec,.final-section{padding:56px 20px;}
+  .section-title{font-size:clamp(24px,6.5vw,42px);letter-spacing:-1.2px;}
+  .section-sub{font-size:15px;line-height:1.75;}
+  .section-tag{font-size:10px;letter-spacing:2px;}
+
+  /* Demo section */
+  .demo-wrap{gap:28px;}
+  .demo-left h2{font-size:clamp(26px,7vw,40px);}
+  .demo-left p{font-size:14.5px;}
+  .demo-bullets li{font-size:13px;}
+
+  /* Before/After */
+  .ba-grid{grid-template-columns:1fr;}
+  .ba-col{padding:30px 20px;}
+  .ba-col h3{font-size:17px;}
+  .ba-col ul li{font-size:13.5px;padding:10px 0;}
+
+  /* Features */
+  .features-grid{grid-template-columns:1fr;}
+  .feat-card{padding:30px 24px;}
+  .feat-card h3{font-size:18px;}
+
+  /* Steps */
+  .steps-grid{grid-template-columns:1fr;}
+  .step{padding:34px 24px;}
+  .step h3{font-size:17px;}
+
+  /* Diferenciais */
+  .diff-grid{grid-template-columns:1fr;}
+  .diff-item{padding:22px 18px;}
+  .diff-body strong{font-size:14px;}
+  .diff-body span{font-size:12.5px;}
+
+  /* Authority */
+  .authority-wrap{gap:28px;}
+  .auth-card{padding:30px 24px;}
+  .auth-stats{gap:16px;justify-content:flex-start;}
+  .auth-stat-n{font-size:26px;}
+  .auth-av{width:54px;height:54px;font-size:20px;border-radius:15px;}
+  .auth-info strong{font-size:16px;}
+  .auth-quote{font-size:13.5px;}
+
+  /* Testimonials */
+  .testimonials-grid{grid-template-columns:1fr;}
+  .t-card{padding:26px 20px;}
+  .t-quote{font-size:13.5px;}
+
+  /* FAQ */
+  .faq-list{margin-top:36px;}
+  .faq-q{padding:18px 20px;font-size:14px;}
+  .faq-a p{padding:4px 20px 20px;font-size:13.5px;}
+
+  /* Final CTA */
+  .final-title{font-size:clamp(26px,7vw,46px);letter-spacing:-1.5px;}
+  .final-sub{font-size:15px;}
+  .final-form-wrap{padding:28px 20px;border-radius:18px;}
+  .trust-row{gap:10px;}
+  .trust-item{font-size:10px;}
+
+  /* Footer */
+  footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}
+  .foot-right{text-align:center;}
+  footer p{font-size:10.5px;}
+
+  /* Sticky CTA */
+
+  /* Disable custom cursor */
+  *{cursor:auto!important;}
+  #cr,#cd{display:none;}
   .float-notif{display:none;}
 }
+
+/* --- SMALL MOBILE 480px --- */
 @media(max-width:480px){
-  .ba-col{padding:32px 22px;}
-  .diff-item{padding:24px 20px;}
-  .hero h1{letter-spacing:-2px;}
+  .urgency-bar{font-size:10px;padding:7px 10px;line-height:1.5;}
+  .hero{padding:110px 16px 48px;}
+  .hero h1{font-size:clamp(30px,10vw,44px);letter-spacing:-1.8px;}
+  .hero-eyebrow{font-size:10px;}
+  .hero-sub{font-size:14px;}
+  .hero-bullets li{font-size:12.5px;gap:9px;}
+  .hb-check{width:18px;height:18px;flex-shrink:0;}
+  .form-card{padding:24px 16px;border-radius:18px;}
+  .fi-btn{padding:15px;font-size:13.5px;}
+  .fi-btn-text{font-size:13.5px;}
+  section.sec,.final-section{padding:48px 16px;}
+  .proof-wrap{padding:0 16px 44px;}
+  .ps-item{padding:18px 10px;}
+  .ps-n{font-size:22px;}
+  .ps-l{font-size:9.5px;}
+  .ba-col{padding:26px 16px;}
+  .ba-col ul li{font-size:12.5px;}
+  .feat-card{padding:26px 18px;}
+  .feat-card h3{font-size:16.5px;}
+  .feat-card p{font-size:12.5px;}
+  .step{padding:28px 18px;}
+  .diff-item{padding:18px 14px;}
+  .auth-card{padding:24px 18px;}
+  .auth-stats{gap:12px;}
+  .auth-stat-n{font-size:22px;}
+  .t-card{padding:22px 16px;}
+  .t-quote{font-size:13px;}
+  .faq-q{padding:16px 16px;font-size:13px;}
+  .faq-a p{padding:4px 16px 18px;font-size:13px;}
+  .final-form-wrap{padding:22px 16px;}
+  .final-title{letter-spacing:-1.2px;}
+  .trust-row{flex-wrap:wrap;justify-content:center;gap:8px;}
+  footer{padding:28px 16px;}
+  .section-title{letter-spacing:-1px;}
+  .demo-left h2{font-size:clamp(24px,8vw,36px);}
+  .demo-bullets li{font-size:12.5px;}
+  .db-ico{width:20px;height:20px;flex-shrink:0;}
+  .auth-profile{flex-direction:column;align-items:flex-start;gap:12px;}
+  .nav-btn{display:none;}
 }
 </style>
 </head>
@@ -910,14 +1067,14 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="divider-light"></div>
 
 <!-- BEFORE / AFTER -->
 <section class="sec ba-section">
   <div class="container">
     <div class="center reveal">
       <div class="section-tag">A realidade antes e depois</div>
-      <h2 class="section-title"><span class="grad-text">Dois mundos completamente</span><br/><span style="color:rgba(240,244,255,0.9)">diferentes.</span></h2>
+      <h2 class="section-title"><span class="grad-text">Dois mundos completamente</span><br/><span style="color:#1e293b;">diferentes.</span></h2>
       <p class="section-sub">Veja como muda a operacao de um estudio de tattoo quando o Bot Ink IA entra em acao.</p>
     </div>
 
@@ -960,7 +1117,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="divider-light"></div>
 
 <!-- FEATURES -->
 <section class="sec features-section">
@@ -1046,14 +1203,14 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="divider-light"></div>
 
 <!-- DIFERENCIAIS -->
 <section class="sec diff-section">
   <div class="container">
     <div class="center reveal">
       <div class="section-tag">O que ele faz</div>
-      <h2 class="section-title"><span class="grad-text">Tudo que consome</span><br/><span style="color:rgba(240,244,255,0.9)">seu tempo hoje.</span></h2>
+      <h2 class="section-title"><span class="grad-text">Tudo que consome</span><br/><span style="color:#1e293b;">seu tempo hoje.</span></h2>
       <p class="section-sub">O Bot Ink IA centraliza e automatiza toda a parte de atendimento e qualificacao — para voce focar no que gera dinheiro de verdade: tatuar.</p>
     </div>
 
@@ -1104,63 +1261,14 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   </div>
 </section>
 
-<div class="divider"></div>
-
-<!-- AUTORIDADE -->
-<section class="sec authority-section">
-  <div class="authority-wrap">
-    <div class="auth-left reveal">
-      <div class="section-tag">Por tras do Bot Ink IA</div>
-      <h2>
-        <span style="color:rgba(240,244,255,0.9)">Construido por quem</span><br/>
-        <span class="grad-text">vive o mercado tattoo.</span>
-      </h2>
-      <p>O Bot Ink IA nao nasceu de uma startup generica. Nasceu da Eikon Ink Marketing — uma agencia especializada <strong style="color:var(--text)">exclusivamente no mercado de estudios de tattoo</strong> ha mais de 4 anos. Conhecemos as objecoes, a linguagem e os clientes do nicho porque trabalhamos com eles todos os dias.</p>
-      <div class="auth-stats">
-        <div class="auth-stat">
-          <div class="auth-stat-n" data-target="4" data-suffix="+ anos">4+ anos</div>
-          <div class="auth-stat-l">No mercado tattoo</div>
-        </div>
-        <div class="auth-stat">
-          <div class="auth-stat-n" data-target="100" data-suffix="+">100+</div>
-          <div class="auth-stat-l">Estudios atendidos</div>
-        </div>
-        <div class="auth-stat">
-          <div class="auth-stat-n" data-target="30">30</div>
-          <div class="auth-stat-l">Paises com o bot</div>
-        </div>
-      </div>
-    </div>
-    <div class="auth-card reveal">
-      <div class="auth-profile">
-        <div class="auth-av">EI</div>
-        <div class="auth-info">
-          <strong>Eikon Ink Marketing</strong>
-          <span>Especialistas em Tattoo desde 2021</span>
-          <div class="auth-badge">✦ Verificado no segmento tattoo</div>
-        </div>
-      </div>
-      <p class="auth-quote">
-        "Depois de ver centenas de tatuadores perdendo clientes por falta de atendimento rapido, decidimos criar a solucao que nos proprios usariamos. O Bot Ink IA e fruto de 2 anos testando em estudios reais — com erros, ajustes e resultados reais."
-      </p>
-      <div class="auth-tags">
-        <span class="auth-tag">Marketing para Tattoo</span>
-        <span class="auth-tag">IA Aplicada</span>
-        <span class="auth-tag">Automacao de Vendas</span>
-        <span class="auth-tag">WhatsApp Business</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
+<div class="divider-light"></div>
 
 <!-- TESTIMONIALS -->
 <section class="sec testimonials-section">
   <div class="container">
     <div class="center reveal">
       <div class="section-tag">Quem ja usa</div>
-      <h2 class="section-title"><span style="color:rgba(240,244,255,0.9)">Estudios que pararam de</span><br/><span class="grad-text">perder cliente.</span></h2>
+      <h2 class="section-title"><span style="color:#1e293b;">Estudios que pararam de</span><br/><span class="grad-text">perder cliente.</span></h2>
       <p class="section-sub">Tatuadores que colocaram o Bot Ink IA pra trabalhar e transformaram a operacao do estudio.</p>
     </div>
 
@@ -1207,7 +1315,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   </div>
 </section>
 
-<div class="divider"></div>
+<div class="divider-light"></div>
 
 <!-- FAQ -->
 <section class="sec faq-section">
@@ -1331,13 +1439,6 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   </div>
 </footer>
 
-<!-- STICKY MOBILE CTA -->
-<div class="sticky-cta">
-  <a href="https://form.respondi.app/4YNKvaCi" target="_blank">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    Quero Minha Demonstração Gratuita
-  </a>
-</div>
 
 <script>
 /* ===== PROGRESS BAR ===== */
