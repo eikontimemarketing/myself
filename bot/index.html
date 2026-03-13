@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Bot Ink IA — Atendimento Inteligente 24h para Estúdios de Tattoo</title>
-<meta name="description" content="O único Bot de IA exclusivo para tatuadores. Atende, qualifica e agenda clientes 24h no seu WhatsApp — enquanto você tatua."/>
+<title>Bot IA Eikon — Seu Pré-Vendedor Digital 24h para Estúdios de Tattoo</title>
+<meta name="description" content="Enquanto você tatua, o Bot IA Eikon atende, qualifica e agenda clientes no seu WhatsApp — 24h por dia, 7 dias por semana. Desenvolvido pela equipe que já lotou a agenda de mais de 200 tatuadores."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
@@ -30,12 +30,32 @@ body{
 
 h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif;}
 
+/* ===== NOISE OVERLAY ===== */
+.noise{
+  display:block;width:100vw;height:100vh;opacity:0.1;
+  background-image:url('https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/ruido-animado.gif');
+  overflow:hidden;position:fixed;top:0;left:0;
+  pointer-events:none;z-index:50;mix-blend-mode:plus-lighter;
+}
+
 /* ===== SCROLL PROGRESS ===== */
 #progress{
   position:fixed;top:0;left:0;height:2px;width:0%;
   background:linear-gradient(90deg,var(--b600),var(--b400),var(--c400));
   z-index:9999;transition:width .08s linear;
+  will-change:width;
 }
+
+/* ===== PERFORMANCE HINTS ===== */
+.fi-btn,.fi-shine,.pc-shine,.nav-btn,#cr,#cd{will-change:transform;}
+.ba-section .ba-grid::before{will-change:background-position;}
+
+/* ===== CTA GLOW PULSE ===== */
+@keyframes ctaGlow{
+  0%,100%{box-shadow:0 8px 32px rgba(245,158,11,0.35);}
+  50%{box-shadow:0 12px 48px rgba(245,158,11,0.55),0 0 80px rgba(245,158,11,0.12);}
+}
+.fi-btn{animation:ctaGlow 3s ease infinite;}
 
 /* ===== CUSTOM CURSOR ===== */
 *{cursor:none!important;}
@@ -390,7 +410,22 @@ section.sec{padding:100px 80px;position:relative;z-index:2;}
 .ba-section .ba-divider span{color:#6B7FA8;}
 .ba-section .ba-divider-line{background:linear-gradient(90deg,transparent,rgba(37,99,235,0.25));}
 .ba-section .ba-divider-line.r{background:linear-gradient(270deg,transparent,rgba(37,99,235,0.25));}
-.ba-section .ba-grid{border-color:rgba(37,99,235,0.12);box-shadow:0 0 60px rgba(12,20,50,0.08);}
+.ba-section .ba-grid{
+  border:none;position:relative;
+  box-shadow:0 8px 60px rgba(37,99,235,0.08),0 2px 20px rgba(0,0,0,0.04);
+}
+.ba-section .ba-grid::before{
+  content:'';position:absolute;inset:-2px;border-radius:22px;z-index:0;pointer-events:none;
+  background:linear-gradient(135deg,#EF4444 0%,#F87171 25%,#cbd5e1 50%,#3B82F6 75%,#06B6D4 100%);
+  background-size:300% 300%;
+  animation:borderShift 6s ease infinite;
+}
+.ba-section .ba-grid::after{
+  content:'';position:absolute;inset:0;border-radius:20px;z-index:0;
+  background:#fff;pointer-events:none;
+}
+@keyframes borderShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+.ba-section .ba-col{position:relative;z-index:1;}
 .ba-section .ba-col.before{background:linear-gradient(150deg,#fff5f5,#fff0f0);}
 .ba-section .ba-col.after{background:linear-gradient(150deg,#f0f5ff,#eef2ff);}
 .ba-section .ba-col h3{color:#1e293b;}
@@ -772,6 +807,8 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   /* Before/After */
   .ba-grid{grid-template-columns:1fr;}
   .ba-col{padding:30px 20px;}
+  .ba-col.before{border-right:none;}
+  .ba-section .ba-col.before{border-bottom:1px solid rgba(0,0,0,0.06);}
   .ba-col h3{font-size:17px;}
   .ba-col ul li{font-size:13.5px;padding:10px 0;}
 
@@ -821,8 +858,6 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   footer{padding:32px 20px;flex-direction:column;gap:12px;text-align:center;}
   .foot-right{text-align:center;}
   footer p{font-size:10.5px;}
-
-  /* Sticky CTA */
 
   /* Disable custom cursor */
   *{cursor:auto!important;}
@@ -876,6 +911,9 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 </head>
 <body>
 
+<!-- NOISE OVERLAY -->
+<div class="noise"></div>
+
 <!-- BG FIXED -->
 <div class="bg-fixed">
   <canvas id="particles"></canvas>
@@ -893,30 +931,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <div id="cr"></div>
 <div id="cd"></div>
 
-<!-- FLOATING SOCIAL PROOF -->
-<div class="float-notif" id="floatNotif">
-  <div class="fn-av" id="fnAv">RM</div>
-  <div>
-    <div class="fn-name" id="fnName">Rafael M.</div>
-    <div class="fn-action" id="fnAction">agendou uma demonstracao gratuita</div>
-  </div>
-  <div class="fn-live"></div>
-</div>
-
-<!-- URGENCY BAR -->
-<div class="urgency-bar">
-  <span class="ub-dot"></span>
-  Melhor Bot Atendimento do mercado com 50% de desconto — <strong>apenas 17 vagas restantes neste mes</strong>
-</div>
-
-<!-- NAV -->
-<nav id="mainNav">
-  <a href="#" class="logo">
-    <div class="logo-mark">B</div>
-    <span class="logo-text">BOT INK IA</span>
-  </a>
-  <a href="https://form.respondi.app/4YNKvaCi" class="nav-btn" target="_blank"><span>Agendar demonstracao</span></a>
-</nav>
+<!-- NAV (removed) -->
 
 <!-- HERO -->
 <section class="hero">
@@ -924,74 +939,34 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
   <div class="hero-left reveal">
     <div class="hero-eyebrow">
       <div class="ey-dot"></div>
-      +100 Estudios em 30 Paises ja usam
+      BOT IA DE ATENDIMENTO EXCLUSIVO NO MERCADO DA TATTOO
     </div>
 
     <h1>
-      <span class="plain">Enquanto voce tatua,</span><br/>
-      <span class="grad-text">o Bot fecha</span><br/>
-      <span class="plain">clientes pra voce.</span>
+      <span class="plain">Enquanto você tatua,</span><br/>
+      <span class="grad-text">a IA fecha</span><br/>
+      <span class="plain">seu próximo cliente.</span>
     </h1>
 
     <p class="hero-sub">
-      Tatuadores perdem em media <strong>3 a 5 clientes por semana</strong> por demora de resposta.
-      O <strong>Bot Ink IA</strong> atende, qualifica e agenda com a sua personalidade —
-      <strong>24 horas, 7 dias, sem parar.</strong>
+      Você está no meio de uma sessão de 6 horas. O celular vibra. São leads perguntando preço, disponibilidade, estilo.
+      Você não pode parar. <strong>Quando responde à noite, metade já fechou com outro.</strong>
+      O Bot IA Eikon resolve isso — atende, qualifica e agenda <strong>24h, com a sua voz.</strong>
     </p>
-
-    <ul class="hero-bullets">
-      <li>
-        <div class="hb-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        Responde no WhatsApp em segundos — mesmo quando voce esta tatuando
-      </li>
-      <li>
-        <div class="hb-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        Qualifica, quebra objecao e agenda o cliente sem voce precisar parar
-      </li>
-      <li>
-        <div class="hb-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        Treinado em mais de 100 estudios de tattoo em 30 paises
-      </li>
-      <li>
-        <div class="hb-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        Clone digital com a sua voz, linguagem e personalidade
-      </li>
-      <li>
-        <div class="hb-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-        Setup completo em 7 dias — sem conhecimento tecnico
-      </li>
-    </ul>
-
-    <div class="scarcity-strip">
-      <span class="sc-dot"></span>
-      Vagas de demonstracao desta semana estao se esgotando
-    </div>
-
-    <div class="seats-box">
-      <div class="seats-label">Ocupacao das vagas de demo</div>
-      <div class="seats-track"><div class="seats-fill" id="seatsFill"></div></div>
-      <div class="seats-count">82% das vagas desta semana ja reservadas</div>
-    </div>
-  </div>
 
   <!-- FORM CARD -->
   <div id="demo" class="reveal">
     <div class="form-card">
       <div class="fc-glow-b"></div>
 
-      <div class="demo-tag">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        Demo gratuita — acesso imediato
-      </div>
-
-      <p class="fc-title">Veja o Bot Ink IA<br/><span class="gt">funcionando ao vivo</span></p>
-      <p class="fc-desc" style="margin-bottom:28px;">Nosso time mostra na pratica como o bot vai funcionar no seu estudio — em 30 minutos voce decide se faz sentido, sem compromisso.</p>
+      <p class="fc-title">Veja o Bot IA Eikon<br/><span class="gt">funcionando ao vivo</span></p>
+      <p class="fc-desc" style="margin-bottom:28px;">Em 30 minutos nosso time mostra o bot atendendo, qualificando e agendando no seu WhatsApp — com a sua personalidade. Sem compromisso.</p>
 
       <a href="https://form.respondi.app/4YNKvaCi" class="fi-btn" style="display:block;text-decoration:none;">
         <div class="fi-shine"></div>
-        <span class="fi-btn-text">QUERO MINHA DEMONSTRAÇÃO GRATUITA &rarr;</span>
+        <span class="fi-btn-text">QUERO VER O BOT FUNCIONANDO &rarr;</span>
       </a>
-      <p class="fi-note" style="margin-top:14px;">100% gratuito · Sem compromisso · Resposta em minutos</p>
+      <p class="fi-note" style="margin-top:14px;">Demonstração gratuita · Sem compromisso · Resposta em minutos</p>
 
       <div class="trust-row">
         <div class="trust-item">
@@ -1015,57 +990,30 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <div class="proof-wrap reveal">
   <div class="proof-strip">
     <div class="ps-item">
-      <div class="ps-n" data-target="100" data-suffix="+">100+</div>
-      <div class="ps-l">Estudios ativos<br/>com o Bot</div>
+      <div class="ps-n" data-target="200" data-suffix="+">200+</div>
+      <div class="ps-l">Tatuadores atendidos<br/>pela Eikon Ink</div>
     </div>
     <div class="ps-item">
-      <div class="ps-n" data-target="30">30</div>
-      <div class="ps-l">Paises onde<br/>o Bot opera</div>
+      <div class="ps-n">3</div>
+      <div class="ps-l">Continentes<br/>Brasil · EUA · Europa</div>
     </div>
     <div class="ps-item">
       <div class="ps-n">24h</div>
-      <div class="ps-l">Ativo sem parar<br/>atendendo clientes</div>
+      <div class="ps-l">Atendendo sem parar<br/>enquanto você dorme</div>
     </div>
     <div class="ps-item">
       <div class="ps-n">7 dias</div>
-      <div class="ps-l">Para setup<br/>completo no ar</div>
+      <div class="ps-l">Para setup completo<br/>do bot no ar</div>
     </div>
     <div class="ps-item">
       <div class="ps-n">0</div>
-      <div class="ps-l">Conhecimento tecnico<br/>necessario</div>
+      <div class="ps-l">Conhecimento técnico<br/>necessário da sua parte</div>
     </div>
   </div>
 </div>
 
 <div class="divider"></div>
 
-<!-- BOT EM AÇÃO -->
-<section class="sec demo-section">
-  <div class="demo-wrap">
-    <div class="demo-left reveal">
-      <div class="section-tag">Veja funcionando</div>
-      <h2><span style="color:rgba(240,244,255,0.92)">O bot que parece</span><br/><span class="grad-text">exatamente voce.</span></h2>
-      <p>Enquanto voce tatua, ele responde em segundos, qualifica o cliente e ja agenda — tudo com a sua linguagem, o seu tom e os seus precos. Nenhum cliente percebe que nao e voce.</p>
-      <ul class="demo-bullets">
-        <li>
-          <div class="db-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>Resposta media de <strong style="color:var(--b300)">8 segundos</strong> — enquanto concorrentes demoram horas</span>
-        </li>
-        <li>
-          <div class="db-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>Quebra de objecao de preco <strong style="color:var(--b300)">antes de voce ver a mensagem</strong></span>
-        </li>
-        <li>
-          <div class="db-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>Atendimento ativo <strong style="color:var(--b300)">de madrugada, no feriado, durante sessoes longas</strong></span>
-        </li>
-        <li>
-          <div class="db-ico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-          <span>Agenda confirmada com <strong style="color:var(--b300)">lembrete automatico</strong> — zero falta de cliente</span>
-        </li>
-      </ul>
-  </div>
-</section>
 
 <div class="divider-light"></div>
 
@@ -1073,44 +1021,44 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <section class="sec ba-section">
   <div class="container">
     <div class="center reveal">
-      <div class="section-tag">A realidade antes e depois</div>
+      <div class="section-tag">O contraste que muda tudo</div>
       <h2 class="section-title"><span class="grad-text">Dois mundos completamente</span><br/><span style="color:#1e293b;">diferentes.</span></h2>
-      <p class="section-sub">Veja como muda a operacao de um estudio de tattoo quando o Bot Ink IA entra em acao.</p>
+      <p class="section-sub">Cada mensagem não respondida é dinheiro saindo da sua agenda. Veja o que muda quando o Bot IA Eikon entra em ação.</p>
     </div>
 
     <div class="ba-divider reveal">
       <div class="ba-divider-line"></div>
-      <span>o que muda na pratica</span>
+      <span>a transformação real</span>
       <div class="ba-divider-line r"></div>
     </div>
 
     <div class="ba-grid reveal">
       <div class="ba-col before">
         <div class="ba-tag"></div>
-        <h3>Voce que faz tudo sozinho</h3>
+        <h3>Você faz tudo sozinho</h3>
         <ul>
-          <li>Lead manda mensagem e fica horas sem resposta enquanto voce tatua</li>
-          <li>Voce para no meio de um trabalho para responder WhatsApp</li>
-          <li>Lead some sem marcar porque demorou a resposta</li>
-          <li>Funcionario erra a qualificacao e agenda cliente desqualificado</li>
-          <li>Agenda com buracos por falta de follow-up ativo</li>
-          <li>Leads de madrugada perdidos porque voce estava dormindo</li>
-          <li>Tempo que deveria ser de tatuar gasto respondendo perguntas repetidas</li>
-          <li>Sem controle: nao sabe quantos leads viraram clientes</li>
+          <li>Lead manda mensagem e fica horas sem resposta enquanto você tatua</li>
+          <li>Você para no meio de um trabalho para responder WhatsApp</li>
+          <li>Lead some porque outro tatuador respondeu primeiro</li>
+          <li>Atendimento inconsistente — cada resposta sai de um jeito</li>
+          <li>Agenda com buracos por falta de follow-up</li>
+          <li>Leads de madrugada e fim de semana perdidos</li>
+          <li>Tempo que deveria ser de arte gasto em perguntas repetidas</li>
+          <li>Sem controle: não sabe quantos leads viraram clientes</li>
         </ul>
       </div>
       <div class="ba-col after">
         <div class="ba-tag"></div>
-        <h3>Com o Bot Ink IA trabalhando</h3>
+        <h3>Com o Bot IA Eikon no comando</h3>
         <ul>
-          <li><span class="check-ico">&#10140;</span> Resposta em segundos — qualquer hora, sem voce precisar parar</li>
-          <li><span class="check-ico">&#10140;</span> Voce tatua com foco total enquanto o bot cuida do atendimento</li>
-          <li><span class="check-ico">&#10140;</span> Lead qualificado e com sinal enviado antes de voce terminar a sessao</li>
-          <li><span class="check-ico">&#10140;</span> Atendimento padrao impecavel — sem erros, sem improvisacao</li>
+          <li><span class="check-ico">&#10140;</span> Resposta em segundos — qualquer hora, sem você parar</li>
+          <li><span class="check-ico">&#10140;</span> Você tatua com foco total, o bot cuida do atendimento</li>
+          <li><span class="check-ico">&#10140;</span> Lead qualificado e pronto antes de você terminar a sessão</li>
+          <li><span class="check-ico">&#10140;</span> Atendimento padrão premium — sem erros, sem improvisação</li>
           <li><span class="check-ico">&#10140;</span> Agenda sempre cheia com os clientes certos</li>
           <li><span class="check-ico">&#10140;</span> Leads de madrugada convertidos antes de amanhecer</li>
-          <li><span class="check-ico">&#10140;</span> Seu tempo 100% dedicado a arte — o bot cuida do resto</li>
-          <li><span class="check-ico">&#10140;</span> Visibilidade total: sabe exatamente quantos leads viraram clientes</li>
+          <li><span class="check-ico">&#10140;</span> Seu tempo 100% dedicado à arte — o bot faz o resto</li>
+          <li><span class="check-ico">&#10140;</span> Visibilidade total: sabe exatamente quantos viraram clientes</li>
         </ul>
       </div>
     </div>
@@ -1120,45 +1068,6 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <div class="divider-light"></div>
 
 <!-- FEATURES -->
-<section class="sec features-section">
-  <div class="container">
-    <div class="center reveal">
-      <div class="section-tag">Por que o Bot Ink IA e diferente</div>
-      <h2 class="section-title"><span class="grad-text">Ele nao e um bot generico.</span><br/><span style="color:rgba(240,244,255,0.9)">E o seu clone digital.</span></h2>
-      <p class="section-sub">Desenvolvido exclusivamente para tattoo. Testado em mais de 100 estudios. Treinado com a sua voz e personalidade.</p>
-    </div>
-
-    <div class="features-grid">
-      <!-- FEAT 1 -->
-      <div class="feat-card reveal">
-        <div class="feat-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M16 2a4 4 0 0 1 4 4"/></svg>
-        </div>
-        <div class="feat-tag">Atendimento 24h</div>
-        <h3>Agente com a Sua Personalidade</h3>
-        <p>Em 7 dias de treinamento, o Bot Ink IA absorve o seu jeito de falar, sua linguagem, seus precos e seu estilo. Ele vira um clone digital seu — respondendo o WhatsApp do estudio o dia inteiro, sem se cansar, sem errar o tom.</p>
-      </div>
-      <!-- FEAT 2 -->
-      <div class="feat-card reveal">
-        <div class="feat-icon">
-          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        </div>
-        <div class="feat-tag">Qualificacao Inteligente</div>
-        <h3>Filtra Quem Vai Pagar — Antes de Voce Atender</h3>
-        <p>O bot coleta nome, ideia da tatuagem, referencias visuais e expectativa de investimento. Chega de perder 40 minutos conversando com alguem que vai sumir quando ver o preco. So vai pra voce quem esta pronto para fechar.</p>
-      </div>
-      <!-- FEAT 3 -->
-      <div class="feat-card reveal">
-        <div class="feat-icon">
-          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/></svg>
-        </div>
-        <div class="feat-tag">Rede Neural Exclusiva</div>
-        <h3>Inteligencia Treinada so para Tattoo</h3>
-        <p>Diferente de bots genericos, o Bot Ink IA foi construido e testado especificamente no mercado de tattoo — com a linguagem, as objecoes e o comportamento real do cliente de estudio. Ele entende o que um bot generico nunca vai entender.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <div class="divider"></div>
 
@@ -1166,9 +1075,9 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <section class="sec how-section">
   <div class="container">
     <div class="center reveal">
-      <div class="section-tag">Como funciona</div>
-      <h2 class="section-title"><span style="color:rgba(240,244,255,0.9)">Tres passos para</span><br/><span class="grad-text">sua agenda lotar.</span></h2>
-      <p class="section-sub">Do zero ao bot funcionando em menos de uma semana. Simples assim.</p>
+      <div class="section-tag">Simples e direto</div>
+      <h2 class="section-title"><span style="color:rgba(240,244,255,0.9)">Três passos para</span><br/><span class="grad-text">sua agenda lotar.</span></h2>
+      <p class="section-sub">Do zero ao bot funcionando em menos de uma semana. Você não precisa entender de tecnologia.</p>
     </div>
 
     <div class="steps-grid reveal">
@@ -1178,8 +1087,8 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
           <svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.069A1 1 0 0 1 21 8.82v6.36a1 1 0 0 1-1.447.89L15 14M3 8a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"/></svg>
         </div>
         <div class="step-num">Passo 01</div>
-        <h3>Demonstracao Gratuita</h3>
-        <p>Voce agenda uma demo de 30 minutos. Nosso time mostra o bot funcionando ao vivo — respondendo clientes, quebrando objecoes, agendando. Voce ve exatamente como vai funcionar no seu estudio antes de decidir qualquer coisa.</p>
+        <h3>Demonstração ao Vivo</h3>
+        <p>Você agenda uma demo de 30 minutos. Nosso time mostra o bot atendendo, qualificando e agendando — ao vivo. Você vê exatamente como vai funcionar no seu estúdio antes de decidir qualquer coisa.</p>
       </div>
       <div class="step">
         <div class="step-bg-num">02</div>
@@ -1187,8 +1096,8 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
           <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
         </div>
         <div class="step-num">Passo 02</div>
-        <h3>Setup em 7 Dias</h3>
-        <p>Nossa equipe treina o bot com tudo sobre o seu estudio: sua voz, seus precos, seus estilos, suas regras de agendamento. Em 7 dias, ele ja esta respondendo com a sua personalidade — sem que nenhum cliente perceba que nao e voce.</p>
+        <h3>Setup Personalizado em 7 Dias</h3>
+        <p>Nossa equipe treina o bot com tudo sobre o seu estúdio: sua voz, seus preços, seus estilos, suas regras. Em 7 dias ele responde com a sua personalidade — nenhum cliente percebe que é IA.</p>
       </div>
       <div class="step">
         <div class="step-bg-num">03</div>
@@ -1197,7 +1106,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
         </div>
         <div class="step-num">Passo 03</div>
         <h3>Agenda Cheia, Arte no Foco</h3>
-        <p>O bot entra em acao, atendendo seus leads 24h por dia. Voce recebe apenas os clientes qualificados e prontos para marcar. Seu trabalho agora e so tatuar — o resto esta resolvido.</p>
+        <p>O bot entra em ação 24h por dia. Você recebe apenas clientes qualificados e prontos para agendar. Seu único trabalho agora é tatuar — o atendimento está resolvido.</p>
       </div>
     </div>
   </div>
@@ -1209,52 +1118,52 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <section class="sec diff-section">
   <div class="container">
     <div class="center reveal">
-      <div class="section-tag">O que ele faz</div>
+      <div class="section-tag">Não é chatbot genérico</div>
       <h2 class="section-title"><span class="grad-text">Tudo que consome</span><br/><span style="color:#1e293b;">seu tempo hoje.</span></h2>
-      <p class="section-sub">O Bot Ink IA centraliza e automatiza toda a parte de atendimento e qualificacao — para voce focar no que gera dinheiro de verdade: tatuar.</p>
+      <p class="section-sub">O Bot IA Eikon automatiza toda a parte de atendimento e qualificação — para você focar no que gera dinheiro: tatuar.</p>
     </div>
 
     <div class="diff-grid reveal">
       <div class="diff-item">
         <div class="diff-num">01</div>
         <div class="diff-body">
-          <strong>Coleta de Dados do Cliente</strong>
-          <span>Nome, contato, redes sociais e referencias visuais coletados de forma fluida e natural — antes mesmo de voce ver a mensagem.</span>
+          <strong>Nunca mais peça nome e contato manualmente</strong>
+          <span>Nome, WhatsApp, redes sociais e referências visuais coletados de forma fluida e natural — antes mesmo de você ver a mensagem.</span>
         </div>
       </div>
       <div class="diff-item">
         <div class="diff-num">02</div>
         <div class="diff-body">
-          <strong>Entendimento da Ideia da Tatuagem</strong>
-          <span>O bot aprofunda a conversa, entende o conceito do cliente, pede referencias e organiza tudo para quando voce for analisar.</span>
+          <strong>O cliente chega com a ideia organizada</strong>
+          <span>O bot aprofunda a conversa, entende o conceito, pede referências e organiza tudo para quando você for analisar o projeto.</span>
         </div>
       </div>
       <div class="diff-item">
         <div class="diff-num">03</div>
         <div class="diff-body">
-          <strong>Qualificacao de Investimento</strong>
-          <span>Explica seu processo de precificacao, alinha expectativas e filtra quem esta disposto a investir no seu trabalho de verdade.</span>
+          <strong>Zero curiosos — só gente séria</strong>
+          <span>Explica seu processo de precificação, alinha expectativas e filtra quem está disposto a investir no seu trabalho de verdade.</span>
         </div>
       </div>
       <div class="diff-item">
         <div class="diff-num">04</div>
         <div class="diff-body">
-          <strong>Quebra de Objecoes</strong>
-          <span>Responde duvidas sobre preco, tempo, cicatrizacao e estilo com inteligencia — convertendo quem estava em duvida antes de voce precisar intervir.</span>
+          <strong>Objeções quebradas antes de você intervir</strong>
+          <span>Responde dúvidas sobre preço, tempo, cicatrização e estilo com inteligência — convertendo quem estava em cima do muro.</span>
         </div>
       </div>
       <div class="diff-item">
         <div class="diff-num">05</div>
         <div class="diff-body">
-          <strong>Agendamento e Confirmacao</strong>
-          <span>Confirma horarios, envia lembretes e reduz faltas sem voce precisar tocar no celular. Agenda preenchida, sem buracos.</span>
+          <strong>Agenda preenchida sem você tocar no celular</strong>
+          <span>Confirma horários, envia lembretes e reduz faltas automaticamente. Sem buracos, sem no-show.</span>
         </div>
       </div>
       <div class="diff-item">
         <div class="diff-num">06</div>
         <div class="diff-body">
-          <strong>Atendimento Noturno e de Fim de Semana</strong>
-          <span>As 2h da manha, no domingo, no feriado — o bot esta la convertendo leads enquanto voce descansa. Nenhum cliente cai mais por falta de resposta.</span>
+          <strong>2h da manhã, domingo, feriado — ele está lá</strong>
+          <span>O bot converte leads enquanto você descansa. Nenhum cliente cai mais por falta de resposta — nunca mais.</span>
         </div>
       </div>
     </div>
@@ -1264,56 +1173,7 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <div class="divider-light"></div>
 
 <!-- TESTIMONIALS -->
-<section class="sec testimonials-section">
-  <div class="container">
-    <div class="center reveal">
-      <div class="section-tag">Quem ja usa</div>
-      <h2 class="section-title"><span style="color:#1e293b;">Estudios que pararam de</span><br/><span class="grad-text">perder cliente.</span></h2>
-      <p class="section-sub">Tatuadores que colocaram o Bot Ink IA pra trabalhar e transformaram a operacao do estudio.</p>
-    </div>
 
-    <div class="testimonials-grid reveal">
-      <div class="t-card">
-        <div class="t-stars"><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div></div>
-        <div class="t-result-pill">+R$11.400 em 18 dias</div>
-        <p class="t-quote">Antes eu ficava olhando pro celular no meio do trabalho. Agora o bot responde tudo enquanto eu tatuo. Em 18 dias minha agenda encheu e eu parei de perder cliente por demora de resposta. Parece idiota de tao simples que e.</p>
-        <div class="t-author">
-          <div class="t-av">RM</div>
-          <div>
-            <div class="t-name">Rafael M.</div>
-            <div class="t-meta">Tatuador Fineline — Sao Paulo · <span style="color:var(--b400)">@rafaelm.tattoo</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="t-card">
-        <div class="t-stars"><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div></div>
-        <div class="t-result-pill">+R$18k no mes seguinte</div>
-        <p class="t-quote">Eu tinha funcionaria so pra responder WhatsApp. Ela errava o tom, qualificava errado, perdia cliente. Troquei pelo Bot Ink IA. Economizei o salario dela e o bot converte muito mais. No mes seguinte o faturamento subiu R$18k.</p>
-        <div class="t-author">
-          <div class="t-av">AC</div>
-          <div>
-            <div class="t-name">Ana C.</div>
-            <div class="t-meta">Dona de estudio — Rio de Janeiro · <span style="color:var(--b400)">@acstudiotattoo</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="t-card">
-        <div class="t-stars"><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div></div>
-        <div class="t-result-pill">De R$9k para R$28k em 45 dias</div>
-        <p class="t-quote">Eu duvidei que um bot pudesse soar como eu. Ate ver funcionando. Os clientes nem percebem. O bot quebra objecao melhor do que eu fazia. Em 45 dias passei de R$9k para R$28k no mes. E o melhor: eu tatuo mais, nao menos.</p>
-        <div class="t-author">
-          <div class="t-av">CT</div>
-          <div>
-            <div class="t-name">Carlos T.</div>
-            <div class="t-meta">Tatuador Blackwork — Belo Horizonte · <span style="color:var(--b400)">@carlos.blackwork</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <div class="divider-light"></div>
 
@@ -1321,8 +1181,8 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <section class="sec faq-section">
   <div class="container">
     <div class="center reveal">
-      <div class="section-tag">Duvidas frequentes</div>
-      <h2 class="section-title"><span class="grad-text">Respostas diretas</span><br/><span style="color:rgba(240,244,255,0.9)">para quem e serio.</span></h2>
+      <div class="section-tag">Dúvidas frequentes</div>
+      <h2 class="section-title"><span class="grad-text">Respostas diretas</span><br/><span style="color:rgba(240,244,255,0.9)">para quem é sério.</span></h2>
     </div>
 
     <div class="faq-list reveal">
@@ -1388,23 +1248,18 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 
 <!-- FINAL CTA -->
 <section class="final-section" id="final-cta">
-  <div class="final-urgency reveal">
-    <div class="u-dot"></div>
-    <p>Vagas de demonstracao desta semana quase esgotadas — <strong>reserve a sua agora</strong></p>
-  </div>
-
   <h2 class="final-title reveal">
-    <span class="grad-text">Pare de perder cliente</span><br/>
-    <span style="color:rgba(240,244,255,0.92)">enquanto voce tatua.</span>
+    <span class="grad-text">Cada lead ignorado</span><br/>
+    <span style="color:rgba(240,244,255,0.92)">é dinheiro que não volta.</span>
   </h2>
-  <p class="final-sub reveal">Agende a demonstracao gratuita e veja na pratica como o Bot Ink IA vai mudar a operacao do seu estudio a partir de hoje.</p>
+  <p class="final-sub reveal">Se você perde 5 leads por semana por demora, são 20 por mês. A R$800 de ticket médio, são <strong style="color:var(--gold);">R$16.000 deixados na mesa.</strong> O Bot IA Eikon custa uma fração disso.</p>
 
   <div class="final-form-wrap reveal">
     <a href="https://form.respondi.app/4YNKvaCi" class="fi-btn" style="display:block;text-decoration:none;">
       <div class="fi-shine"></div>
-      <span class="fi-btn-text">QUERO MINHA DEMONSTRAÇÃO GRATUITA &rarr;</span>
+      <span class="fi-btn-text">QUERO VER O BOT FUNCIONANDO &rarr;</span>
     </a>
-    <p class="fi-note" style="margin-top:14px;">100% gratuito · Sem compromisso · Nossa equipe entra em contato pelo WhatsApp</p>
+    <p class="fi-note" style="margin-top:14px;">Demonstração gratuita · Sem compromisso · Nossa equipe entra em contato pelo WhatsApp</p>
   </div>
 
   <div class="trust-row reveal" style="margin-top:32px;">
@@ -1430,12 +1285,11 @@ footer p{font-size:11.5px;color:rgba(59,130,246,0.28);line-height:1.9;}
 <!-- FOOTER -->
 <footer>
   <div class="foot-logo">
-    <div class="logo-mark">B</div>
-    <span class="logo-text">BOT INK IA</span>
+    <span class="logo-text">BOT IA EIKON</span>
   </div>
   <div class="foot-right">
-    <p>2025 Bot Ink IA — Eikon Ink Marketing. Todos os direitos reservados.<br/>
-    Exclusivo para estudios de tattoo. Desenvolvido com inteligencia artificial.</p>
+    <p>© 2025 Bot IA Eikon — Eikon Ink Marketing. Todos os direitos reservados.<br/>
+    Desenvolvido pela equipe que já lotou a agenda de mais de 200 tatuadores no Brasil, EUA e Europa.</p>
   </div>
 </footer>
 
@@ -1482,37 +1336,45 @@ document.addEventListener('click',e=>{
   if(!canvas)return;
   const ctx=canvas.getContext('2d');
   let W=canvas.width=window.innerWidth,H=canvas.height=window.innerHeight;
-  const pts=Array.from({length:55},()=>({
+  const isMobile=W<768;
+  const count=isMobile?18:45;
+  const linkDist=isMobile?80:130;
+  const pts=Array.from({length:count},()=>({
     x:Math.random()*W,y:Math.random()*H,
-    vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,
-    r:Math.random()*1.4+.4,
-    a:Math.random()*.5+.1
+    vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,
+    r:Math.random()*1.3+.4,
+    a:Math.random()*.45+.1
   }));
-  window.addEventListener('resize',()=>{W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;});
+  let resizeTimer;
+  window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;},150);});
+  let raf;
   function draw(){
     ctx.clearRect(0,0,W,H);
-    pts.forEach(p=>{
+    for(let i=0;i<pts.length;i++){
+      const p=pts[i];
       p.x+=p.vx;p.y+=p.vy;
       if(p.x<0||p.x>W)p.vx*=-1;
       if(p.y<0||p.y>H)p.vy*=-1;
-      ctx.beginPath();
-      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(96,165,250,${p.a})`;
-      ctx.fill();
-    });
-    pts.forEach((a,i)=>{
-      pts.slice(i+1).forEach(b=>{
-        const d=Math.hypot(a.x-b.x,a.y-b.y);
-        if(d<130){
-          ctx.beginPath();
-          ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
-          ctx.strokeStyle=`rgba(59,130,246,${.08*(1-d/130)})`;
-          ctx.lineWidth=.6;ctx.stroke();
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(96,165,250,${p.a})`;ctx.fill();
+    }
+    if(!isMobile){
+      for(let i=0;i<pts.length;i++){
+        for(let j=i+1;j<pts.length;j++){
+          const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d2=dx*dx+dy*dy;
+          if(d2<linkDist*linkDist){
+            ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+            ctx.strokeStyle=`rgba(59,130,246,${.07*(1-Math.sqrt(d2)/linkDist)})`;
+            ctx.lineWidth=.6;ctx.stroke();
+          }
         }
-      });
-    });
-    requestAnimationFrame(draw);
+      }
+    }
+    raf=requestAnimationFrame(draw);
   }
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){cancelAnimationFrame(raf);}else{draw();}
+  });
   draw();
 })();
 
@@ -1551,36 +1413,6 @@ const cObs=new IntersectionObserver(entries=>{
 },{threshold:.5});
 document.querySelectorAll('[data-target]').forEach(el=>cObs.observe(el));
 
-/* ===== NAV SCROLL — GLASS + HIDE ===== */
-(function(){
-  const nav=document.getElementById('mainNav');
-  let lastY=window.scrollY;
-  let ticking=false;
-
-  function updateNav(){
-    const currentY=window.scrollY;
-    const scrolled=currentY>40;
-    const goingDown=currentY>lastY;
-
-    nav.classList.toggle('scrolled',scrolled);
-
-    if(currentY>120){
-      nav.classList.toggle('nav-hidden',goingDown);
-    } else {
-      nav.classList.remove('nav-hidden');
-    }
-
-    lastY=currentY;
-    ticking=false;
-  }
-
-  window.addEventListener('scroll',()=>{
-    if(!ticking){requestAnimationFrame(updateNav);ticking=true;}
-  },{passive:true});
-
-  updateNav();
-})();
-
 /* ===== FAQ ===== */
 function toggleFaq(btn){
   const item=btn.parentElement;
@@ -1597,27 +1429,6 @@ function toggleFaq(btn){
     btn.classList.add('active');
   }
 }
-
-/* ===== FLOATING NOTIF ===== */
-const notifs=[
-  {av:'RM',name:'Rafael M.',action:'agendou uma demonstracao'},
-  {av:'AC',name:'Ana C.',action:'esta vendo o bot funcionando ao vivo'},
-  {av:'LF',name:'Lucas F.',action:'acabou de contratar o Bot Ink IA'},
-  {av:'MR',name:'Marcos R.',action:'lotou a agenda no primeiro mes'},
-  {av:'JP',name:'Julia P.',action:'agendou demonstracao para hoje'},
-  {av:'CB',name:'Carlos B.',action:'ativou o bot no estudio'},
-];
-let ni=0;
-function showNotif(){
-  const n=notifs[ni%notifs.length];ni++;
-  const el=document.getElementById('floatNotif');
-  document.getElementById('fnAv').textContent=n.av;
-  document.getElementById('fnName').textContent=n.name;
-  document.getElementById('fnAction').textContent=n.action;
-  el.classList.add('show');
-  setTimeout(()=>{el.classList.remove('show');setTimeout(showNotif,7000);},5000);
-}
-setTimeout(showNotif,3500);
 
 /* ===== FORM SUBMIT ===== */
 function submitForm(){
