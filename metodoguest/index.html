@@ -13,14 +13,20 @@
 <meta name="robots" content="index, follow, max-image-preview:large"/>
 <meta name="author" content="EIKON Agência"/>
 <meta name="keywords" content="Método Guest, tatuador Europa, guest tatuagem internacional, EIKON, tatuador brasileiro Europa, agência tatuador, marketing tatuador"/>
-<link rel="preload" as="image" href="hero-logo.jpg" fetchpriority="high"/>
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/Eikon.jpg" fetchpriority="high" crossorigin="anonymous"/>
+<link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700;800;900&display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<link rel="dns-prefetch" href="https://scripts.converteai.net"/>
+<link rel="preconnect" href="https://scripts.converteai.net" crossorigin/>
+<!-- Fonts: peso reduzido — só pesos efetivamente usados -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800;900&display=swap" rel="stylesheet"/>
+<!-- Tailwind CDN (mantido conforme pedido) — defer p/ não bloquear render -->
+<script src="https://cdn.tailwindcss.com" defer></script>
+<!-- GSAP com defer: não bloqueia parse do HTML -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
 <style>
 :root {
   /* PALETA PRINCIPAL — branco/cinza substitui roxos */
@@ -241,7 +247,8 @@ body::before{
   content:'';position:absolute;bottom:-30%;right:-20%;width:60%;height:60%;
   background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 70%);pointer-events:none;
 }
-.card-3d{transform-style:preserve-3d;transition:transform .1s ease,box-shadow .1s ease;will-change:transform;}
+.card-3d{transform-style:preserve-3d;transition:transform .1s ease,box-shadow .1s ease;}
+.card-3d-wrap:hover .card-3d{will-change:transform;} /* só aplica GPU layer no hover */
 .card-3d-wrap{perspective:1400px;}
 
 /* PROCESS STEP */
@@ -665,8 +672,8 @@ body::before{
   border-radius:24px;
   background:
     linear-gradient(135deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.015) 100%);
-  backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  backdrop-filter:blur(12px) saturate(150%);
+  -webkit-backdrop-filter:blur(12px) saturate(150%);
   border:1px solid rgba(255,255,255,0.08);
   overflow:hidden;
   transition:
@@ -935,8 +942,8 @@ body::before{
   isolation:isolate;
   border-radius:24px;
   background:linear-gradient(135deg,rgba(255,255,255,0.045) 0%,rgba(255,255,255,0.015) 100%);
-  backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  backdrop-filter:blur(12px) saturate(150%);
+  -webkit-backdrop-filter:blur(12px) saturate(150%);
   border:1px solid rgba(255,255,255,0.08);
   overflow:hidden;
   transition:transform .55s cubic-bezier(.22,.61,.36,1),
@@ -1154,8 +1161,8 @@ body::before{
   padding:2.5rem 2rem 2rem;
   border-radius:24px;
   background:linear-gradient(135deg,rgba(255,255,255,0.045) 0%,rgba(255,255,255,0.015) 100%);
-  backdrop-filter:blur(20px) saturate(180%);
-  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  backdrop-filter:blur(12px) saturate(150%);
+  -webkit-backdrop-filter:blur(12px) saturate(150%);
   border:1px solid rgba(255,255,255,0.08);
   overflow:hidden;
   transition:transform .55s cubic-bezier(.22,.61,.36,1),
@@ -1251,8 +1258,8 @@ body::before{
 }
 .testi-card .testi-stars svg{
   width:18px;height:18px;
-  color:#fff;
-  filter:drop-shadow(0 0 6px rgba(255,255,255,.5));
+  color:#FBBF24; /* amarelo dourado */
+  filter:drop-shadow(0 0 6px rgba(251,191,36,.45));
 }
 .testi-card .testi-text{
   position:relative;z-index:3;
@@ -1273,7 +1280,7 @@ body::before{
   display:flex;align-items:center;gap:.9rem;
 }
 .testi-card .testi-avatar{
-  width:42px;height:42px;border-radius:50%;
+  width:48px;height:48px;border-radius:50%;
   background:linear-gradient(135deg,#525252,#1a1a1a);
   display:flex;align-items:center;justify-content:center;
   color:#fff;font-weight:800;font-size:.85rem;
@@ -1283,6 +1290,12 @@ body::before{
     0 6px 16px rgba(0,0,0,.5),
     inset 0 1px 0 rgba(255,255,255,.15);
   flex-shrink:0;
+  overflow:hidden; /* recorta foto no círculo */
+}
+.testi-card .testi-avatar img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
 }
 .testi-card .testi-info{flex:1;min-width:0;}
 .testi-card .testi-name{
@@ -1324,12 +1337,7 @@ body::before{
 .footer-bottom-link{color:#52525b;transition:color .2s ease;}
 .footer-bottom-link:hover{color:#ffffff;}
 
-/* Acessibilidade — Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *,*::before,*::after{animation-duration:.01s !important;animation-iteration-count:1 !important;transition-duration:.01s !important;scroll-behavior:auto !important;}
-  .light-beam,.gradient-text-hero{animation:none !important;}
-  .marquee-track{animation-duration:90s !important;}
-}
+/* Acessibilidade — Reduced motion (regra unificada está no critical-perf-css abaixo) */
 
 </style>
 
@@ -1359,14 +1367,28 @@ body::before{
   }
 }
 </script>
-<script type="text/javascript">var s=document.createElement("script");s.src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js";s.async=!0;document.head.appendChild(s);</script>
+<!-- SDK ConverteAI — async para carregar paralelo, mas o quanto antes possível
+     (o player espera esse SDK no window pai). Ficar no head + async é a opção mais segura. -->
+<script async src="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js"></script>
 
 <style id="critical-perf-css">
 /* Safety: content always visible even if GSAP fails to load. GSAP can still animate. */
 .fade-up{opacity:1;transform:none;}
 /* Reserve hero image space to avoid CLS */
 .hero-logo{background:#000;}
-/* Mobile performance: disable heavy backdrop-filter on small screens */
+
+/* ─────── CONTENT-VISIBILITY — render só do que tá na tela
+   (cases-section removido para não interferir com IntersectionObserver dos vídeos) ─────── */
+.pillars-section,
+.testi-section,
+section.bg-process,
+section.bg-pricing,
+section.bg-cta{
+  content-visibility:auto;
+  contain-intrinsic-size:auto 800px;
+}
+
+/* ─────── MOBILE PERFORMANCE — desliga efeitos caros ─────── */
 @media (max-width: 768px){
   *{
     backdrop-filter:none !important;
@@ -1378,28 +1400,56 @@ body::before{
     opacity:1 !important;
   }
   .hero-logo-wrap::before{filter:blur(20px);}
-  /* Reduce heavy infinite animations on mobile */
+  /* Remove animações infinitas pesadas em mobile */
   .light-beam, .blob{display:none;}
+  .globe-bg, .cases-globe, .testi-globe{display:none;}
+  body::before{display:none;} /* grain off em mobile */
+  .marquee-track{animation-duration:50s;} /* mais lento = menos repaints */
+  /* Desliga borda animada cara dos cards em mobile */
+  .pillar-card::before,
+  .case-card::before,
+  .testi-card::before,
+  .service-card::before{animation:none !important;}
+  /* Para o shine sweep em mobile */
+  .pillar-card::after,
+  .case-card::after,
+  .testi-card::after{display:none;}
 }
+
+/* ─────── REDUCED MOTION (regra unificada) ─────── */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
     animation-duration:.001s !important;
     animation-iteration-count:1 !important;
     transition-duration:.001s !important;
+    scroll-behavior:auto !important;
   }
+  .light-beam,.gradient-text-hero,.globe-bg svg,.cases-globe svg,.testi-globe svg{animation:none !important;}
+  .marquee-track{animation-duration:90s !important;}
+}
+
+/* ─────── SCROLLBAR PARA TELAS GRANDES ─────── */
+@media (hover:hover){
+  ::-webkit-scrollbar{width:8px;}
 }
 </style>
 </head>
 <body>
 
-<noscript>
-<style>.fade-up,.scroll-left,.scroll-right,.scroll-bottom,.scroll-top{opacity:1 !important;transform:none !important;filter:none !important;}
+<style>
 /* VIDEO CASE — variação do case-card para hospedar vídeo vertical */
 .video-case{padding:1.25rem 1.25rem 1.5rem;display:flex;flex-direction:column;}
 .video-case .case-header{margin-bottom:1rem;}
 .video-case .video-block{margin-top:auto;background:#0a0a0a;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 38px rgba(0,0,0,.45);}
 .video-case .video-block iframe{display:block;background:#000;}
 @media (max-width:640px){.video-case .video-block{max-width:340px;}}
+</style>
+
+<noscript>
+<style>
+.fade-up,.scroll-left,.scroll-right,.scroll-bottom,.scroll-top{opacity:1 !important;transform:none !important;filter:none !important;}
+/* Sem JS: força carregamento direto dos vídeos */
+iframe[data-lazy-video]{background:#0a0a0a;}
 </style>
 </noscript>
 
@@ -1421,7 +1471,7 @@ body::before{
     <h1 class="fade-up" style="margin:0 auto;max-width:1000px;">
       <span class="visually-hidden">Método Guest — O sistema operacional Eikon que acelera o Tatuador para o crescimento e o sucesso em todo seu Guest. Validado em +35 países e R$1MM investidos em tráfego pago.</span>
       <span class="hero-logo-wrap">
-        <img src="hero-logo.jpg" alt="Método Guest" class="hero-logo" width="1640" height="881" fetchpriority="high" decoding="async"/>
+        <img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/Eikon.jpg" alt="Método Guest — EIKON" class="hero-logo" width="1640" height="881" fetchpriority="high" decoding="sync" loading="eager"/>
       </span>
     </h1>
 
@@ -1574,9 +1624,9 @@ body::before{
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">O Sistema · Método Guest</span></div>
       <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;">
-        Conheça o <span class="gradient-text">"Método Guest"</span> e descubra como Tatuadores estão lotando agenda, cobrando 7x mais e virando referência na Tattoo.
+        Conheça o <span class="gradient-text">"Método Guest"</span> e veja como Tatuadores estão lotando agenda, cobrando mais caro.
       </h2>
-      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">Não tem guru e muito menos mentira! É sistema operacional validado em <strong style="color:#fff;font-weight:600;">+35 países</strong> e <strong style="color:#fff;font-weight:600;">R$1MM</strong> investidos em tráfego pago. Além de método único no atendimento do tatuador!</p>
+      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;"><strong style="color:#fff;font-weight:600;">+35 países</strong> e <strong style="color:#fff;font-weight:600;">R$1MM</strong> investidos em tráfego pago.</p>
     </div>
 
     <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:max-w-6xl">
@@ -1590,7 +1640,7 @@ body::before{
           </div>
           <p class="pillar-eyebrow">Módulo 1 · Fundamento do Guest</p>
           <h3 class="pillar-title">Planejamento e Previsibilidade</h3>
-          <p class="pillar-desc">40 dias de antecedência mínimo! Calendário operacional, planilha de ROI por viagem e checklist pré-embarque (visto, ANVISA, biossegurança, contratos). <strong>Organização e clareza é paz</strong> para curtir toda viagem.</p>
+          <p class="pillar-desc">Calendário operacional, planilha de ROI por viagem e checklist pré-embarque (visto, ANVISA, biossegurança, contratos).</p>
           <div class="pillar-hint">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-13a.75.75 0 0 0-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 0 0 0-1.5h-3.25V5Z" clip-rule="evenodd"/></svg>
             40 dias · cronograma operacional
@@ -1605,7 +1655,7 @@ body::before{
           </div>
           <p class="pillar-eyebrow">Pilar 2 · Aquisição Guest</p>
           <h3 class="pillar-title">Tráfego Pago · Funil de Visita</h3>
-          <p class="pillar-desc">Funil Visita validado em <strong>35 países diferentes</strong> e <strong>+R$1MM investidos</strong>. Aplicando as estratégias ensinadas no Tráfego, resultado é garantido. Funil Aquisição sempre deu certo porque ele traz visibilidade com pressão no seu perfil — explora a vontade e o desejo do ser humano.</p>
+          <p class="pillar-desc">Funil Visita e <strong>estratégias avançadas na tattoo</strong> que quase ninguém faz rodando Tráfego Pago.</p>
           <div class="pillar-hint">
             <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0 1 12 2v5h4a1 1 0 0 1 .82 1.573l-7 10A1 1 0 0 1 8 18v-5H4a1 1 0 0 1-.82-1.573l7-10a1 1 0 0 1 1.12-.38Z" clip-rule="evenodd"/></svg>
             ROI 20x · caso documentado
@@ -1620,7 +1670,7 @@ body::before{
           </div>
           <p class="pillar-eyebrow">Pilar 3 · Conteúdo de Consciência Guest</p>
           <h3 class="pillar-title">Edição de Vídeo IA · Conversão</h3>
-          <p class="pillar-desc">Mesmo sem falar o idioma local, com <strong>Edição de Vídeo IA</strong> você consegue lotar sua agenda com clientes dispostos a pagar <strong>5x, 6x, 7x ou mais</strong> no seu trampo. Por aqui você encaixa scripts de quebra de objeção e se destaca acima da concorrência — <em>Script avançado</em> para diferenciar.</p>
+          <p class="pillar-desc">Encaixe scripts de quebra de objeção e se destaque acima da concorrência — <strong>Script avançado para diferenciar</strong>. Domine Edição Viral e tenha clientes dispostos a pagar <strong>2x, 3x, 4x mais</strong> na sua arte.</p>
           <div class="pillar-hint">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M7 4a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm1.5 4.146a.5.5 0 0 1 .732-.442l4 2a.5.5 0 0 1 0 .884l-4 2A.5.5 0 0 1 8.5 12V8.146Z"/></svg>
             4 idiomas · IA + tradução
@@ -1635,7 +1685,7 @@ body::before{
           </div>
           <p class="pillar-eyebrow">Pilar 4 · Conversão</p>
           <h3 class="pillar-title">Sistema Atendimento Reverso + Network</h3>
-          <p class="pillar-desc">Network real de estúdios em vários países — <strong>Atendimento Reverso</strong> é o framework de venda em 4 idiomas. Você <strong>CONDUZ</strong> a conversa, não espera, e logo vê a atenção e a vontade do cliente pagar. Esse "Atendimento Reverso" gerou em menos de <strong>90 dias +R$200 Mil</strong> em vendas na Europa para nossos parceiros.</p>
+          <p class="pillar-desc">Network com estúdios de vários países + <strong>Sistema de Atendimento Reverso</strong>, tenha acesso a todo framework e venda seu serviço em <strong>+ de 4 idiomas</strong>.</p>
           <div class="pillar-hint">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-7 9a7 7 0 1 1 14 0H3Z"/></svg>
             35+ países · network ativo
@@ -1665,7 +1715,7 @@ body::before{
           </div>
           <p class="pillar-eyebrow">Bônus · R$150 (Presente da Eikon)</p>
           <h3 class="pillar-title">Comunidade Eikon Tattoo</h3>
-          <p class="pillar-desc">Converse com tatuadores que estão na correria assim como você. Não fique perdido — entenda o mercado, encontre oportunidade e faça mais network real com quem já operou em <strong>+35 países</strong>.</p>
+          <p class="pillar-desc">Faça parte de um grupo seleto de Tatuadores que fatura <strong>R$ 10 mil até R$ 100 mil</strong> todos os meses na Tattoo. Não fique sozinho quando o mercado tiver ruim — entenda e melhore para conquistar seus sonhos!</p>
           <div class="pillar-hint">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-7 9a7 7 0 1 1 14 0H3Z"/></svg>
             150+ tatuadores ativos
@@ -1718,13 +1768,13 @@ body::before{
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">Cases Reais</span></div>
       <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;">
-        Tatuadores impactados<br/>pela <span class="gradient-text">Eikon Marketing</span>
+        Alguns Tatuadores de <span class="gradient-text">100 pra mais</span><br/>com resultados, previsibilidade e crescimento na Tattoo acelerado!
       </h2>
-      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">Sem foto de stock, sem caso aspiracional. Tatuadores reais que aplicaram o Método Guest nos últimos 12 meses — country, ticket e trampo documentados.</p>
+      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">O que Tatuadores falam sobre o <strong style="color:#fff;font-weight:600;">"Método Guest"?</strong></p>
     </div>
 
     <div class="mx-auto mt-14 sm:mt-16 max-w-2xl lg:max-w-6xl">
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
         <!-- VIDEO CASE 1 — Fabio Castilho Tattoo · Portugal -->
         <div class="fade-up case-card video-case meio">
@@ -1735,7 +1785,7 @@ body::before{
           </div>
           <div class="video-block" id="ifr_6a037bba9ca1e0db9a6b0bfe_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bba9ca1e0db9a6b0bfe_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bba9ca1e0db9a6b0bfe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin" onload=" this.onload=null, this.src='https://scripts.converteai.net/6924efa6-6db1-48a2-a62a-9b14ee9dce10/players/6a037bba9ca1e0db9a6b0bfe/v4/embed.html' +(location.search||'?') +'&vl=' +encodeURIComponent(location.href)"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bba9ca1e0db9a6b0bfe" data-lazy-video="6a037bba9ca1e0db9a6b0bfe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
@@ -1749,7 +1799,7 @@ body::before{
           </div>
           <div class="video-block" id="ifr_6a037bbf40952b53b4fab9e3_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bbf40952b53b4fab9e3_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bbf40952b53b4fab9e3" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin" onload=" this.onload=null, this.src='https://scripts.converteai.net/6924efa6-6db1-48a2-a62a-9b14ee9dce10/players/6a037bbf40952b53b4fab9e3/v4/embed.html' +(location.search||'?') +'&vl=' +encodeURIComponent(location.href)"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bbf40952b53b4fab9e3" data-lazy-video="6a037bbf40952b53b4fab9e3" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
@@ -1763,7 +1813,7 @@ body::before{
           </div>
           <div class="video-block" id="ifr_6a037bc4319b5efaa4281578_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bc4319b5efaa4281578_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bc4319b5efaa4281578" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin" onload=" this.onload=null, this.src='https://scripts.converteai.net/6924efa6-6db1-48a2-a62a-9b14ee9dce10/players/6a037bc4319b5efaa4281578/v4/embed.html' +(location.search||'?') +'&vl=' +encodeURIComponent(location.href)"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bc4319b5efaa4281578" data-lazy-video="6a037bc4319b5efaa4281578" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
@@ -1777,7 +1827,49 @@ body::before{
           </div>
           <div class="video-block" id="ifr_6a037bc84d6e3177e1f80593_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bc84d6e3177e1f80593_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bc84d6e3177e1f80593" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin" onload=" this.onload=null, this.src='https://scripts.converteai.net/6924efa6-6db1-48a2-a62a-9b14ee9dce10/players/6a037bc84d6e3177e1f80593/v4/embed.html' +(location.search||'?') +'&vl=' +encodeURIComponent(location.href)"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bc84d6e3177e1f80593" data-lazy-video="6a037bc84d6e3177e1f80593" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIDEO CASE 5 — Vinny Tattoo · Estados Unidos -->
+        <div class="fade-up case-card video-case meio">
+          <span class="case-bg-number">05</span>
+          <div class="case-header" style="margin-bottom:1rem;">
+            <span class="case-flag-display" aria-label="Estados Unidos"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#B22234"/><rect y="3.08" width="60" height="3.08" fill="#fff"/><rect y="9.23" width="60" height="3.08" fill="#fff"/><rect y="15.38" width="60" height="3.08" fill="#fff"/><rect y="21.54" width="60" height="3.08" fill="#fff"/><rect y="27.69" width="60" height="3.08" fill="#fff"/><rect y="33.85" width="60" height="3.08" fill="#fff"/><rect width="24" height="21.54" fill="#3C3B6E"/></svg></span>
+            <span class="case-route">Vinny Tattoo <span class="case-route-strong">· Estados Unidos</span></span>
+          </div>
+          <div class="video-block" id="ifr_6a03bc69f7dfb345ee3b5403_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
+            <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a03bc69f7dfb345ee3b5403_aspect">
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a03bc69f7dfb345ee3b5403" data-lazy-video="6a03bc69f7dfb345ee3b5403" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIDEO CASE 6 — Aryel Tattoo · Portugal -->
+        <div class="fade-up case-card video-case meio">
+          <span class="case-bg-number">06</span>
+          <div class="case-header" style="margin-bottom:1rem;">
+            <span class="case-flag-display" aria-label="Portugal"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="24" height="40" fill="#006600"/><rect x="24" width="36" height="40" fill="#FF0000"/><circle cx="24" cy="20" r="7" fill="#FFD700" stroke="#000" stroke-width=".6"/></svg></span>
+            <span class="case-route">Aryel Tattoo <span class="case-route-strong">· Portugal</span></span>
+          </div>
+          <div class="video-block" id="ifr_6a03bc6508dd22f8e6183054_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
+            <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a03bc6508dd22f8e6183054_aspect">
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a03bc6508dd22f8e6183054" data-lazy-video="6a03bc6508dd22f8e6183054" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIDEO CASE 7 — Danilo Santos · Inglaterra -->
+        <div class="fade-up case-card video-case meio">
+          <span class="case-bg-number">07</span>
+          <div class="case-header" style="margin-bottom:1rem;">
+            <span class="case-flag-display" aria-label="Inglaterra"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#fff"/><rect x="24" width="12" height="40" fill="#CE1124"/><rect y="14" width="60" height="12" fill="#CE1124"/></svg></span>
+            <span class="case-route">Danilo Santos <span class="case-route-strong">· Inglaterra</span></span>
+          </div>
+          <div class="video-block" id="ifr_6a03bc62f18251980df1b4d2_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
+            <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a03bc62f18251980df1b4d2_aspect">
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a03bc62f18251980df1b4d2" data-lazy-video="6a03bc62f18251980df1b4d2" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
@@ -1795,45 +1887,45 @@ body::before{
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">Linha do Tempo · Da decisão ao embarque</span></div>
       <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;">
-        Antes do embarque sua agenda<br/><span class="gradient-text">já tá fechada</span> (recebendo 7x o valor em € do seu trampo)
+        O que realmente é distorção de tempo e <span class="gradient-text">Agenda Fechada</span> que o "Método Guest" ENTREGA?
       </h2>
-      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">Sistema replicável validado em 35 países. <strong>Sem improviso, sem passar raiva.</strong> A linha do tempo abaixo é o cronograma real que cada tatuador EIKON executa antes de embarcar.</p>
+      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;"><strong style="color:#fff;">"Não é talvez ou será que funciona para mim?"</strong> — MÉTODO GUEST é único, ele levou <strong style="color:#fff;">4 anos</strong> para garantir agenda cheia e previsibilidade.</p>
     </div>
     <div class="mx-auto mt-16 max-w-3xl">
       <div class="space-y-10" id="process-linee">
 
         <div class="fade-up process-step relative" data-step="01">
           <div class="process-connector"></div>
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 1–2 · Diagnóstico</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Escolha do País-Alvo e Auditoria de Feed</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">Definimos o país-alvo entre os 4 validados (Irlanda, França, Espanha, Itália) com base no seu estilo, idioma e ticket de saída. Auditoria de portfólio, verificação de visto e documentação Schengen. Sem chute — decisão guiada por dados de mercado.</p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 1 e 2 · Diagnóstico</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Escolha do País e Previsibilidade</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;">Definimos juntos o país que você vai viajar de forma estratégica. <strong style="color:#fff;">Agenda fechada antes mesmo de embarcar.</strong></p>
         </div>
 
         <div class="fade-up process-step relative" data-step="02">
           <div class="process-connector"></div>
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 3–4 · Estrutura</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Fechar Estúdio Parceiro + Logística</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">Acionamos o network EIKON em 35+ países — estúdio anfitrião com ticket combinado e agenda compartilhada. Reserva de passagem 60+ dias antes (-50% custo), AirBnB FORA de zona de fiscalização. Primeiro lote de 7 vídeos editados em IA com idioma local.</p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 3 e 4 · Conexão</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Estúdios Parceiros + Network Tattoo</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;">A EIKON tem <strong style="color:#fff;">+200 tatuadores</strong> no método. Conectamos você com donos de estúdio no país escolhido — chegou, sentou, tatuou.</p>
         </div>
 
         <div class="fade-up process-step relative" data-step="03">
           <div class="process-connector"></div>
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 5–7 · Tráfego e Qualificação</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Funil Visita Ligado · Atendimento Reverso</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">Funil Visita entra no ar 25–30 dias antes do embarque. Leads chegam quentes, qualificamos com framework de Atendimento Reverso em 4 idiomas. Meta: pré-fechar 60–80% da agenda da viagem <strong style="color:#fff;">antes</strong> de você comprar o cartão de passagem.</p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 5, 6 e 7 · Tráfego e Conversão</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Funil de Visita + Atendimento Reverso</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;">Funil de Visita ligado e Atendimento Reverso em <strong style="color:#fff;">+4 idiomas</strong>. Clientes dispostos a pagar <strong style="color:#fff;">5x, 6x até 7x</strong> o valor do seu trampo.</p>
         </div>
 
         <div class="fade-up process-step relative" data-step="04">
           <div class="process-connector"></div>
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 8–10 · Embarque + Execução</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Você Embarca com Agenda Confirmada</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">Você chega no estúdio anfitrião, executa 5–7 dias de guest em ritmo planejado, sem improviso. Suporte da EIKON em tempo real via WhatsApp para qualquer ajuste de campanha, supply ou cliente. Volta com € 8–12 mil em moeda forte no Wise.</p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 8, 9 e 10 · Embarque</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Você Viaja com Agenda Fechada</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;">Você embarca com a agenda cheia. Sem se preocupar com tinta, material ou faturamento — tudo preparado. <strong style="color:#fff;">Você só realiza o sonho.</strong></p>
         </div>
 
         <div class="fade-up process-step" data-step="05">
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 11–12 · Capitalização</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Prova Gerada · Próximo Guest Já no Pipeline</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">Postamos o resultado, geramos prova social e alimentamos o próximo guest com o efeito halo da viagem. Clientes brasileiros que viram o trampo lá fora começam a procurar você cobrando ticket internacional. O ciclo se fecha — e o próximo passaporte já tá carimbado.</p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 11 e 12 · Colheita</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Prova Social + Posicionamento</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;">Depoimentos gerados e posicionamento nas redes. Volta com <strong style="color:#fff;">autoridade</strong>, referência no seu estilo e podendo cobrar mais caro no Brasil.</p>
         </div>
 
       </div>
@@ -1886,52 +1978,90 @@ body::before{
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">Quem Aplicou</span></div>
       <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;">
-        O que os tatuadores<br/><span class="gradient-text">estão dizendo</span>
+        Tatuadores que pararam de tentar sozinhos<br/>e <span class="gradient-text">deixaram o marketing com quem entende</span>
       </h2>
-      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">Depoimentos reais de tatuadores brasileiros que aplicaram o Método Guest nos últimos 12 meses. Sem ator, sem encenação.</p>
+      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">Depoimentos reais de quem aplicou o <strong style="color:#fff;font-weight:600;">Método Guest</strong>. Sem ator, sem encenação — só tatuador falando o que mudou na agenda, no faturamento e na cabeça.</p>
     </div>
 
-    <div class="mx-auto mt-14 sm:mt-16 max-w-2xl lg:max-w-6xl">
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div class="mx-auto mt-14 sm:mt-16 max-w-2xl lg:max-w-7xl">
+      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
 
-        <!-- TESTIMONIAL 1 — Rafael -->
+        <!-- TESTIMONIAL 1 — G INK TATTOO -->
         <div class="fade-up testi-card meio">
           <span class="testi-quote" aria-hidden="true">"</span>
-          <div class="testi-stars" aria-label="5 estrelas"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg></div>
-          <p class="testi-text">Fui pra Dublin achando que ia voltar quebrado. Cheguei lá com agenda fechada. Faturei €4.900 na primeira semana com R$1.500 de tráfego. Voltei pro Brasil só pra buscar minhas coisas — a estrutura do Método Guest mudou minha cabeça sobre o que é viver de tatuagem.</p>
+          <div class="testi-stars" aria-label="5 estrelas">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+          </div>
+          <p class="testi-text">Sempre fiz questão de entregar acima da expectativa — cliente saía do estúdio falando <em>"ficou melhor do que eu imaginava"</em>. Mas chegou um momento que eu queria crescer e o boca a boca travou. Tentei sozinho a internet, não rolou. Quando entrei pra equipa da EIKON, comecei a desenvolver <strong style="color:#fff;">conteúdo, posicionamento e constância</strong> — e isso mudou tudo. Hoje eu vejo: <strong style="color:#fff;">não existe estúdio forte sem tráfego pago e sem posicionamento na internet</strong>. Se você quer levar o seu estúdio pra outro nível, vale a conversa.</p>
           <div class="testi-author">
-            <div class="testi-avatar">RA</div>
+            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/gink.jpg" alt="G Ink Tattoo" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
-              <p class="testi-name">Rafael — Realismo</p>
-              <p class="testi-route">São Paulo <span class="testi-flag" aria-label="Irlanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#FF883E"/></svg></span> Dublin</p>
+              <p class="testi-name">G Ink Tattoo</p>
+              <p class="testi-route">Conteúdo &amp; Posicionamento</p>
             </div>
           </div>
         </div>
 
-        <!-- TESTIMONIAL 2 — Carolina -->
+        <!-- TESTIMONIAL 2 — ROMÁRIO TATTOO -->
         <div class="fade-up testi-card meio">
           <span class="testi-quote" aria-hidden="true">"</span>
-          <div class="testi-stars" aria-label="5 estrelas"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg></div>
-          <p class="testi-text">Já tinha tentado guest 2 vezes sozinha. Voltei das duas no zero a zero — pagou as despesas e olhe lá. Com o Método Guest mudei minha realidade e hoje faço viagem pra Europa para realmente ter lazer com a família.</p>
+          <div class="testi-stars" aria-label="5 estrelas">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+          </div>
+          <p class="testi-text">Tatuo há mais de 10 anos, hoje moro na Espanha. <strong style="color:#fff;">Captar cliente na Europa não é fácil</strong> — e acredito que em lugar nenhum do mundo seja. Tentei várias vezes fazer meu próprio anúncio, meu próprio marketing. Sinceramente? <strong style="color:#fff;">Só gastei dinheiro</strong>. Quando conheci o Flávio e a equipe, começamos a aplicar estratégia específica pro meu estilo (realismo preto e cinza). Em poucos dias vieram os primeiros resultados. Hoje minha agenda tá constante — esse mês e os próximos. <strong style="color:#fff;">Foca no que faz de melhor: tatuar. Deixa o marketing com profissional.</strong></p>
           <div class="testi-author">
-            <div class="testi-avatar">CM</div>
+            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/romario.jpg" alt="Romário Tattoo" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
-              <p class="testi-name">Carolina — Fineline</p>
-              <p class="testi-route">Curitiba <span class="testi-flag" aria-label="França"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#002654"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE1126"/></svg></span> Paris</p>
+              <p class="testi-name">Romário Tattoo</p>
+              <p class="testi-route">Sevilha <span class="testi-flag" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Espanha</p>
             </div>
           </div>
         </div>
 
-        <!-- TESTIMONIAL 3 — Thiago -->
+        <!-- TESTIMONIAL 3 — LUCAS FABRÍCIO TATTOO -->
         <div class="fade-up testi-card meio">
           <span class="testi-quote" aria-hidden="true">"</span>
-          <div class="testi-stars" aria-label="5 estrelas"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg><svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg></div>
-          <p class="testi-text">Eu cobrava R$ 400 a sessão em BH e cliente regateava. Em Barcelona cobrei €750 e cliente AGRADECEU. Não é 100% talento — o local influencia. O Método Guest me mostrou isso de um jeito que ninguém tinha conseguido. Mesma máquina, mesmo traço, outro mercado.</p>
+          <div class="testi-stars" aria-label="5 estrelas">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+          </div>
+          <p class="testi-text">Eu <strong style="color:#fff;">nunca quis fechar com agência que não fosse especializada em tatuagem</strong>. Pra mim fazia diferença trabalhar com quem entende o produto. Com a ajuda de vocês eu me adaptei muito melhor profissionalmente. Hoje <strong style="color:#fff;">não preciso ficar preocupado com tráfego, captação ou pesquisando estratégia o tempo todo</strong> — não porque não quero aprender, mas porque não tenho tempo. Focas no que importa: tatuar, evoluir e cuidar da vida pessoal. Sem marketing o tatuador fica perdido — e ter quem cuida disso pra você libera espaço pra crescer de verdade.</p>
           <div class="testi-author">
-            <div class="testi-avatar">TS</div>
+            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/lucas.png" alt="Lucas Fabrício Tattoo" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
-              <p class="testi-name">Thiago — Blackwork</p>
-              <p class="testi-route">Belo Horizonte <span class="testi-flag" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Barcelona</p>
+              <p class="testi-name">Lucas Fabrício Tattoo</p>
+              <p class="testi-route">Atração &amp; Conversão</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- TESTIMONIAL 4 — BUZARANHO TATTOO -->
+        <div class="fade-up testi-card meio">
+          <span class="testi-quote" aria-hidden="true">"</span>
+          <div class="testi-stars" aria-label="5 estrelas">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
+          </div>
+          <p class="testi-text">No começo foi muito complicado pra mim. Pressão profissional, momento difícil na vida pessoal. Já tinha investido em outra empresa <strong style="color:#fff;">— valor alto, e não funcionou pro meu caso</strong>. Foram anos tentando, sem constância nenhuma. Quando vocês entraram, a realidade mudou: agenda aumentou, agendamento ficou constante, cliente chegando com frequência. Tem comunicação, acompanhamento, estratégia de verdade. E o que mais me marcou? <strong style="color:#fff;">Fechar um mês inteiro de agenda pela primeira vez.</strong> Trouxe tranquilidade, confiança e a certeza de que <em>finalmente</em> encontrei quem entende o mercado da tattoo.</p>
+          <div class="testi-author">
+            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/buza.jpg" alt="Buzaranho Tattoo" loading="lazy" decoding="async"/></div>
+            <div class="testi-info">
+              <p class="testi-name">Buzaranho Tattoo</p>
+              <p class="testi-route">Agenda Cheia &amp; Constância</p>
             </div>
           </div>
         </div>
@@ -1950,10 +2080,10 @@ body::before{
   </div>
   <div class="mx-auto max-w-4xl text-center">
     <div class="fade-up flex justify-center mb-4"><span class="section-label">Investimento</span></div>
-    <h2 class="fade-up heading-display text-5xl sm:text-6xl" style="color:#fff;">
-      Quanto custa fazer um Guest<br/>e não ter clientes <span class="gradient-text">na sua agenda</span>
+    <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;line-height:1.1;letter-spacing:-.035em;text-wrap:balance;">
+      Por <span class="gradient-text">R$335</span> você faz <strong style="color:#fff;">1 tatuagem.</strong><br/>Por <span class="gradient-text">R$335</span> você também garante<br/>o método que <strong style="color:#fff;">enche sua agenda.</strong>
     </h2>
-    <p class="fade-up mt-6 text-lg leading-relaxed mx-auto max-w-2xl" style="color:#a1a1aa;">Acesso vitalício ao Método Guest. <strong>Garantia blindada de 30 dias.</strong> Pagamento à vista com bônus ou parcelado em 3x sem juros no cartão. Sem estresse e tempo perdido.</p>
+    <p class="fade-up mt-6 text-lg leading-relaxed mx-auto max-w-2xl" style="color:#a1a1aa;">Acesso vitalício. <strong style="color:#fff;">Garantia blindada de 30 dias.</strong> Se você não fechar 1 cliente, devolvemos cada centavo. Sem juros, sem letra miúda, <strong style="color:#fff;">sem promessa de guru</strong>.</p>
   </div>
   <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
     <div class="card-3d-wrap fade-up">
@@ -1964,7 +2094,7 @@ body::before{
           <span class="heading-display text-5xl" style="color:#fff;letter-spacing:-.04em;">R$335</span>
         </p>
         <p class="mt-1 text-xs" style="color:#71717a;">no cartão · sem juros · acesso liberado na confirmação</p>
-        <p class="mt-6 text-base" style="color:#a1a1aa;">Para o tatuador que quer aplicar o sistema completo.</p>
+        <p class="mt-6 text-base" style="color:#a1a1aa;">Pra tatuador que quer entrar no jogo agora. <strong style="color:#fff;">1 cliente fechado já paga o investimento inteiro.</strong></p>
         <ul role="list" class="mt-8 space-y-3 text-sm sm:mt-10" style="color:#d4d4d8;">
           <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Os 4 Módulos do Método Guest</li>
           <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Lista de estúdios parceiros (15 países)</li>
@@ -1974,21 +2104,21 @@ body::before{
           <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Comunidade Eikon Tattoo</li>
           <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Garantia blindada de 30 dias</li>
         </ul>
-        <a href="https://pay.hub.la/AiZ62hvlKooA2wiKSAVY" target="_blank" rel="noopener noreferrer" class="mt-8 block rounded-xl px-3.5 py-2.5 text-center text-sm font-semibold transition-all sm:mt-10" style="color:#fff;background:transparent;border:1.5px solid rgba(255,255,255,.22);">Quero parcelar →</a>
+        <a href="https://pay.hub.la/AiZ62hvlKooA2wiKSAVY" target="_blank" rel="noopener noreferrer" class="mt-8 block rounded-xl px-3.5 py-2.5 text-center text-sm font-semibold transition-all sm:mt-10" style="color:#fff;background:transparent;border:1.5px solid rgba(255,255,255,.22);">Quero entrar com R$335 →</a>
       </div>
     </div>
     <div class="card-3d-wrap fade-up">
       <div class="card-3d pricing-pro rounded-3xl p-8 shadow-2xl sm:p-10">
         <div class="flex items-center justify-between mb-1">
           <h3 class="text-base font-bold" style="color:#fff;">À Vista</h3>
-          <span style="font-size:.65rem;font-weight:700;background:#fff;border-radius:999px;padding:.2rem .7rem;color:#000;letter-spacing:.1em;">RECOMENDADO</span>
+          <span style="font-size:.65rem;font-weight:700;background:#fff;border-radius:999px;padding:.2rem .7rem;color:#000;letter-spacing:.1em;">ESCOLHA DE 8 EM 10</span>
         </div>
         <p class="mt-4 flex items-baseline gap-x-2">
           <span class="heading-display text-5xl" style="color:#fff;letter-spacing:-.04em;">R$997</span>
           <span class="text-base" style="color:#a1a1aa;">único</span>
         </p>
         <p class="mt-1 text-xs" style="color:#a1a1aa;">pagamento à vista · economia + bônus exclusivos</p>
-        <p class="mt-6 text-base" style="color:#d4d4d8;">Para tatuador que vai pagar à vista e quer todos os bônus.</p>
+        <p class="mt-6 text-base" style="color:#d4d4d8;">Pra tatuador que <strong style="color:#fff;">decide rápido e quer todos os bônus</strong>. Auditoria de portfólio, mentoria coletiva e 1h de mentoria 1:1 inclusas.</p>
         <ul role="list" class="mt-8 space-y-3 text-sm sm:mt-10" style="color:#e4e4e7;">
           <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg><strong>Tudo do parcelado +</strong></li>
           <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Auditoria de portfólio</li>
@@ -1998,7 +2128,34 @@ body::before{
           <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Bônus: PDF "Piores Países Para Guest na Europa"</li>
           <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>1H de mentoria nos primeiros 30 dias</li>
         </ul>
-        <a href="https://pay.hub.la/AiZ62hvlKooA2wiKSAVY" target="_blank" rel="noopener noreferrer" class="btn-glow mt-8 block px-3.5 py-3 text-center text-sm font-semibold rounded-xl sm:mt-10">Garantir vaga à vista →</a>
+        <a href="https://pay.hub.la/AiZ62hvlKooA2wiKSAVY" target="_blank" rel="noopener noreferrer" class="btn-glow mt-8 block px-3.5 py-3 text-center text-sm font-semibold rounded-xl sm:mt-10">Garantir vaga à vista (todos os bônus) →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ QUEBRA DE OBJEÇÃO — CAIXA BRANCA ═══ -->
+  <div class="mx-auto mt-16 max-w-3xl">
+    <div class="fade-up objection-box" style="background:linear-gradient(135deg,#ffffff 0%,#f4f4f5 100%);border-radius:24px;padding:2.5rem 2rem;color:#000;box-shadow:0 24px 60px rgba(255,255,255,.12),0 0 0 1px rgba(255,255,255,.4);position:relative;overflow:hidden;">
+      <p class="text-xs font-bold uppercase tracking-[.18em] mb-3" style="color:#71717a;">Fazendo as contas</p>
+      <h3 class="heading-display text-2xl sm:text-3xl mb-6" style="color:#000;line-height:1.15;letter-spacing:-.025em;">R$997 é menos do que <span style="text-decoration:line-through;color:#a1a1aa;">você imagina</span> — e te entrega muito mais.</h3>
+      <ul class="space-y-3 text-base" style="color:#1f1f23;">
+        <li class="flex gap-x-3 items-start">
+          <svg viewBox="0 0 20 20" fill="#000" class="size-5 shrink-0 mt-1"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>
+          <span><strong>Tranquilidade de saber</strong> que toda semana tem cliente novo fechando contigo.</span>
+        </li>
+        <li class="flex gap-x-3 items-start">
+          <svg viewBox="0 0 20 20" fill="#000" class="size-5 shrink-0 mt-1"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>
+          <span><strong>Sessão garantida, estúdio crescendo</strong> e você virando referência no seu estilo.</span>
+        </li>
+        <li class="flex gap-x-3 items-start">
+          <svg viewBox="0 0 20 20" fill="#000" class="size-5 shrink-0 mt-1"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>
+          <span><strong>Menos do que 1 mês de academia + suplemento.</strong> 30% do valor de 1 cliente fechado.</span>
+        </li>
+      </ul>
+      <div style="margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid rgba(0,0,0,.10);">
+        <p class="text-base sm:text-lg" style="color:#000;font-weight:600;line-height:1.45;">
+          <strong>Apenas 1 cliente fechado já se paga</strong> — e a real é que sempre vem muito mais.
+        </p>
       </div>
     </div>
   </div>
@@ -2013,9 +2170,9 @@ body::before{
           </div>
         </div>
         <div class="flex-1">
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-2" style="color:#a1a1aa;">Garantia Blindada</p>
-          <h3 class="heading-display text-2xl mb-3" style="color:#fff;">30 dias para aplicar.<br/>Se não fechar 1 cliente na Europa ou no Brasil, devolvemos 100% do seu dinheiro.</h3>
-          <p class="text-sm leading-relaxed" style="color:#a1a1aa;">Aplique o Método Guest nos 30 primeiros dias. Se você não fechar pelo menos <strong style="color:#fff;">1 cliente na Europa ou no Brasil</strong>, devolvemos integralmente o valor pago. <strong style="color:#fff;">+ de 4 anos vivendo de Tattoo</strong> e <strong style="color:#fff;">+ de 200 tatuadores atendidos</strong> — somos a maior Assessoria porque cada produto é validado no <em>real life</em>.</p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-2" style="color:#a1a1aa;">Garantia Blindada · 30 Dias</p>
+          <h3 class="heading-display text-2xl mb-3" style="color:#fff;line-height:1.2;letter-spacing:-.02em;text-wrap:balance;">Aplicou e não fechou 1 cliente?<br/>A gente devolve <span class="gradient-text">100% do seu dinheiro.</span></h3>
+          <p class="text-sm leading-relaxed" style="color:#a1a1aa;">Você tem <strong style="color:#fff;">30 dias</strong> pra aplicar o Método Guest. Se não fechar pelo menos <strong style="color:#fff;">1 cliente na Europa ou no Brasil</strong>, devolvemos o valor integral. <strong style="color:#fff;">+4 anos vivendo de Tattoo · +200 tatuadores atendidos</strong> — cada estratégia foi validada no campo, não na teoria.</p>
         </div>
       </div>
     </div>
@@ -2027,11 +2184,11 @@ body::before{
   <div class="absolute inset-0 -z-10 pointer-events-none" style="background:radial-gradient(ellipse at 20% 50%,rgba(255,255,255,.10) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(255,255,255,.06) 0%,transparent 50%);"></div>
   <div class="absolute inset-0 -z-10" style="background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);"></div>
   <div class="mx-auto max-w-3xl text-center">
-    <p class="fade-up text-xs font-bold uppercase tracking-[.18em] mb-4" style="color:#a1a1aa;">Método Guest · Vagas Limitadas — 23 Tatuadores</p>
-    <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;line-height:1.1;">
-      Pronto para tatuar onde<br/>vai ganhar mais <span class="euro-anchor">€</span>, destacar<br/>e <span class="gradient-text">garantir o sucesso</span> do seu Guest?
+    <p class="fade-up text-xs font-bold uppercase tracking-[.18em] mb-4" style="color:#a1a1aa;">Vagas Limitadas · 23 Tatuadores</p>
+    <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;line-height:1.15;letter-spacing:-.035em;text-wrap:balance;">
+      Você não precisa de mais um curso.<br/>Precisa de um <span class="gradient-text">sistema que funciona</span><br/>e garante sua <span class="gradient-text">agenda cheia!</span>
     </h2>
-    <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">O limite de vagas para o "Método Guest" é de <strong style="color:#fff;">23 tatuadores apenas</strong>. Focamos em manter qualidade e resultado real para cada parceiro.</p>
+    <p class="fade-up mt-6 text-base sm:text-lg leading-relaxed mx-auto" style="color:#a1a1aa;max-width:560px;">De <strong style="color:#fff;">50 vagas abertas</strong> resta apenas <strong style="color:#fff;">23 vagas</strong> — limite real pra garantir acompanhamento, estratégia e resultado. <strong style="color:#fff;">Sem improviso e aqui não existe GURU da Tattoo!</strong></p>
     <div class="fade-up mt-10 flex items-center justify-center gap-4 flex-wrap">
       <a href="https://form.respondi.app/elWVwOha" target="_blank" rel="noopener noreferrer" class="btn-glow px-8 py-4 text-sm font-semibold rounded-xl flex items-center gap-2" style="box-shadow:0 8px 36px rgba(255,255,255,.28),0 0 0 1px rgba(255,255,255,.5);">
         Garantir minha vaga
@@ -2061,147 +2218,233 @@ body::before{
 </div><!-- /z-index wrapper -->
 
 <script>
-gsap.registerPlugin(ScrollTrigger);
+/* ═══════════════════════════════════════════
+   PERFORMANCE-OPTIMIZED SCRIPT
+   - Espera GSAP (carregado com defer)
+   - Throttle em todos os scroll/mousemove
+   - IntersectionObserver substitui scroll listener
+   - Lazy-load de iframes ConverteAI
+   ═══════════════════════════════════════════ */
+(function(){
+  'use strict';
 
-// GSAP estado inicial
-const heroSection = document.querySelector('section.bg-hero');
-document.querySelectorAll('.fade-up').forEach(el => gsap.set(el, {opacity:0, y:32, filter:'blur(8px)'}));
+  /* ────── 1. INIT GSAP quando carregar ────── */
+  function initGSAP(){
+    if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined'){
+      return setTimeout(initGSAP, 80);
+    }
+    gsap.registerPlugin(ScrollTrigger);
 
-// Hero anima imediatamente
-if (heroSection) {
-  heroSection.querySelectorAll('.fade-up').forEach((el, i) => {
-    gsap.to(el, {opacity:1, y:0, filter:'blur(0px)', duration:.8, ease:'power3.out', delay:.08 + i*.13});
-  });
-}
+    const heroSection = document.querySelector('section.bg-hero');
+    const fadeEls = document.querySelectorAll('.fade-up');
 
-// Restante com ScrollTrigger
-document.querySelectorAll('.fade-up').forEach(el => {
-  if (heroSection && heroSection.contains(el)) return;
-  gsap.to(el, {
-    scrollTrigger:{trigger:el, start:'top 90%', toggleActions:'play none none none'},
-    opacity:1, y:0, filter:'blur(0px)', duration:.7, ease:'power2.out'
-  });
-});
+    // estado inicial em batch (um único reflow)
+    gsap.set(fadeEls, {opacity:0, y:32, filter:'blur(8px)'});
 
-// COUNTER
-function animateCounters() {
-  document.querySelectorAll('.stat-num[data-target]').forEach(el => {
-    const target = parseFloat(el.dataset.target);
-    const suffix = el.dataset.suffix || '';
-    const prefix = el.dataset.prefix || '';
-    const obj = {val:0};
-    gsap.to(obj, {
-      val:target, duration:2.4, ease:'power2.out', delay:.5,
-      onUpdate() { el.textContent = prefix + Math.floor(obj.val) + suffix; }
-    });
-  });
-}
-window.addEventListener('load', () => setTimeout(animateCounters, 200));
-
-// TIMELINE processo
-const processLinee = document.getElementById('process-linee');
-if (processLinee) {
-  const lineBar = document.createElement('div');
-  const lPos = window.innerWidth <= 600 ? '-7px' : '-19px';
-  lineBar.style.cssText = `position:absolute;top:0;left:1.1rem;width:2px;height:0%;background:linear-gradient(180deg,#ffffff 0%,rgba(255,255,255,.3) 100%);border-radius:99px;box-shadow:0 0 12px rgba(255,255,255,.45);`;
-  processLinee.style.position = 'relative';
-  processLinee.appendChild(lineBar);
-  gsap.to(lineBar, {
-    height:'100%', ease:'none',
-    scrollTrigger:{trigger:processLinee, start:'top 75%', end:'bottom 30%', scrub:1.2}
-  });
-}
-
-// 3D TILT pricing
-document.querySelectorAll('.card-3d-wrap').forEach(wrap => {
-  const card = wrap.querySelector('.card-3d');
-  wrap.addEventListener('mousemove', e => {
-    const r = wrap.getBoundingClientRect(), MAX = 14;
-    const rx = -(((e.clientY - r.top) / r.height) - .5) * MAX;
-    const ry =  (((e.clientX - r.left) / r.width)  - .5) * MAX;
-    card.style.transition = 'transform .08s ease';
-    card.style.transform  = `perspective(1400px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.04,1.04,1.04)`;
-    card.style.boxShadow  = `${-ry*2}px ${rx*2}px 55px rgba(255,255,255,.14)`;
-  });
-  wrap.addEventListener('mouseleave', () => {
-    card.style.transition = 'transform .6s cubic-bezier(.23,1,.32,1),box-shadow .6s ease';
-    card.style.transform  = 'perspective(1400px) rotateX(0) rotateY(0) scale3d(1,1,1)';
-    card.style.boxShadow  = '';
-  });
-});
-
-// ═══ EFEITO LUZ NO MOUSE ═══
-(function() {
-  const container = document.getElementById('bgluz');
-  if (!container) return;
-  const isLarge = window.matchMedia('(min-width: 1025px)').matches;
-  if (!isLarge) return;
-  let lastX = 0, lastY = 0, rafPending = false;
-  container.addEventListener('mousemove', (e) => {
-    lastX = e.clientX;
-    lastY = e.clientY;
-    if (!rafPending) {
-      rafPending = true;
-      requestAnimationFrame(() => {
-        document.querySelectorAll('.meio').forEach(el => {
-          const rect = el.getBoundingClientRect();
-          el.style.setProperty('--mouse-x', (lastX - rect.left) + 'px');
-          el.style.setProperty('--mouse-y', (lastY - rect.top)  + 'px');
-        });
-        rafPending = false;
+    // hero: anima imediatamente, sem ScrollTrigger
+    if(heroSection){
+      const heroFades = heroSection.querySelectorAll('.fade-up');
+      heroFades.forEach((el, i) => {
+        gsap.to(el, {opacity:1, y:0, filter:'blur(0px)', duration:.8, ease:'power3.out', delay:.08 + i*.13});
       });
     }
-  }, { passive: true });
-})();
 
-// ═══ SCROLL FADE — cards de serviço ═══
-(function() {
-  const cards = document.querySelectorAll('.scroll-left, .scroll-right, .scroll-bottom, .scroll-top');
-  const threshold = window.innerHeight * 0.88;
+    // restante via ScrollTrigger (uma passada só pelo NodeList)
+    fadeEls.forEach(el => {
+      if(heroSection && heroSection.contains(el)) return;
+      gsap.to(el, {
+        scrollTrigger:{trigger:el, start:'top 90%', toggleActions:'play none none none', once:true},
+        opacity:1, y:0, filter:'blur(0px)', duration:.7, ease:'power2.out'
+      });
+    });
 
-  function checkCards() {
-    cards.forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if (top < threshold) {
-        el.classList.add('ativo');
-      } else {
-        el.classList.remove('ativo');
-      }
+    // contadores
+    document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const prefix = el.dataset.prefix || '';
+      const obj = {val:0};
+      gsap.to(obj, {
+        val:target, duration:2.4, ease:'power2.out', delay:.6,
+        onUpdate(){ el.textContent = prefix + Math.floor(obj.val) + suffix; }
+      });
+    });
+
+    // linha do processo
+    const processLinee = document.getElementById('process-linee');
+    if(processLinee){
+      const lineBar = document.createElement('div');
+      lineBar.style.cssText = 'position:absolute;top:0;left:1.1rem;width:2px;height:0%;background:linear-gradient(180deg,#ffffff 0%,rgba(255,255,255,.3) 100%);border-radius:99px;box-shadow:0 0 12px rgba(255,255,255,.45);';
+      processLinee.style.position = 'relative';
+      processLinee.appendChild(lineBar);
+      gsap.to(lineBar, {
+        height:'100%', ease:'none',
+        scrollTrigger:{trigger:processLinee, start:'top 75%', end:'bottom 30%', scrub:1.2}
+      });
+    }
+  }
+
+  /* ────── 2. 3D TILT — só desktop (em mobile é desperdício) ────── */
+  function init3DTilt(){
+    if(!window.matchMedia('(hover:hover) and (min-width:1024px)').matches) return;
+    document.querySelectorAll('.card-3d-wrap').forEach(wrap => {
+      const card = wrap.querySelector('.card-3d');
+      if(!card) return;
+      let raf = 0;
+      wrap.addEventListener('mousemove', e => {
+        if(raf) return;
+        raf = requestAnimationFrame(() => {
+          const r = wrap.getBoundingClientRect(), MAX = 14;
+          const rx = -(((e.clientY - r.top) / r.height) - .5) * MAX;
+          const ry =  (((e.clientX - r.left) / r.width)  - .5) * MAX;
+          card.style.transition = 'transform .08s ease';
+          card.style.transform  = `perspective(1400px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(1.04,1.04,1.04)`;
+          card.style.boxShadow  = `${-ry*2}px ${rx*2}px 55px rgba(255,255,255,.14)`;
+          raf = 0;
+        });
+      }, {passive:true});
+      wrap.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform .6s cubic-bezier(.23,1,.32,1),box-shadow .6s ease';
+        card.style.transform  = 'perspective(1400px) rotateX(0) rotateY(0) scale3d(1,1,1)';
+        card.style.boxShadow  = '';
+      });
     });
   }
 
-  window.addEventListener('scroll', checkCards, { passive: true });
-  // Checar no load também (cards já visíveis)
-  window.addEventListener('load', checkCards);
-  checkCards();
-})();
+  /* ────── 3. EFEITO LUZ NO MOUSE — só desktop ────── */
+  function initMouseLight(){
+    const container = document.getElementById('bgluz');
+    if(!container) return;
+    if(!window.matchMedia('(hover:hover) and (min-width:1025px)').matches) return;
 
-// ═══ BOTÕES — brilho dourado mouse-tracking ═══
-(function() {
-  const BRILHO_W = 18;
-  document.querySelectorAll('.btn-glow').forEach(btn => {
-    let last = -20;
-    btn.addEventListener('mousemove', (e) => {
-      const rect = btn.getBoundingClientRect();
-      let pct = ((e.clientX - rect.left) / rect.width) * 100 - BRILHO_W / 2;
-      pct = Math.max(0, Math.min(100 - BRILHO_W, pct));
-      btn.style.setProperty('--btn-left', pct + '%');
-      last = pct;
-    });
-    btn.addEventListener('mouseleave', () => {
-      btn.style.setProperty('--btn-left', last + '%');
-    });
-  });
-})();
+    const meios = document.querySelectorAll('.meio');
+    if(!meios.length) return;
 
+    let lastX = 0, lastY = 0, rafPending = false;
+    container.addEventListener('mousemove', (e) => {
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if(!rafPending){
+        rafPending = true;
+        requestAnimationFrame(() => {
+          // Only update visible elements (rough check via getBoundingClientRect)
+          const vh = window.innerHeight;
+          meios.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            if(rect.bottom < 0 || rect.top > vh) return; // skip off-screen
+            el.style.setProperty('--mouse-x', (lastX - rect.left) + 'px');
+            el.style.setProperty('--mouse-y', (lastY - rect.top)  + 'px');
+          });
+          rafPending = false;
+        });
+      }
+    }, {passive:true});
+  }
+
+  /* ────── 4. SCROLL FADE — IntersectionObserver (substitui scroll listener) ────── */
+  function initScrollFade(){
+    const cards = document.querySelectorAll('.scroll-left, .scroll-right, .scroll-bottom, .scroll-top');
+    if(!cards.length) return;
+
+    if(!('IntersectionObserver' in window)){
+      // Fallback: ativa tudo
+      cards.forEach(el => el.classList.add('ativo'));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('ativo');
+          io.unobserve(entry.target); // dispara uma vez só
+        }
+      });
+    }, {rootMargin:'0px 0px -12% 0px', threshold:0.01});
+
+    cards.forEach(el => io.observe(el));
+  }
+
+  /* ────── 5. LAZY LOAD VÍDEOS CONVERTEAI ────── */
+  function initLazyVideos(){
+    const iframes = document.querySelectorAll('iframe[data-lazy-video]');
+    if(!iframes.length) return;
+
+    // Base URL dos players ConverteAI (mesma do código original)
+    const ACCOUNT = '6924efa6-6db1-48a2-a62a-9b14ee9dce10';
+
+    function loadVideo(iframe){
+      if(!iframe.dataset.lazyVideo) return; // já carregado
+      const id = iframe.dataset.lazyVideo;
+      const src = 'https://scripts.converteai.net/' + ACCOUNT + '/players/' + id + '/v4/embed.html'
+                + (location.search || '?')
+                + '&vl=' + encodeURIComponent(location.href);
+      iframe.src = src;
+      iframe.removeAttribute('data-lazy-video');
+    }
+
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            loadVideo(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, {rootMargin:'400px 0px', threshold:0.01}); // 400px = bem antes do viewport p/ UX fluida
+      iframes.forEach(ifr => io.observe(ifr));
+    } else {
+      // Fallback: carrega tudo no load
+      window.addEventListener('load', () => iframes.forEach(loadVideo));
+    }
+  }
+
+  /* ────── 6. BOTÕES — brilho mouse-tracking ────── */
+  function initButtonGlow(){
+    if(!window.matchMedia('(hover:hover)').matches) return;
+    const BRILHO_W = 18;
+    document.querySelectorAll('.btn-glow').forEach(btn => {
+      let last = -20, raf = 0;
+      btn.addEventListener('mousemove', (e) => {
+        if(raf) return;
+        raf = requestAnimationFrame(() => {
+          const rect = btn.getBoundingClientRect();
+          let pct = ((e.clientX - rect.left) / rect.width) * 100 - BRILHO_W / 2;
+          pct = Math.max(0, Math.min(100 - BRILHO_W, pct));
+          btn.style.setProperty('--btn-left', pct + '%');
+          last = pct;
+          raf = 0;
+        });
+      }, {passive:true});
+      btn.addEventListener('mouseleave', () => {
+        btn.style.setProperty('--btn-left', last + '%');
+      });
+    });
+  }
+
+  /* ────── BOOT ────── */
+  function boot(){
+    initGSAP();
+    init3DTilt();
+    initMouseLight();
+    initScrollFade();
+    initLazyVideos();
+    initButtonGlow();
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
 </script>
 
 <script>
-/* Safety net: if GSAP fails to load/run within 2.5s, force-show all hidden content. */
+/* Safety net: se GSAP falhar em carregar/rodar em 2.5s, força exibição. */
 (function(){
   setTimeout(function(){
     try {
-      document.querySelectorAll('.fade-up, .scroll-left, .scroll-right, .scroll-bottom, .scroll-top').forEach(function(el){
+      document.querySelectorAll('.fade-up').forEach(function(el){
         var cs = getComputedStyle(el);
         if (parseFloat(cs.opacity) < 0.1) {
           el.style.opacity = '1';
@@ -2211,7 +2454,7 @@ document.querySelectorAll('.card-3d-wrap').forEach(wrap => {
       });
     } catch(e){}
   }, 2500);
-  // If GSAP/ScrollTrigger never loaded, also no-op gracefully
+  // Fallback para falha de carregamento de GSAP
   window.addEventListener('error', function(e){
     if (e && e.target && e.target.src && /gsap/.test(e.target.src)) {
       document.querySelectorAll('.fade-up').forEach(function(el){
