@@ -20,13 +20,140 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="dns-prefetch" href="https://scripts.converteai.net"/>
 <link rel="preconnect" href="https://scripts.converteai.net" crossorigin/>
-<!-- Fonts: peso reduzido — só pesos efetivamente usados -->
+<!-- Preload da fonte CRÍTICA (Inter 700) — usada no hero, evita FOIT -->
+<link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2" crossorigin/>
+<!-- Fonts: peso reduzido — só pesos efetivamente usados + display=swap p/ render instantâneo -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800;900&display=swap" rel="stylesheet"/>
+<!-- CRITICAL CSS INLINE — Tailwind utilities mínimas pro hero renderizar antes do CDN carregar -->
+<style>
+/* ═════ Critical CSS — render imediato (above the fold) ═════
+   Subset de utilidades Tailwind usadas no hero/header.
+   Tailwind CDN sobrescreve depois sem afetar visual. */
+.mx-auto{margin-left:auto;margin-right:auto;}
+.max-w-6xl{max-width:72rem;}
+.max-w-7xl{max-width:80rem;}
+.max-w-3xl{max-width:48rem;}
+.max-w-2xl{max-width:42rem;}
+.max-w-md{max-width:28rem;}
+.text-center{text-align:center;}
+.relative{position:relative;}
+.absolute{position:absolute;}
+.isolate{isolation:isolate;}
+.overflow-hidden{overflow:hidden;}
+.inset-0{inset:0;}
+.inset-x-0{left:0;right:0;}
+.flex{display:flex;}
+.grid{display:grid;}
+.items-center{align-items:center;}
+.justify-center{justify-content:center;}
+.flex-wrap{flex-wrap:wrap;}
+.gap-4{gap:1rem;}
+.gap-2{gap:.5rem;}
+.gap-6{gap:1.5rem;}
+.gap-x-2{column-gap:.5rem;}
+.gap-x-3{column-gap:.75rem;}
+.gap-x-4{column-gap:1rem;}
+.gap-y-3{row-gap:.75rem;}
+.gap-y-6{row-gap:1.5rem;}
+.gap-y-0{row-gap:0;}
+.px-6{padding-left:1.5rem;padding-right:1.5rem;}
+.px-7{padding-left:1.75rem;padding-right:1.75rem;}
+.px-8{padding-left:2rem;padding-right:2rem;}
+.px-3\.5{padding-left:.875rem;padding-right:.875rem;}
+.py-3{padding-top:.75rem;padding-bottom:.75rem;}
+.py-3\.5{padding-top:.875rem;padding-bottom:.875rem;}
+.py-4{padding-top:1rem;padding-bottom:1rem;}
+.py-2\.5{padding-top:.625rem;padding-bottom:.625rem;}
+.py-10{padding-top:2.5rem;padding-bottom:2.5rem;}
+.py-16{padding-top:4rem;padding-bottom:4rem;}
+.py-20{padding-top:5rem;padding-bottom:5rem;}
+.py-24{padding-top:6rem;padding-bottom:6rem;}
+.pt-0{padding-top:0;}
+.pb-16{padding-bottom:4rem;}
+.mt-1{margin-top:.25rem;}
+.mt-4{margin-top:1rem;}
+.mt-5{margin-top:1.25rem;}
+.mt-6{margin-top:1.5rem;}
+.mt-8{margin-top:2rem;}
+.mt-10{margin-top:2.5rem;}
+.mt-14{margin-top:3.5rem;}
+.mt-16{margin-top:4rem;}
+.mt-20{margin-top:5rem;}
+.mb-1{margin-bottom:.25rem;}
+.mb-2{margin-bottom:.5rem;}
+.mb-3{margin-bottom:.75rem;}
+.mb-4{margin-bottom:1rem;}
+.mb-6{margin-bottom:1.5rem;}
+.mb-10{margin-bottom:2.5rem;}
+.size-4{width:1rem;height:1rem;}
+.size-5{width:1.25rem;height:1.25rem;}
+.size-7{width:1.75rem;height:1.75rem;}
+.shrink-0,.flex-shrink-0{flex-shrink:0;}
+.flex-1{flex:1 1 0%;}
+.flex-col{flex-direction:column;}
+.text-xs{font-size:.75rem;line-height:1rem;}
+.text-sm{font-size:.875rem;line-height:1.25rem;}
+.text-base{font-size:1rem;line-height:1.5rem;}
+.text-lg{font-size:1.125rem;line-height:1.75rem;}
+.text-2xl{font-size:1.5rem;line-height:2rem;}
+.text-4xl{font-size:2.25rem;line-height:2.5rem;}
+.text-5xl{font-size:3rem;line-height:1;}
+.text-6xl{font-size:3.75rem;line-height:1;}
+.font-semibold{font-weight:600;}
+.font-bold{font-weight:700;}
+.uppercase{text-transform:uppercase;}
+.tracking-wider{letter-spacing:.05em;}
+.leading-relaxed{line-height:1.625;}
+.rounded-xl{border-radius:.75rem;}
+.rounded-3xl{border-radius:1.5rem;}
+.block{display:block;}
+.hidden{display:none;}
+.-z-10{z-index:-10;}
+.z-10{z-index:10;}
+.pointer-events-none{pointer-events:none;}
+.blur-3xl{filter:blur(64px);}
+.space-y-3>*+*{margin-top:.75rem;}
+.space-y-10>*+*{margin-top:2.5rem;}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr));}
+.grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media (min-width:640px){
+  .sm\:text-5xl{font-size:3rem;line-height:1;}
+  .sm\:text-6xl{font-size:3.75rem;line-height:1;}
+  .sm\:py-24{padding-top:6rem;padding-bottom:6rem;}
+  .sm\:pb-20{padding-bottom:5rem;}
+  .sm\:mt-10{margin-top:2.5rem;}
+  .sm\:mt-14{margin-top:3.5rem;}
+  .sm\:mt-16{margin-top:4rem;}
+  .sm\:mt-20{margin-top:5rem;}
+  .sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .sm\:flex-row{flex-direction:row;}
+  .sm\:p-10{padding:2.5rem;}
+  .sm\:mx-8{margin-left:2rem;margin-right:2rem;}
+  .sm\:rounded-b-none{border-bottom-left-radius:0;border-bottom-right-radius:0;}
+  .sm\:gap-y-0{row-gap:0;}
+}
+@media (min-width:768px){
+  .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media (min-width:1024px){
+  .lg\:px-8{padding-left:2rem;padding-right:2rem;}
+  .lg\:max-w-4xl{max-width:56rem;}
+  .lg\:max-w-6xl{max-width:72rem;}
+  .lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+  .lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr));}
+  .lg\:mx-0{margin-left:0;margin-right:0;}
+  .lg\:rounded-tr-none{border-top-right-radius:0;}
+  .lg\:rounded-bl-3xl{border-bottom-left-radius:1.5rem;}
+}
+@media (min-width:1280px){
+  .xl\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+</style>
+
 <!-- Tailwind CDN (mantido conforme pedido) — defer p/ não bloquear render -->
 <script src="https://cdn.tailwindcss.com" defer></script>
-<!-- GSAP com defer: não bloqueia parse do HTML -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+<!-- GSAP removido — usando IntersectionObserver puro (mais leve, mais rápido) -->
 <style>
 :root {
   /* PALETA PRINCIPAL — branco/cinza substitui roxos */
@@ -57,7 +184,128 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:20px;background:#000;}
-body{font-family:'Inter',sans-serif;background:#000000;color:#ffffff;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;}
+body{font-family:'Inter',sans-serif;background:#000000;color:#ffffff;overflow-x:clip;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;position:relative;}
+
+/* ═══════════════════════════════════════════════════════════
+   GLOBAL AURORA — Brilho animado no fundo de toda a página
+   3 camadas de luz suaves orbitando lentamente.
+   Performance: position:fixed (compositor GPU), transform-only animations.
+   ═══════════════════════════════════════════════════════════ */
+.global-aurora{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  overflow:hidden;
+  /* Promove para camada de composição própria (GPU layer dedicada) */
+  transform:translateZ(0);
+  will-change:auto;
+}
+.global-aurora__layer{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:.35;
+  /* Cada camada vive na própria GPU layer */
+  transform:translate3d(0,0,0);
+  will-change:transform;
+  mix-blend-mode:screen;
+}
+/* Camada A — top-left, branco suave */
+.global-aurora__layer--a{
+  top:-20%;left:-15%;
+  width:55vw;height:55vw;
+  max-width:900px;max-height:900px;
+  background:radial-gradient(circle, rgba(255,255,255,.10) 0%, rgba(255,255,255,.04) 35%, transparent 70%);
+  animation:aurora-a 28s ease-in-out infinite alternate;
+}
+/* Camada B — bottom-right, cinza-azulado sutil */
+.global-aurora__layer--b{
+  bottom:-25%;right:-20%;
+  width:60vw;height:60vw;
+  max-width:1000px;max-height:1000px;
+  background:radial-gradient(circle, rgba(200,210,225,.08) 0%, rgba(180,190,210,.03) 40%, transparent 75%);
+  animation:aurora-b 36s ease-in-out infinite alternate;
+}
+/* Camada C — centro vertical, mais sutil */
+.global-aurora__layer--c{
+  top:30%;left:35%;
+  width:40vw;height:40vw;
+  max-width:700px;max-height:700px;
+  background:radial-gradient(circle, rgba(255,255,255,.06) 0%, transparent 65%);
+  animation:aurora-c 44s ease-in-out infinite alternate;
+}
+@keyframes aurora-a{
+  0%{transform:translate3d(0,0,0) scale(1);}
+  50%{transform:translate3d(8vw,4vh,0) scale(1.08);}
+  100%{transform:translate3d(-4vw,8vh,0) scale(.95);}
+}
+@keyframes aurora-b{
+  0%{transform:translate3d(0,0,0) scale(1);}
+  50%{transform:translate3d(-6vw,-5vh,0) scale(1.05);}
+  100%{transform:translate3d(5vw,-8vh,0) scale(.92);}
+}
+@keyframes aurora-c{
+  0%{transform:translate3d(-50%,-50%,0) scale(1);opacity:.35;}
+  50%{transform:translate3d(-40%,-55%,0) scale(1.15);opacity:.45;}
+  100%{transform:translate3d(-55%,-45%,0) scale(.9);opacity:.25;}
+}
+
+/* MOBILE — aurora simplificada (só 1 camada, blur menor, animação mais lenta) */
+@media (max-width:768px){
+  .global-aurora__layer--b,
+  .global-aurora__layer--c{display:none;}
+  .global-aurora__layer--a{
+    filter:blur(60px);
+    opacity:.25;
+    animation-duration:40s;
+    width:80vw;height:80vw;
+  }
+}
+
+/* Acessibilidade — desliga aurora com reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  .global-aurora__layer{animation:none !important;}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PREMIUM REVEAL SYSTEM v2 — Apple/Linear style
+   Tudo via CSS variables + IntersectionObserver
+   ═══════════════════════════════════════════════════════════ */
+[data-reveal]{
+  opacity:0;
+  transform:translate3d(var(--rx,0),var(--ry,40px),0) scale(var(--rs,1));
+  filter:blur(var(--rb,6px));
+  transition:
+    opacity .9s cubic-bezier(.16,1,.3,1),
+    transform 1s cubic-bezier(.16,1,.3,1),
+    filter .9s cubic-bezier(.16,1,.3,1);
+  transition-delay:var(--rd,0s);
+  will-change:opacity,transform,filter;
+}
+[data-reveal="up"]{--ry:40px;}
+[data-reveal="down"]{--ry:-40px;}
+[data-reveal="left"]{--rx:-40px;--ry:0;}
+[data-reveal="right"]{--rx:40px;--ry:0;}
+[data-reveal="scale"]{--rs:.94;--ry:20px;}
+[data-reveal="lift"]{--ry:60px;--rs:.96;}
+
+[data-reveal].is-visible{
+  opacity:1;
+  transform:translate3d(0,0,0) scale(1);
+  filter:blur(0);
+  /* PERF: libera GPU layer assim que a animação termina */
+  will-change:auto;
+}
+
+/* Stagger automático via data-attributes */
+[data-stagger="1"]{--rd:.05s;}
+[data-stagger="2"]{--rd:.12s;}
+[data-stagger="3"]{--rd:.19s;}
+[data-stagger="4"]{--rd:.26s;}
+[data-stagger="5"]{--rd:.33s;}
+[data-stagger="6"]{--rd:.40s;}
+[data-stagger="7"]{--rd:.47s;}
 
 /* SCROLLBAR */
 ::-webkit-scrollbar{width:5px;}
@@ -67,12 +315,48 @@ body{font-family:'Inter',sans-serif;background:#000000;color:#ffffff;overflow-x:
 
 /* LIGHT BEAM */
 .light-beam{
-  pointer-events:none;position:fixed;top:-10vh;left:50%;transform:translateX(-50%);
+  pointer-events:none;position:fixed;top:-10vh;left:50%;transform:translate3d(-50%,0,0);
   width:700px;height:100vh;
   background:conic-gradient(from 180deg at 50% 0%,rgba(255,255,255,.10) 0deg,transparent 55deg,transparent 305deg,rgba(255,255,255,.07) 360deg);
-  filter:blur(45px);z-index:0;animation:beamPulse 7s ease-in-out infinite alternate;
+  filter:blur(35px);z-index:0;animation:beamPulse 7s ease-in-out infinite alternate;
+  will-change:opacity,transform;
 }
-@keyframes beamPulse{from{opacity:.55;transform:translateX(-50%) scaleX(1);}to{opacity:1;transform:translateX(-50%) scaleX(1.2);}}
+@keyframes beamPulse{from{opacity:.55;transform:translate3d(-50%,0,0) scaleX(1);}to{opacity:1;transform:translate3d(-50%,0,0) scaleX(1.2);}}
+
+/* ═══════════════════════════════════════════════════════════
+   MESH GRADIENT AMBIENTE — orbita lenta no fundo (Apple Vision style)
+   ═══════════════════════════════════════════════════════════ */
+.mesh-orb{
+  position:absolute;
+  border-radius:50%;
+  filter:blur(60px);
+  pointer-events:none;
+  z-index:0;
+  opacity:.25; /* reduzido de .4 — aurora global já fornece luz ambiente */
+  will-change:transform;
+  transform:translateZ(0);
+}
+.mesh-orb-a{
+  top:20%;left:-10%;width:500px;height:500px;
+  background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%);
+  animation:meshDrift1 28s ease-in-out infinite alternate;
+}
+.mesh-orb-b{
+  bottom:10%;right:-15%;width:600px;height:600px;
+  background:radial-gradient(circle,rgba(255,255,255,.05) 0%,transparent 70%);
+  animation:meshDrift2 36s ease-in-out infinite alternate;
+}
+@keyframes meshDrift1{
+  0%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(40px,-30px) scale(1.1);}
+  100%{transform:translate(-30px,40px) scale(.95);}
+}
+@keyframes meshDrift2{
+  0%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(-50px,30px) scale(1.05);}
+  100%{transform:translate(30px,-40px) scale(.92);}
+}
+@media (max-width:768px){.mesh-orb{display:none;}}
 
 /* GRAIN */
 body::before{
@@ -108,6 +392,51 @@ body::before{
   animation:gradShine 6s linear infinite;
 }
 @keyframes gradShine{0%{background-position:0% center;}100%{background-position:-200% center;}}
+
+/* ═══════════════════════════════════════════════════════════
+   PREMIUM TITLE GRADIENT — gradient animado nos H2 das seções
+   Movimento sutil, alto padrão, GPU-accelerated (sem afetar performance)
+   Estilo Stripe / Vercel / Linear
+   ═══════════════════════════════════════════════════════════ */
+.title-gradient{
+  background:linear-gradient(
+    100deg,
+    #ffffff 0%,
+    #ffffff 28%,
+    #b4b4b8 50%,
+    #ffffff 72%,
+    #ffffff 100%
+  );
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  color:transparent;
+  animation:titleShine 8s linear infinite;
+  /* GPU acceleration sem will-change permanente */
+  transform:translateZ(0);
+}
+@keyframes titleShine{
+  0%{background-position:0% center;}
+  100%{background-position:-200% center;}
+}
+
+/* Reduzir motion quando o usuário pediu */
+@media (prefers-reduced-motion: reduce){
+  .title-gradient{
+    animation:none;
+    background:linear-gradient(135deg,#ffffff 0%,#b4b4b8 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+  }
+}
+
+/* Mobile — animação mais lenta (menos repaints, ainda elegante) */
+@media (max-width:768px){
+  .title-gradient{
+    animation-duration:12s;
+  }
+}
 
 /* BTN — agora branco com texto preto, com glow */
 .btn-glow {
@@ -287,10 +616,19 @@ body::before{
   overflow:hidden;
   -webkit-mask-image:linear-gradient(90deg,transparent 0%,black 12%,black 88%,transparent 100%);
   mask-image:linear-gradient(90deg,transparent 0%,black 12%,black 88%,transparent 100%);
+  /* PERF: pula render se fora da tela */
+  content-visibility:auto;
+  contain-intrinsic-size:auto 80px;
 }
-.marquee-track{display:flex;gap:4rem;align-items:center;width:max-content;animation:marqueeScroll 35s linear infinite;}
+.marquee-track{
+  display:flex;gap:4rem;align-items:center;width:max-content;
+  animation:marqueeScroll 35s linear infinite;
+  /* GPU acceleration */
+  will-change:transform;
+  transform:translateZ(0);
+}
 .marquee-track:hover{animation-play-state:paused;}
-@keyframes marqueeScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@keyframes marqueeScroll{from{transform:translate3d(0,0,0);}to{transform:translate3d(-50%,0,0);}}
 
 
 /* ═══════════════════════════════════════════
@@ -427,7 +765,7 @@ body::before{
 }
 .footer-social:hover{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.3);color:#ffffff;}
 
-.blob{will-change:transform;transform:translateZ(0);}
+.blob{transform:translateZ(0);}
 
 /* ══ SCROLL FADE ══ */
 .scroll-left {
@@ -574,6 +912,33 @@ body::before{
 .heading-display{font-family:'Space Grotesk','Inter',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:1.04;}
 .text-eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#71717a;}
 
+/* ═══════════════════════════════════════════════════════════
+   FLUID TYPE — tipografia que escala suave (sem breakpoints abruptos)
+   ═══════════════════════════════════════════════════════════ */
+.heading-display{
+  text-wrap:balance;
+}
+section h2.heading-display{
+  font-size:clamp(1.875rem, 1.2rem + 3vw, 3.25rem);
+  line-height:1.08;
+  letter-spacing:-.038em;
+}
+section h3.heading-display{
+  font-size:clamp(1.25rem, .95rem + 1.2vw, 1.65rem);
+  line-height:1.15;
+  letter-spacing:-.025em;
+}
+/* Subtítulo padrão das seções */
+.section-sub{
+  font-size:clamp(1rem, .9rem + .4vw, 1.125rem);
+  line-height:1.65;
+  color:#a1a1aa;
+  max-width:620px;
+  margin-left:auto;
+  margin-right:auto;
+  text-wrap:pretty;
+}
+
 /* ═══════════════════════════════════════════
    PILARES — VERSÃO PREMIUM SAAS
    Globo terrestre + cards aprimorados
@@ -583,7 +948,9 @@ body::before{
 .pillars-section{
   position:relative;
   isolation:isolate;
-  overflow:hidden;
+  /* overflow:hidden REMOVIDO — estava quebrando position:sticky dos cards.
+     Os elementos absolute internos (globo, mesh-orbs) usam pointer-events:none
+     e ficam contidos pelo viewport naturalmente. */
   background:#000;
 }
 .pillars-section::before{
@@ -608,6 +975,9 @@ body::before{
   opacity:.55;
   mask-image:radial-gradient(circle at center, #000 30%, transparent 75%);
   -webkit-mask-image:radial-gradient(circle at center, #000 30%, transparent 75%);
+  /* PERF: pula render se fora da tela */
+  content-visibility:auto;
+  contain-intrinsic-size:1400px 1400px;
 }
 .globe-bg svg{
   width:100%;height:100%;
@@ -626,6 +996,7 @@ body::before{
   animation:dotPulse 3s ease-in-out infinite;
   transform-origin:center;
   transform-box:fill-box;
+  will-change:opacity,transform;
 }
 .globe-dot:nth-child(2){animation-delay:.4s;}
 .globe-dot:nth-child(3){animation-delay:.8s;}
@@ -661,6 +1032,8 @@ body::before{
 .pillars-content{
   position:relative;
   z-index:2;
+  /* IMPORTANTE: overflow visible para não quebrar position:sticky dos cards filhos */
+  overflow:visible;
 }
 
 /* ───────── CARDS PREMIUM ───────── */
@@ -688,6 +1061,8 @@ body::before{
   min-height:300px;
   display:flex;
   flex-direction:column;
+  /* PERF: contain isola layout/style — mudanças no card não causam reflow em irmãos */
+  contain:layout style;
 }
 
 /* Número gigante no fundo */
@@ -899,6 +1274,142 @@ body::before{
   .pillar-card .pillar-title{font-size:1.1rem;}
 }
 
+/* ═══════════════════════════════════════════════════════════
+   ESCADA — Linha conectora luminosa entre os pilares (desktop)
+   ═══════════════════════════════════════════════════════════ */
+@media (min-width:1024px){
+  .pillars-grid-wrap{position:relative;}
+  .pillars-grid-wrap::before{
+    content:"";
+    position:absolute;
+    top:0;bottom:0;left:50%;
+    width:1px;
+    background:linear-gradient(180deg,
+      transparent 0%,
+      rgba(255,255,255,.08) 10%,
+      rgba(255,255,255,.15) 50%,
+      rgba(255,255,255,.08) 90%,
+      transparent 100%);
+    transform:translateX(-50%);
+    pointer-events:none;
+    z-index:0;
+  }
+  /* Ponto luminoso descendo conforme o scroll progride */
+  .pillars-grid-wrap::after{
+    content:"";
+    position:absolute;
+    top:var(--scroll-progress,0%);
+    left:50%;
+    width:8px;height:8px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 12px rgba(255,255,255,.8),0 0 24px rgba(255,255,255,.4);
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    z-index:1;
+    transition:top .15s linear;
+  }
+}
+
+/* Sutil escalonamento dos pilares em desktop pra criar "escada" visual */
+@media (min-width:1024px){
+  .pillar-card.step-up{transform:translateY(-12px);}
+  .pillar-card.step-up:hover{transform:translateY(-20px);}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STICKY STACK CARDS — efeito baralho (Apple / Linear / Stripe style)
+   Os cards empilham no topo conforme o usuário scrolla.
+   FUNCIONA EM MOBILE E DESKTOP.
+   Performance: puro CSS (position: sticky + transform).
+
+   IMPORTANTE: Para position:sticky funcionar:
+   - Nenhum ancestral pode ter overflow:hidden, scroll, ou auto
+   - Nenhum ancestral pode ter content-visibility:auto
+   - O elemento ATIVO não pode ter transform setado quando sticky (vira novo containing block)
+   ═══════════════════════════════════════════════════════════ */
+.pillars-stack{
+  display:flex;
+  flex-direction:column;
+  gap:0; /* sem gap — os cards se sobrepõem */
+  position:relative;
+  /* offset interno controla quanto fica visível do card embaixo */
+  padding-bottom:6rem;
+  /* Garante que o container NÃO tem overflow ou contain que quebre sticky */
+  overflow:visible;
+}
+
+.pillars-stack .pillar-card{
+  position:sticky;
+  /* cada card "para" em uma altura diferente do topo, criando o baralho */
+  top:calc(5rem + var(--stack-i, 0) * 16px);
+  /* margin-top = espaço entre cards no scroll (sensação de "abrir baralho") */
+  margin-top:3rem;
+  /* Fundo sólido — cada card cobre o anterior */
+  background:linear-gradient(135deg, rgba(20,20,22,0.96) 0%, rgba(10,10,12,0.94) 100%);
+  backdrop-filter:blur(12px) saturate(150%);
+  -webkit-backdrop-filter:blur(12px) saturate(150%);
+  transform-origin:center top;
+  transition:
+    transform .6s cubic-bezier(.16,1,.3,1),
+    opacity .6s cubic-bezier(.16,1,.3,1),
+    filter .6s cubic-bezier(.16,1,.3,1);
+  z-index:calc(var(--stack-i, 0) + 1);
+}
+.pillars-stack .pillar-card:first-child{
+  margin-top:0;
+}
+
+/* DESKTOP — offsets maiores entre cards (mais espaço pro efeito) */
+@media (min-width:1024px){
+  .pillars-stack .pillar-card{
+    top:calc(6rem + var(--stack-i, 0) * 22px);
+    margin-top:4rem;
+  }
+}
+
+/* Card ATIVO (atualmente travado no topo) */
+.pillars-stack .pillar-card.is-active{
+  opacity:1;
+}
+
+/* Card EMPILHADO (já passou pelo topo, recuou no baralho) */
+.pillars-stack .pillar-card.is-stacked{
+  transform:scale(calc(1 - (var(--stack-depth, 0) * 0.018))) translateY(calc(var(--stack-depth, 0) * -8px));
+  opacity:calc(1 - (var(--stack-depth, 0) * 0.12));
+  filter:blur(calc(var(--stack-depth, 0) * 0.5px));
+}
+
+/* Sombra dramática no card ativo */
+.pillars-stack .pillar-card{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05) inset,
+    0 20px 40px -20px rgba(0,0,0,.5),
+    0 0 0 1px rgba(255,255,255,0.04);
+}
+.pillars-stack .pillar-card.is-active{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.1) inset,
+    0 30px 60px -10px rgba(0,0,0,.7),
+    0 0 0 1px rgba(255,255,255,0.12),
+    0 0 60px -10px rgba(255,255,255,.08);
+}
+@media (min-width:1024px){
+  .pillars-stack .pillar-card{
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.05) inset,
+      0 30px 60px -20px rgba(0,0,0,.6),
+      0 0 0 1px rgba(255,255,255,0.04);
+  }
+  .pillars-stack .pillar-card.is-active{
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.1) inset,
+      0 40px 100px -10px rgba(0,0,0,.8),
+      0 0 0 1px rgba(255,255,255,0.12),
+      0 0 80px -10px rgba(255,255,255,.10);
+  }
+}
+
 /* ═══════════════════════════════════════════
    CASES REAIS — PREMIUM (mesmo padrão dos Pilares)
    ═══════════════════════════════════════════ */
@@ -956,6 +1467,8 @@ body::before{
     0 0 0 1px rgba(255,255,255,0.02);
   display:flex;
   flex-direction:column;
+  /* PERF: isola layout/style — mudanças no card não causam reflow em irmãos */
+  contain:layout style;
 }
 
 /* Border conic animada */
@@ -1378,8 +1891,8 @@ body::before{
 .hero-logo{background:#000;}
 
 /* ─────── CONTENT-VISIBILITY — render só do que tá na tela
-   (cases-section removido para não interferir com IntersectionObserver dos vídeos) ─────── */
-.pillars-section,
+   (cases-section removido para não interferir com IntersectionObserver dos vídeos)
+   (pillars-section REMOVIDO — quebrava position:sticky dos cards do baralho) ─────── */
 .testi-section,
 section.bg-process,
 section.bg-pricing,
@@ -1414,6 +1927,16 @@ section.bg-cta{
   .pillar-card::after,
   .case-card::after,
   .testi-card::after{display:none;}
+
+  /* PERF EXTRA — mobile só */
+  /* Drop-shadow é muito caro em mobile (não acelerado por GPU em muitos chipsets) */
+  .globe-dot{filter:none !important;}
+  /* Texto-stroke fineline também é caro */
+  .pillar-card .pillar-bg-number{-webkit-text-stroke:none !important;color:rgba(255,255,255,0.04);}
+  /* Reduzir custo do efeito spotlight do .meio */
+  .meio::before,.meio::after{display:none;}
+  /* Desligar mesh orbs em mobile */
+  .mesh-orb{display:none !important;}
 }
 
 /* ─────── REDUCED MOTION (regra unificada) ─────── */
@@ -1436,6 +1959,13 @@ section.bg-cta{
 </head>
 <body>
 
+<!-- ═══ GLOBAL AURORA — brilho ambiente animado em toda a página ═══ -->
+<div class="global-aurora" aria-hidden="true">
+  <div class="global-aurora__layer global-aurora__layer--a"></div>
+  <div class="global-aurora__layer global-aurora__layer--b"></div>
+  <div class="global-aurora__layer global-aurora__layer--c"></div>
+</div>
+
 <style>
 /* VIDEO CASE — variação do case-card para hospedar vídeo vertical */
 .video-case{padding:1.25rem 1.25rem 1.5rem;display:flex;flex-direction:column;}
@@ -1443,6 +1973,167 @@ section.bg-cta{
 .video-case .video-block{margin-top:auto;background:#0a0a0a;border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 38px rgba(0,0,0,.45);}
 .video-case .video-block iframe{display:block;background:#000;}
 @media (max-width:640px){.video-case .video-block{max-width:340px;}}
+
+/* ═══════════════════════════════════════════════════════════
+   CINEMA STACK — Cards de vídeo com elevação 3D no scroll
+   ═══════════════════════════════════════════════════════════ */
+.video-case{
+  perspective:1400px;
+  transform-style:preserve-3d;
+  /* PERF: pula render do card se não está na tela */
+  content-visibility:auto;
+  contain-intrinsic-size:auto 600px;
+}
+.video-case .video-block{
+  position:relative;
+  border-radius:14px;
+  transition:transform .6s cubic-bezier(.16,1,.3,1), box-shadow .6s ease;
+}
+.video-case:hover .video-block{
+  transform:translateY(-6px) rotateX(2deg);
+  box-shadow:0 28px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.15);
+}
+/* Glow sutil ao redor do vídeo quando hover */
+.video-case .video-block::before{
+  content:"";
+  position:absolute;inset:-2px;
+  border-radius:inherit;
+  background:linear-gradient(135deg,rgba(255,255,255,.18) 0%,transparent 50%,rgba(255,255,255,.1) 100%);
+  opacity:0;
+  transition:opacity .6s ease;
+  z-index:-1;
+  pointer-events:none;
+  filter:blur(8px);
+}
+.video-case:hover .video-block::before{opacity:1;}
+
+/* Frame premium no entorno do iframe (apple-style) */
+.video-case .video-block{
+  background:#0a0a0a;
+  border:1px solid rgba(255,255,255,.08);
+}
+.video-case:hover{
+  border-color:rgba(255,255,255,.18);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CASES CAROUSEL — scroll horizontal com snap (Apple/Netflix style)
+   ═══════════════════════════════════════════════════════════ */
+.cases-carousel-wrap{
+  position:relative;
+  /* máscara nas bordas para fade-out elegante */
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 4%,#000 96%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 4%,#000 96%,transparent 100%);
+}
+.cases-carousel{
+  display:flex;
+  gap:1.5rem;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  padding:1rem 2rem 2rem;
+  scrollbar-width:none;          /* Firefox */
+  -ms-overflow-style:none;       /* IE/Edge */
+}
+.cases-carousel::-webkit-scrollbar{display:none;} /* Chrome/Safari */
+
+.cases-carousel > .video-case{
+  flex:0 0 320px;                /* mobile padrão */
+  scroll-snap-align:center;
+  scroll-snap-stop:always;
+}
+@media (min-width:640px){
+  .cases-carousel > .video-case{flex:0 0 340px;scroll-snap-align:start;}
+}
+@media (min-width:1024px){
+  .cases-carousel > .video-case{flex:0 0 360px;}
+  .cases-carousel{padding:1.5rem 3rem 2.5rem;gap:1.75rem;}
+}
+
+/* Indicadores de progresso (dots) */
+.carousel-dots{
+  display:flex;
+  justify-content:center;
+  gap:.5rem;
+  margin-top:1.5rem;
+}
+.carousel-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(255,255,255,.18);
+  cursor:pointer;
+  transition:all .3s ease;
+  border:none;padding:0;
+}
+.carousel-dot.is-active{
+  background:#fff;
+  width:24px;
+  border-radius:6px;
+  box-shadow:0 0 8px rgba(255,255,255,.4);
+}
+
+/* Botões de navegação (desktop) */
+.carousel-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  width:48px;height:48px;
+  border-radius:50%;
+  background:rgba(0,0,0,.7);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:10;
+  transition:all .3s ease;
+  color:#fff;
+}
+.carousel-btn:hover{
+  background:#fff;
+  color:#000;
+  border-color:#fff;
+  box-shadow:0 0 24px rgba(255,255,255,.3);
+}
+.carousel-btn:disabled{
+  opacity:.3;
+  cursor:not-allowed;
+  pointer-events:none;
+}
+.carousel-btn-prev{left:.5rem;}
+.carousel-btn-next{right:.5rem;}
+@media (min-width:1024px){
+  .carousel-btn{display:flex;}
+  .carousel-btn-prev{left:1rem;}
+  .carousel-btn-next{right:1rem;}
+}
+
+/* Hint de swipe em mobile (animação sutil) */
+.swipe-hint{
+  display:none;
+  text-align:center;
+  margin-top:1rem;
+  font-size:.75rem;
+  color:#71717a;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.swipe-hint svg{
+  display:inline-block;
+  vertical-align:middle;
+  margin:0 .4rem;
+  animation:swipeHint 2s ease-in-out infinite;
+}
+@keyframes swipeHint{
+  0%,100%{transform:translateX(-4px);opacity:.4;}
+  50%{transform:translateX(4px);opacity:1;}
+}
+@media (max-width:1023px){
+  .swipe-hint{display:block;}
+}
 </style>
 
 <noscript>
@@ -1542,6 +2233,10 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 <!-- ═══ OS 4 PILARES ═══ -->
 <section id="pilares" class="pillars-section py-20 sm:py-24">
 
+  <!-- Mesh gradient orbs ambient -->
+  <div class="mesh-orb mesh-orb-a" aria-hidden="true"></div>
+  <div class="mesh-orb mesh-orb-b" aria-hidden="true"></div>
+
   <!-- ▓▓ GLOBO TERRESTRE SAAS — BACKGROUND ▓▓ -->
   <div class="globe-bg" aria-hidden="true">
     <svg viewBox="-300 -300 600 600" xmlns="http://www.w3.org/2000/svg">
@@ -1623,17 +2318,17 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <div class="pillars-content mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">O Sistema · Método Guest</span></div>
-      <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;">
+      <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;">
         Conheça o <span class="gradient-text">"Método Guest"</span> e veja como Tatuadores estão lotando agenda, cobrando mais caro.
       </h2>
       <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;"><strong style="color:#fff;font-weight:600;">+35 países</strong> e <strong style="color:#fff;font-weight:600;">R$1MM</strong> investidos em tráfego pago.</p>
     </div>
 
     <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:max-w-6xl">
-      <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 xl:grid-cols-3">
+      <div class="pillars-grid-wrap pillars-stack">
 
         <!-- PILAR 1 -->
-        <div class="pillar-card meio scroll-left sc-d1">
+        <div class="pillar-card meio" style="--stack-i:0;">
           <span class="pillar-bg-number">01</span>
           <div class="pillar-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" class="size-5"><path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1648,7 +2343,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         </div>
 
         <!-- PILAR 2 -->
-        <div class="pillar-card meio scroll-right sc-d2">
+        <div class="pillar-card meio step-up" style="--stack-i:1;">
           <span class="pillar-bg-number">02</span>
           <div class="pillar-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" class="size-5"><path d="M2.25 12 5.5 8.75M5.5 8.75 2.25 5.5M5.5 8.75H15a4.5 4.5 0 0 1 0 9h-6m12-9.5L18.5 15.25M18.5 15.25l3.25 3.25M18.5 15.25H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1663,7 +2358,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         </div>
 
         <!-- PILAR 3 -->
-        <div class="pillar-card meio scroll-left sc-d3">
+        <div class="pillar-card meio" style="--stack-i:2;">
           <span class="pillar-bg-number">03</span>
           <div class="pillar-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" class="size-5"><path d="m15.75 10.5 4.72-4.72a.75.75 0 0 1 1.28.53v11.38a.75.75 0 0 1-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25h-9A2.25 2.25 0 0 0 2.25 7.5v9a2.25 2.25 0 0 0 2.25 2.25Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1678,7 +2373,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         </div>
 
         <!-- PILAR 4 -->
-        <div class="pillar-card meio scroll-right sc-d4">
+        <div class="pillar-card meio step-up" style="--stack-i:3;">
           <span class="pillar-bg-number">04</span>
           <div class="pillar-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" class="size-5"><path d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1693,7 +2388,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         </div>
 
         <!-- BÔNUS 1 -->
-        <div class="pillar-card meio scroll-left sc-d5" style="border-style:dashed;border-color:rgba(255,255,255,0.15);">
+        <div class="pillar-card meio" style="--stack-i:4;border-style:dashed;border-color:rgba(255,255,255,0.15);">
           <span class="pillar-bg-number" style="-webkit-text-stroke-color:rgba(255,255,255,0.04);">+1</span>
           <div class="pillar-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" class="size-5"><path d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1708,7 +2403,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         </div>
 
         <!-- BÔNUS 2 -->
-        <div class="pillar-card meio scroll-right sc-d6" style="border-style:dashed;border-color:rgba(255,255,255,0.15);">
+        <div class="pillar-card meio step-up" style="--stack-i:5;border-style:dashed;border-color:rgba(255,255,255,0.15);">
           <span class="pillar-bg-number" style="-webkit-text-stroke-color:rgba(255,255,255,0.04);">+2</span>
           <div class="pillar-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" class="size-5"><path d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1767,17 +2462,26 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <div class="cases-content mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">Cases Reais</span></div>
-      <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;">
+      <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;">
         Alguns Tatuadores de <span class="gradient-text">100 pra mais</span><br/>com resultados, previsibilidade e crescimento na Tattoo acelerado!
       </h2>
       <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">O que Tatuadores falam sobre o <strong style="color:#fff;font-weight:600;">"Método Guest"?</strong></p>
     </div>
 
-    <div class="mx-auto mt-14 sm:mt-16 max-w-2xl lg:max-w-6xl">
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="mx-auto mt-14 sm:mt-16 max-w-7xl">
+      <div class="cases-carousel-wrap">
+        <!-- Botão anterior -->
+        <button type="button" class="carousel-btn carousel-btn-prev" aria-label="Anterior" data-carousel-prev>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <!-- Botão próximo -->
+        <button type="button" class="carousel-btn carousel-btn-next" aria-label="Próximo" data-carousel-next>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="cases-carousel" id="cases-carousel">
 
         <!-- VIDEO CASE 1 — Fabio Castilho Tattoo · Portugal -->
-        <div class="fade-up case-card video-case meio">
+        <div class="case-card video-case meio" data-reveal="scale" data-stagger="1">
           <span class="case-bg-number">01</span>
           <div class="case-header" style="margin-bottom:1rem;">
             <span class="case-flag-display" aria-label="Portugal"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="24" height="40" fill="#006600"/><rect x="24" width="36" height="40" fill="#FF0000"/><circle cx="24" cy="20" r="7" fill="#FFD700" stroke="#000" stroke-width=".6"/></svg></span>
@@ -1785,13 +2489,13 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <div class="video-block" id="ifr_6a037bba9ca1e0db9a6b0bfe_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bba9ca1e0db9a6b0bfe_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bba9ca1e0db9a6b0bfe" data-lazy-video="6a037bba9ca1e0db9a6b0bfe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bba9ca1e0db9a6b0bfe" loading="lazy" data-lazy-video="6a037bba9ca1e0db9a6b0bfe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
 
         <!-- VIDEO CASE 2 — João Noslen Tattoo · Portugal -->
-        <div class="fade-up case-card video-case meio">
+        <div class="case-card video-case meio" data-reveal="scale" data-stagger="2">
           <span class="case-bg-number">02</span>
           <div class="case-header" style="margin-bottom:1rem;">
             <span class="case-flag-display" aria-label="Portugal"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="24" height="40" fill="#006600"/><rect x="24" width="36" height="40" fill="#FF0000"/><circle cx="24" cy="20" r="7" fill="#FFD700" stroke="#000" stroke-width=".6"/></svg></span>
@@ -1799,13 +2503,13 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <div class="video-block" id="ifr_6a037bbf40952b53b4fab9e3_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bbf40952b53b4fab9e3_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bbf40952b53b4fab9e3" data-lazy-video="6a037bbf40952b53b4fab9e3" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bbf40952b53b4fab9e3" loading="lazy" data-lazy-video="6a037bbf40952b53b4fab9e3" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
 
         <!-- VIDEO CASE 3 — Japa Tattoo · Portugal -->
-        <div class="fade-up case-card video-case meio">
+        <div class="case-card video-case meio" data-reveal="scale" data-stagger="3">
           <span class="case-bg-number">03</span>
           <div class="case-header" style="margin-bottom:1rem;">
             <span class="case-flag-display" aria-label="Portugal"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="24" height="40" fill="#006600"/><rect x="24" width="36" height="40" fill="#FF0000"/><circle cx="24" cy="20" r="7" fill="#FFD700" stroke="#000" stroke-width=".6"/></svg></span>
@@ -1813,13 +2517,13 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <div class="video-block" id="ifr_6a037bc4319b5efaa4281578_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bc4319b5efaa4281578_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bc4319b5efaa4281578" data-lazy-video="6a037bc4319b5efaa4281578" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bc4319b5efaa4281578" loading="lazy" data-lazy-video="6a037bc4319b5efaa4281578" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
 
         <!-- VIDEO CASE 4 — Bruno CP · Noruega -->
-        <div class="fade-up case-card video-case meio">
+        <div class="case-card video-case meio" data-reveal="scale" data-stagger="4">
           <span class="case-bg-number">04</span>
           <div class="case-header" style="margin-bottom:1rem;">
             <span class="case-flag-display" aria-label="Noruega"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#EF2B2D"/><rect x="16" width="6" height="40" fill="#fff"/><rect y="17" width="60" height="6" fill="#fff"/><rect x="17.5" width="3" height="40" fill="#002868"/><rect y="18.5" width="60" height="3" fill="#002868"/></svg></span>
@@ -1827,13 +2531,13 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <div class="video-block" id="ifr_6a037bc84d6e3177e1f80593_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bc84d6e3177e1f80593_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bc84d6e3177e1f80593" data-lazy-video="6a037bc84d6e3177e1f80593" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bc84d6e3177e1f80593" loading="lazy" data-lazy-video="6a037bc84d6e3177e1f80593" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
 
         <!-- VIDEO CASE 5 — Vinny Tattoo · Estados Unidos -->
-        <div class="fade-up case-card video-case meio">
+        <div class="case-card video-case meio" data-reveal="scale" data-stagger="5">
           <span class="case-bg-number">05</span>
           <div class="case-header" style="margin-bottom:1rem;">
             <span class="case-flag-display" aria-label="Estados Unidos"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#B22234"/><rect y="3.08" width="60" height="3.08" fill="#fff"/><rect y="9.23" width="60" height="3.08" fill="#fff"/><rect y="15.38" width="60" height="3.08" fill="#fff"/><rect y="21.54" width="60" height="3.08" fill="#fff"/><rect y="27.69" width="60" height="3.08" fill="#fff"/><rect y="33.85" width="60" height="3.08" fill="#fff"/><rect width="24" height="21.54" fill="#3C3B6E"/></svg></span>
@@ -1841,13 +2545,13 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <div class="video-block" id="ifr_6a03bc69f7dfb345ee3b5403_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a03bc69f7dfb345ee3b5403_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a03bc69f7dfb345ee3b5403" data-lazy-video="6a03bc69f7dfb345ee3b5403" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a03bc69f7dfb345ee3b5403" loading="lazy" data-lazy-video="6a03bc69f7dfb345ee3b5403" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
 
         <!-- VIDEO CASE 6 — Aryel Tattoo · Portugal -->
-        <div class="fade-up case-card video-case meio">
+        <div class="case-card video-case meio" data-reveal="scale" data-stagger="6">
           <span class="case-bg-number">06</span>
           <div class="case-header" style="margin-bottom:1rem;">
             <span class="case-flag-display" aria-label="Portugal"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="24" height="40" fill="#006600"/><rect x="24" width="36" height="40" fill="#FF0000"/><circle cx="24" cy="20" r="7" fill="#FFD700" stroke="#000" stroke-width=".6"/></svg></span>
@@ -1855,13 +2559,13 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <div class="video-block" id="ifr_6a03bc6508dd22f8e6183054_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a03bc6508dd22f8e6183054_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a03bc6508dd22f8e6183054" data-lazy-video="6a03bc6508dd22f8e6183054" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a03bc6508dd22f8e6183054" loading="lazy" data-lazy-video="6a03bc6508dd22f8e6183054" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
 
         <!-- VIDEO CASE 7 — Danilo Santos · Inglaterra -->
-        <div class="fade-up case-card video-case meio">
+        <div class="case-card video-case meio" data-reveal="scale" data-stagger="7">
           <span class="case-bg-number">07</span>
           <div class="case-header" style="margin-bottom:1rem;">
             <span class="case-flag-display" aria-label="Inglaterra"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#fff"/><rect x="24" width="12" height="40" fill="#CE1124"/><rect y="14" width="60" height="12" fill="#CE1124"/></svg></span>
@@ -1869,12 +2573,23 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <div class="video-block" id="ifr_6a03bc62f18251980df1b4d2_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
             <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a03bc62f18251980df1b4d2_aspect">
-              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a03bc62f18251980df1b4d2" data-lazy-video="6a03bc62f18251980df1b4d2" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
+              <iframe frameborder="0" allowfullscreen src="about:blank" id="ifr_6a03bc62f18251980df1b4d2" loading="lazy" data-lazy-video="6a03bc62f18251980df1b4d2" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
             </div>
           </div>
         </div>
 
-      </div>
+        </div><!-- /.cases-carousel -->
+      </div><!-- /.cases-carousel-wrap -->
+
+      <!-- Indicadores de progresso (dots) -->
+      <div class="carousel-dots" id="cases-carousel-dots" aria-hidden="true"></div>
+
+      <!-- Hint de swipe (mobile) -->
+      <p class="swipe-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Arraste para os lados
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </p>
     </div>
   </div>
 </section>
@@ -1886,7 +2601,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">Linha do Tempo · Da decisão ao embarque</span></div>
-      <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;">
+      <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;">
         O que realmente é distorção de tempo e <span class="gradient-text">Agenda Fechada</span> que o "Método Guest" ENTREGA?
       </h2>
       <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;"><strong style="color:#fff;">"Não é talvez ou será que funciona para mim?"</strong> — MÉTODO GUEST é único, ele levou <strong style="color:#fff;">4 anos</strong> para garantir agenda cheia e previsibilidade.</p>
@@ -1894,35 +2609,35 @@ iframe[data-lazy-video]{background:#0a0a0a;}
     <div class="mx-auto mt-16 max-w-3xl">
       <div class="space-y-10" id="process-linee">
 
-        <div class="fade-up process-step relative" data-step="01">
+        <div data-reveal="up" data-stagger="1" class="process-step relative" data-step="01">
           <div class="process-connector"></div>
           <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 1 e 2 · Diagnóstico</p>
           <h3 class="heading-display text-lg mb-2" style="color:#fff;">Escolha do País e Previsibilidade</h3>
           <p class="leading-relaxed" style="color:#a1a1aa;">Definimos juntos o país que você vai viajar de forma estratégica. <strong style="color:#fff;">Agenda fechada antes mesmo de embarcar.</strong></p>
         </div>
 
-        <div class="fade-up process-step relative" data-step="02">
+        <div data-reveal="up" data-stagger="2" class="process-step relative" data-step="02">
           <div class="process-connector"></div>
           <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 3 e 4 · Conexão</p>
           <h3 class="heading-display text-lg mb-2" style="color:#fff;">Estúdios Parceiros + Network Tattoo</h3>
           <p class="leading-relaxed" style="color:#a1a1aa;">A EIKON tem <strong style="color:#fff;">+200 tatuadores</strong> no método. Conectamos você com donos de estúdio no país escolhido — chegou, sentou, tatuou.</p>
         </div>
 
-        <div class="fade-up process-step relative" data-step="03">
+        <div data-reveal="up" data-stagger="3" class="process-step relative" data-step="03">
           <div class="process-connector"></div>
           <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 5, 6 e 7 · Tráfego e Conversão</p>
           <h3 class="heading-display text-lg mb-2" style="color:#fff;">Funil de Visita + Atendimento Reverso</h3>
           <p class="leading-relaxed" style="color:#a1a1aa;">Funil de Visita ligado e Atendimento Reverso em <strong style="color:#fff;">+4 idiomas</strong>. Clientes dispostos a pagar <strong style="color:#fff;">5x, 6x até 7x</strong> o valor do seu trampo.</p>
         </div>
 
-        <div class="fade-up process-step relative" data-step="04">
+        <div data-reveal="up" data-stagger="4" class="process-step relative" data-step="04">
           <div class="process-connector"></div>
           <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 8, 9 e 10 · Embarque</p>
           <h3 class="heading-display text-lg mb-2" style="color:#fff;">Você Viaja com Agenda Fechada</h3>
           <p class="leading-relaxed" style="color:#a1a1aa;">Você embarca com a agenda cheia. Sem se preocupar com tinta, material ou faturamento — tudo preparado. <strong style="color:#fff;">Você só realiza o sonho.</strong></p>
         </div>
 
-        <div class="fade-up process-step" data-step="05">
+        <div data-reveal="up" data-stagger="5" class="process-step" data-step="05">
           <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 11 e 12 · Colheita</p>
           <h3 class="heading-display text-lg mb-2" style="color:#fff;">Prova Social + Posicionamento</h3>
           <p class="leading-relaxed" style="color:#a1a1aa;">Depoimentos gerados e posicionamento nas redes. Volta com <strong style="color:#fff;">autoridade</strong>, referência no seu estilo e podendo cobrar mais caro no Brasil.</p>
@@ -1977,7 +2692,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <div class="testi-content mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">Quem Aplicou</span></div>
-      <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;">
+      <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;">
         Tatuadores que pararam de tentar sozinhos<br/>e <span class="gradient-text">deixaram o marketing com quem entende</span>
       </h2>
       <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">Depoimentos reais de quem aplicou o <strong style="color:#fff;font-weight:600;">Método Guest</strong>. Sem ator, sem encenação — só tatuador falando o que mudou na agenda, no faturamento e na cabeça.</p>
@@ -1987,7 +2702,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
 
         <!-- TESTIMONIAL 1 — G INK TATTOO -->
-        <div class="fade-up testi-card meio">
+        <div class="testi-card meio" data-reveal="up" data-stagger="1">
           <span class="testi-quote" aria-hidden="true">"</span>
           <div class="testi-stars" aria-label="5 estrelas">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
@@ -1998,7 +2713,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <p class="testi-text">Sempre fiz questão de entregar acima da expectativa — cliente saía do estúdio falando <em>"ficou melhor do que eu imaginava"</em>. Mas chegou um momento que eu queria crescer e o boca a boca travou. Tentei sozinho a internet, não rolou. Quando entrei pra equipa da EIKON, comecei a desenvolver <strong style="color:#fff;">conteúdo, posicionamento e constância</strong> — e isso mudou tudo. Hoje eu vejo: <strong style="color:#fff;">não existe estúdio forte sem tráfego pago e sem posicionamento na internet</strong>. Se você quer levar o seu estúdio pra outro nível, vale a conversa.</p>
           <div class="testi-author">
-            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/gink.jpg" alt="G Ink Tattoo" loading="lazy" decoding="async"/></div>
+            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/gink.jpg" alt="G Ink Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
               <p class="testi-name">G Ink Tattoo</p>
               <p class="testi-route">Conteúdo &amp; Posicionamento</p>
@@ -2007,7 +2722,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         </div>
 
         <!-- TESTIMONIAL 2 — ROMÁRIO TATTOO -->
-        <div class="fade-up testi-card meio">
+        <div class="testi-card meio" data-reveal="up" data-stagger="2">
           <span class="testi-quote" aria-hidden="true">"</span>
           <div class="testi-stars" aria-label="5 estrelas">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
@@ -2018,7 +2733,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <p class="testi-text">Tatuo há mais de 10 anos, hoje moro na Espanha. <strong style="color:#fff;">Captar cliente na Europa não é fácil</strong> — e acredito que em lugar nenhum do mundo seja. Tentei várias vezes fazer meu próprio anúncio, meu próprio marketing. Sinceramente? <strong style="color:#fff;">Só gastei dinheiro</strong>. Quando conheci o Flávio e a equipe, começamos a aplicar estratégia específica pro meu estilo (realismo preto e cinza). Em poucos dias vieram os primeiros resultados. Hoje minha agenda tá constante — esse mês e os próximos. <strong style="color:#fff;">Foca no que faz de melhor: tatuar. Deixa o marketing com profissional.</strong></p>
           <div class="testi-author">
-            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/romario.jpg" alt="Romário Tattoo" loading="lazy" decoding="async"/></div>
+            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/romario.jpg" alt="Romário Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
               <p class="testi-name">Romário Tattoo</p>
               <p class="testi-route">Sevilha <span class="testi-flag" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Espanha</p>
@@ -2027,7 +2742,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         </div>
 
         <!-- TESTIMONIAL 3 — LUCAS FABRÍCIO TATTOO -->
-        <div class="fade-up testi-card meio">
+        <div class="testi-card meio" data-reveal="up" data-stagger="3">
           <span class="testi-quote" aria-hidden="true">"</span>
           <div class="testi-stars" aria-label="5 estrelas">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
@@ -2038,7 +2753,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <p class="testi-text">Eu <strong style="color:#fff;">nunca quis fechar com agência que não fosse especializada em tatuagem</strong>. Pra mim fazia diferença trabalhar com quem entende o produto. Com a ajuda de vocês eu me adaptei muito melhor profissionalmente. Hoje <strong style="color:#fff;">não preciso ficar preocupado com tráfego, captação ou pesquisando estratégia o tempo todo</strong> — não porque não quero aprender, mas porque não tenho tempo. Focas no que importa: tatuar, evoluir e cuidar da vida pessoal. Sem marketing o tatuador fica perdido — e ter quem cuida disso pra você libera espaço pra crescer de verdade.</p>
           <div class="testi-author">
-            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/lucas.png" alt="Lucas Fabrício Tattoo" loading="lazy" decoding="async"/></div>
+            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/lucas.png" alt="Lucas Fabrício Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
               <p class="testi-name">Lucas Fabrício Tattoo</p>
               <p class="testi-route">Atração &amp; Conversão</p>
@@ -2047,7 +2762,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         </div>
 
         <!-- TESTIMONIAL 4 — BUZARANHO TATTOO -->
-        <div class="fade-up testi-card meio">
+        <div class="testi-card meio" data-reveal="up" data-stagger="4">
           <span class="testi-quote" aria-hidden="true">"</span>
           <div class="testi-stars" aria-label="5 estrelas">
             <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292Z"/></svg>
@@ -2058,7 +2773,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
           <p class="testi-text">No começo foi muito complicado pra mim. Pressão profissional, momento difícil na vida pessoal. Já tinha investido em outra empresa <strong style="color:#fff;">— valor alto, e não funcionou pro meu caso</strong>. Foram anos tentando, sem constância nenhuma. Quando vocês entraram, a realidade mudou: agenda aumentou, agendamento ficou constante, cliente chegando com frequência. Tem comunicação, acompanhamento, estratégia de verdade. E o que mais me marcou? <strong style="color:#fff;">Fechar um mês inteiro de agenda pela primeira vez.</strong> Trouxe tranquilidade, confiança e a certeza de que <em>finalmente</em> encontrei quem entende o mercado da tattoo.</p>
           <div class="testi-author">
-            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/buza.jpg" alt="Buzaranho Tattoo" loading="lazy" decoding="async"/></div>
+            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/buza.jpg" alt="Buzaranho Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
               <p class="testi-name">Buzaranho Tattoo</p>
               <p class="testi-route">Agenda Cheia &amp; Constância</p>
@@ -2075,18 +2790,21 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 
 <!-- ═══ INVESTIMENTO ═══ -->
 <section id="investimento" class="bg-pricing relative isolate py-20 sm:py-24 px-6 lg:px-8">
+  <!-- Mesh orbs ambient -->
+  <div class="mesh-orb mesh-orb-a" aria-hidden="true" style="opacity:.25;"></div>
+  <div class="mesh-orb mesh-orb-b" aria-hidden="true" style="opacity:.2;"></div>
   <div aria-hidden="true" class="absolute inset-x-0 -top-3 -z-10 overflow-hidden px-36 blur-3xl pointer-events-none">
     <div class="mx-auto w-[72rem] opacity-15" style="aspect-ratio:1155/678;background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(160,160,170,.08));clip-path:polygon(74.1% 44.1%,100% 61.6%,97.5% 26.9%,85.5% 0.1%,80.7% 2%,72.5% 32.5%,60.2% 62.4%,52.4% 68.1%,47.5% 58.3%,45.2% 34.5%,27.5% 76.7%,0.1% 64.9%,17.9% 100%,27.6% 76.8%,76.1% 97.7%,74.1% 44.1%)"></div>
   </div>
   <div class="mx-auto max-w-4xl text-center">
     <div class="fade-up flex justify-center mb-4"><span class="section-label">Investimento</span></div>
-    <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;line-height:1.1;letter-spacing:-.035em;text-wrap:balance;">
+    <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;line-height:1.1;letter-spacing:-.035em;text-wrap:balance;">
       Por <span class="gradient-text">R$335</span> você faz <strong style="color:#fff;">1 tatuagem.</strong><br/>Por <span class="gradient-text">R$335</span> você também garante<br/>o método que <strong style="color:#fff;">enche sua agenda.</strong>
     </h2>
     <p class="fade-up mt-6 text-lg leading-relaxed mx-auto max-w-2xl" style="color:#a1a1aa;">Acesso vitalício. <strong style="color:#fff;">Garantia blindada de 30 dias.</strong> Se você não fechar 1 cliente, devolvemos cada centavo. Sem juros, sem letra miúda, <strong style="color:#fff;">sem promessa de guru</strong>.</p>
   </div>
   <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
-    <div class="card-3d-wrap fade-up">
+    <div class="card-3d-wrap" data-reveal="scale">
       <div class="card-3d pricing-free rounded-3xl p-8 sm:mx-8 sm:rounded-b-none sm:p-10 lg:mx-0 lg:rounded-tr-none lg:rounded-bl-3xl">
         <h3 class="text-base font-bold" style="color:#a1a1aa;">Parcelado</h3>
         <p class="mt-4 flex items-baseline gap-x-2">
@@ -2107,7 +2825,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         <a href="https://pay.hub.la/AiZ62hvlKooA2wiKSAVY" target="_blank" rel="noopener noreferrer" class="mt-8 block rounded-xl px-3.5 py-2.5 text-center text-sm font-semibold transition-all sm:mt-10" style="color:#fff;background:transparent;border:1.5px solid rgba(255,255,255,.22);">Quero entrar com R$335 →</a>
       </div>
     </div>
-    <div class="card-3d-wrap fade-up">
+    <div class="card-3d-wrap" data-reveal="scale">
       <div class="card-3d pricing-pro rounded-3xl p-8 shadow-2xl sm:p-10">
         <div class="flex items-center justify-between mb-1">
           <h3 class="text-base font-bold" style="color:#fff;">À Vista</h3>
@@ -2185,7 +2903,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <div class="absolute inset-0 -z-10" style="background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);"></div>
   <div class="mx-auto max-w-3xl text-center">
     <p class="fade-up text-xs font-bold uppercase tracking-[.18em] mb-4" style="color:#a1a1aa;">Vagas Limitadas · 23 Tatuadores</p>
-    <h2 class="fade-up heading-display text-4xl sm:text-5xl" style="color:#fff;line-height:1.15;letter-spacing:-.035em;text-wrap:balance;">
+    <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;line-height:1.15;letter-spacing:-.035em;text-wrap:balance;">
       Você não precisa de mais um curso.<br/>Precisa de um <span class="gradient-text">sistema que funciona</span><br/>e garante sua <span class="gradient-text">agenda cheia!</span>
     </h2>
     <p class="fade-up mt-6 text-base sm:text-lg leading-relaxed mx-auto" style="color:#a1a1aa;max-width:560px;">De <strong style="color:#fff;">50 vagas abertas</strong> resta apenas <strong style="color:#fff;">23 vagas</strong> — limite real pra garantir acompanhamento, estratégia e resultado. <strong style="color:#fff;">Sem improviso e aqui não existe GURU da Tattoo!</strong></p>
@@ -2228,60 +2946,188 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 (function(){
   'use strict';
 
-  /* ────── 1. INIT GSAP quando carregar ────── */
-  function initGSAP(){
-    if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined'){
-      return setTimeout(initGSAP, 80);
-    }
-    gsap.registerPlugin(ScrollTrigger);
-
-    const heroSection = document.querySelector('section.bg-hero');
-    const fadeEls = document.querySelectorAll('.fade-up');
-
-    // estado inicial em batch (um único reflow)
-    gsap.set(fadeEls, {opacity:0, y:32, filter:'blur(8px)'});
-
-    // hero: anima imediatamente, sem ScrollTrigger
-    if(heroSection){
-      const heroFades = heroSection.querySelectorAll('.fade-up');
-      heroFades.forEach((el, i) => {
-        gsap.to(el, {opacity:1, y:0, filter:'blur(0px)', duration:.8, ease:'power3.out', delay:.08 + i*.13});
-      });
-    }
-
-    // restante via ScrollTrigger (uma passada só pelo NodeList)
-    fadeEls.forEach(el => {
-      if(heroSection && heroSection.contains(el)) return;
-      gsap.to(el, {
-        scrollTrigger:{trigger:el, start:'top 90%', toggleActions:'play none none none', once:true},
-        opacity:1, y:0, filter:'blur(0px)', duration:.7, ease:'power2.out'
-      });
+  /* ────── 1. PREMIUM REVEAL SYSTEM (IntersectionObserver puro) ────── */
+  function initReveal(){
+    // Auto-migra .fade-up legado pra data-reveal="up" se não tiver
+    document.querySelectorAll('.fade-up:not([data-reveal])').forEach(el => {
+      el.setAttribute('data-reveal','up');
     });
 
-    // contadores
-    document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+    const els = document.querySelectorAll('[data-reveal]');
+    if(!els.length) return;
+
+    // Hero anima imediatamente (sem esperar scroll)
+    const heroSection = document.querySelector('section.bg-hero');
+    if(heroSection){
+      const heroReveal = heroSection.querySelectorAll('[data-reveal]');
+      heroReveal.forEach((el, i) => {
+        el.style.setProperty('--rd', (.1 + i*.08) + 's');
+        // Pequeno timeout pra garantir render do CSS antes
+        requestAnimationFrame(() => el.classList.add('is-visible'));
+      });
+    }
+
+    if(!('IntersectionObserver' in window)){
+      els.forEach(el => el.classList.add('is-visible'));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {rootMargin:'0px 0px -8% 0px', threshold:0.01});
+
+    els.forEach(el => {
+      if(heroSection && heroSection.contains(el)) return;
+      io.observe(el);
+    });
+  }
+
+  /* ────── 2. COUNTERS (mantém GSAP se disponível, fallback puro) ────── */
+  function initCounters(){
+    const counters = document.querySelectorAll('.stat-num[data-target]');
+    if(!counters.length) return;
+
+    const animateCounter = (el) => {
       const target = parseFloat(el.dataset.target);
       const suffix = el.dataset.suffix || '';
       const prefix = el.dataset.prefix || '';
-      const obj = {val:0};
-      gsap.to(obj, {
-        val:target, duration:2.4, ease:'power2.out', delay:.6,
-        onUpdate(){ el.textContent = prefix + Math.floor(obj.val) + suffix; }
-      });
-    });
+      const duration = 2200;
+      const start = performance.now();
 
-    // linha do processo
+      function tick(now){
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        // ease-out-expo
+        const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        const val = Math.floor(eased * target);
+        el.textContent = prefix + val + suffix;
+        if(progress < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    };
+
+    if('IntersectionObserver' in window){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if(entry.isIntersecting){
+            animateCounter(entry.target);
+            io.unobserve(entry.target);
+          }
+        });
+      }, {threshold:0.5});
+      counters.forEach(el => io.observe(el));
+    } else {
+      counters.forEach(animateCounter);
+    }
+  }
+
+  /* ────── 3. TIMELINE PROCESS — linha vertical preenchendo no scroll ────── */
+  /* ────── 3.5 PILLARS SCROLL DOT — ponto luminoso descendo entre os cards ────── */
+  /* ────── 3.6 PILLARS STICKY STACK — cards de baralho ────── */
+  /* PERF: 3 funções consolidadas em 1 listener de scroll */
+  function initScrollEffects(){
     const processLinee = document.getElementById('process-linee');
+    const pillarsWrap = document.querySelector('.pillars-grid-wrap');
+    const pillarsStack = document.querySelector('.pillars-stack');
+    const isDesktop = window.matchMedia('(min-width:1024px)').matches;
+
+    // === Timeline bar setup ===
+    let lineBar = null;
     if(processLinee){
-      const lineBar = document.createElement('div');
-      lineBar.style.cssText = 'position:absolute;top:0;left:1.1rem;width:2px;height:0%;background:linear-gradient(180deg,#ffffff 0%,rgba(255,255,255,.3) 100%);border-radius:99px;box-shadow:0 0 12px rgba(255,255,255,.45);';
+      lineBar = document.createElement('div');
+      lineBar.style.cssText = 'position:absolute;top:0;left:1.1rem;width:2px;height:0%;background:linear-gradient(180deg,#ffffff 0%,rgba(255,255,255,.3) 100%);border-radius:99px;box-shadow:0 0 12px rgba(255,255,255,.45);transition:height .15s linear;pointer-events:none;will-change:height;';
       processLinee.style.position = 'relative';
       processLinee.appendChild(lineBar);
-      gsap.to(lineBar, {
-        height:'100%', ease:'none',
-        scrollTrigger:{trigger:processLinee, start:'top 75%', end:'bottom 30%', scrub:1.2}
-      });
     }
+
+    // === Stack setup ===
+    // === Stack setup (mobile + desktop) ===
+    const stackCards = pillarsStack
+      ? Array.from(pillarsStack.querySelectorAll('.pillar-card'))
+      : [];
+
+    let ticking = false;
+    function update(){
+      const vh = window.innerHeight;
+
+      // 1. Timeline bar
+      if(processLinee && lineBar){
+        const rect = processLinee.getBoundingClientRect();
+        if(rect.bottom > -100 && rect.top < vh + 100){ // só calcula se visível ou perto
+          const total = rect.height + vh * .5;
+          const passed = vh - rect.top;
+          const progress = Math.max(0, Math.min(1, passed / total));
+          lineBar.style.height = (progress * 100) + '%';
+        }
+      }
+
+      // 2. Pillars scroll dot (CSS variable)
+      if(isDesktop && pillarsWrap){
+        const rect = pillarsWrap.getBoundingClientRect();
+        if(rect.bottom > -100 && rect.top < vh + 100){
+          const total = rect.height + vh * .3;
+          const passed = vh * .5 - rect.top;
+          const progress = Math.max(0, Math.min(1, passed / total));
+          pillarsWrap.style.setProperty('--scroll-progress', (progress * 100) + '%');
+        }
+      }
+
+      // 3. Pillars sticky stack (active/stacked classes) - FUNCIONA EM TODOS OS TAMANHOS
+      if(stackCards.length){
+        // Calcula bounding rect só se a seção tá visível
+        const firstRect = stackCards[0].getBoundingClientRect();
+        const lastRect = stackCards[stackCards.length-1].getBoundingClientRect();
+        if(lastRect.bottom > -50 && firstRect.top < vh + 50){
+          // Sticky top adapta entre mobile (5rem + 16px*i) e desktop (6rem + 22px*i)
+          const baseTop = isDesktop ? 96 : 80;
+          const stepTop = isDesktop ? 22 : 16;
+          let activeIndex = -1;
+          for(let i = 0; i < stackCards.length; i++){
+            const rect = stackCards[i].getBoundingClientRect();
+            const stickyTop = baseTop + i * stepTop;
+            if(rect.top <= stickyTop + 5){
+              activeIndex = i;
+            }
+          }
+          stackCards.forEach((card, i) => {
+            if(activeIndex > -1 && i < activeIndex){
+              card.classList.add('is-stacked');
+              card.classList.remove('is-active');
+              card.style.setProperty('--stack-depth', activeIndex - i);
+            } else if(i === activeIndex){
+              card.classList.add('is-active');
+              card.classList.remove('is-stacked');
+              card.style.setProperty('--stack-depth', '0');
+            } else if(card.classList.contains('is-active') || card.classList.contains('is-stacked')){
+              card.classList.remove('is-active','is-stacked');
+              card.style.setProperty('--stack-depth', '0');
+            }
+          });
+        }
+      }
+
+      ticking = false;
+    }
+
+    function onScroll(){
+      if(!ticking){
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', () => {
+      clearTimeout(window.__scrollEffectsResize);
+      window.__scrollEffectsResize = setTimeout(update, 200);
+    }, {passive:true});
+
+    update();
   }
 
   /* ────── 2. 3D TILT — só desktop (em mobile é desperdício) ────── */
@@ -2398,7 +3244,95 @@ iframe[data-lazy-video]{background:#0a0a0a;}
     }
   }
 
-  /* ────── 6. BOTÕES — brilho mouse-tracking ────── */
+  /* ────── 6. CASES CAROUSEL — scroll-snap horizontal + dots + arrows ────── */
+  function initCasesCarousel(){
+    const carousel = document.getElementById('cases-carousel');
+    if(!carousel) return;
+    const dotsWrap = document.getElementById('cases-carousel-dots');
+    const btnPrev = document.querySelector('[data-carousel-prev]');
+    const btnNext = document.querySelector('[data-carousel-next]');
+    const items = carousel.querySelectorAll('.video-case');
+    if(!items.length) return;
+
+    // Cria dots (1 por card)
+    if(dotsWrap){
+      dotsWrap.innerHTML = '';
+      items.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'carousel-dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Ir ao depoimento ' + (i + 1));
+        dot.addEventListener('click', () => scrollToIndex(i));
+        dotsWrap.appendChild(dot);
+      });
+    }
+
+    function scrollToIndex(i){
+      const item = items[i];
+      if(!item) return;
+      const carouselRect = carousel.getBoundingClientRect();
+      const itemRect = item.getBoundingClientRect();
+      const target = carousel.scrollLeft + (itemRect.left - carouselRect.left) - 24;
+      carousel.scrollTo({left: target, behavior: 'smooth'});
+    }
+
+    function getCurrentIndex(){
+      const scrollLeft = carousel.scrollLeft;
+      const itemWidth = items[0].offsetWidth + parseFloat(getComputedStyle(carousel).gap || 24);
+      return Math.round(scrollLeft / itemWidth);
+    }
+
+    function updateUI(){
+      const idx = getCurrentIndex();
+      // Dots
+      if(dotsWrap){
+        dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
+          d.classList.toggle('is-active', i === idx);
+        });
+      }
+      // Buttons disabled state
+      if(btnPrev) btnPrev.disabled = carousel.scrollLeft <= 4;
+      if(btnNext){
+        const maxScroll = carousel.scrollWidth - carousel.clientWidth - 4;
+        btnNext.disabled = carousel.scrollLeft >= maxScroll;
+      }
+    }
+
+    // Nav buttons
+    if(btnPrev) btnPrev.addEventListener('click', () => {
+      scrollToIndex(Math.max(0, getCurrentIndex() - 1));
+    });
+    if(btnNext) btnNext.addEventListener('click', () => {
+      scrollToIndex(Math.min(items.length - 1, getCurrentIndex() + 1));
+    });
+
+    // Scroll listener (throttled)
+    let scrollTicking = false;
+    carousel.addEventListener('scroll', () => {
+      if(!scrollTicking){
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+          updateUI();
+          scrollTicking = false;
+        });
+      }
+    }, {passive:true});
+
+    // Keyboard navigation
+    carousel.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowLeft'){
+        e.preventDefault();
+        scrollToIndex(Math.max(0, getCurrentIndex() - 1));
+      } else if(e.key === 'ArrowRight'){
+        e.preventDefault();
+        scrollToIndex(Math.min(items.length - 1, getCurrentIndex() + 1));
+      }
+    });
+
+    // Init
+    updateUI();
+    window.addEventListener('resize', updateUI, {passive:true});
+  }
   function initButtonGlow(){
     if(!window.matchMedia('(hover:hover)').matches) return;
     const BRILHO_W = 18;
@@ -2423,11 +3357,14 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 
   /* ────── BOOT ────── */
   function boot(){
-    initGSAP();
+    initReveal();
+    initCounters();
+    initScrollEffects(); /* consolidado: timeline + dot + stack */
     init3DTilt();
     initMouseLight();
     initScrollFade();
     initLazyVideos();
+    initCasesCarousel();
     initButtonGlow();
   }
 
@@ -2440,10 +3377,13 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 </script>
 
 <script>
-/* Safety net: se GSAP falhar em carregar/rodar em 2.5s, força exibição. */
+/* Safety net: força exibição após 3s caso algo falhe */
 (function(){
   setTimeout(function(){
     try {
+      document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach(function(el){
+        el.classList.add('is-visible');
+      });
       document.querySelectorAll('.fade-up').forEach(function(el){
         var cs = getComputedStyle(el);
         if (parseFloat(cs.opacity) < 0.1) {
@@ -2453,15 +3393,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         }
       });
     } catch(e){}
-  }, 2500);
-  // Fallback para falha de carregamento de GSAP
-  window.addEventListener('error', function(e){
-    if (e && e.target && e.target.src && /gsap/.test(e.target.src)) {
-      document.querySelectorAll('.fade-up').forEach(function(el){
-        el.style.opacity='1';el.style.transform='none';el.style.filter='none';
-      });
-    }
-  }, true);
+  }, 3000);
 })();
 </script>
 </body>
