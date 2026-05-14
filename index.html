@@ -1164,6 +1164,46 @@ footer{
   color:#000000;
   letter-spacing:1px;
 }
+/* ===== INSTAGRAM ICONS — footer tema claro ===== */
+.foot-social{
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:36px;
+  margin-bottom:24px;
+  flex-wrap:wrap;
+}
+.foot-social a{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  gap:7px;
+  text-decoration:none;
+  color:rgba(0,0,0,0.78);
+  font-size:11.5px;
+  font-weight:500;
+  letter-spacing:0.4px;
+  transition:transform .25s cubic-bezier(.23,1,.32,1), color .25s ease;
+}
+.foot-social a:hover,
+.foot-social a:focus-visible{
+  color:#000;
+  transform:translateY(-2px);
+  outline:none;
+}
+.foot-social svg{
+  width:26px;height:26px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:transform .25s ease;
+}
+.foot-social a:hover svg,
+.foot-social a:focus-visible svg{
+  transform:scale(1.1);
+}
 footer p{
   font-size:12.5px;
   color:rgba(0,0,0,0.62);
@@ -2672,7 +2712,11 @@ function __loadMetaPixel(){
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '200096279305740');
+  // ── DOIS PIXELS META ATIVOS ──
+  // Qualquer fbq('track', ...) é enviado automaticamente para AMBOS os pixels.
+  // Não precisa duplicar chamadas de track — o SDK faz fan-out interno.
+  fbq('init', '200096279305740');   // Pixel 1
+  fbq('init', '958225726998591');   // Pixel 2
   fbq('track', 'PageView');
 }
 // Dispara após LCP (1.5s) OU no primeiro scroll/interação — o que vier antes
@@ -2691,6 +2735,8 @@ if ('requestIdleCallback' in window) {
 <!-- Meta Pixel — fallback noscript (envia PageView via image beacon para usuários sem JS) -->
 <noscript><img height="1" width="1" style="display:none" alt=""
   src="https://www.facebook.com/tr?id=200096279305740&ev=PageView&noscript=1"/></noscript>
+<noscript><img height="1" width="1" style="display:none" alt=""
+  src="https://www.facebook.com/tr?id=958225726998591&ev=PageView&noscript=1"/></noscript>
 
 <!-- NOSCRIPT FALLBACK — avisa o usuário que JS é necessário para algumas features (vídeos lazy-load) -->
 <noscript>
@@ -2781,33 +2827,74 @@ if ('requestIdleCallback' in window) {
     .vsl-section { padding: 3.5rem 1rem 2rem; }
   }
 
-  /* ===== SCARCITY BADGE + PULSE no primeiro CTA (gatilho de conversão) ===== */
-  .cta-scarcity{
-    display:flex;align-items:center;justify-content:center;gap:8px;
-    margin:0 auto 14px;
-    padding:7px 16px;
-    background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.14);
-    border-radius:100px;
-    width:fit-content;
-    font-size:.72rem;
-    font-weight:600;
+  /* ===== HERO META CTA — agenda cheia / previsível / saber mais (rolagem) ===== */
+  .hero-meta-cta{
+    display:block;
+    text-align:center;
+    margin:0 auto 16px;
+    padding:14px 24px;
+    max-width:520px;
+    text-decoration:none;
+    color:#fff;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.10);
+    border-radius:16px;
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+    transition:transform .28s cubic-bezier(.23,1,.32,1),
+               border-color .28s ease,
+               background .28s ease,
+               box-shadow .28s ease;
+  }
+  .hero-meta-cta:hover,
+  .hero-meta-cta:focus-visible{
+    transform:translateY(-2px);
+    border-color:rgba(255,255,255,0.22);
+    background:rgba(255,255,255,0.07);
+    box-shadow:0 8px 32px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.05);
+    outline:none;
+  }
+  .hero-meta-cta__title{
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.92rem;
+    font-weight:700;
     letter-spacing:.05em;
     text-transform:uppercase;
+    background:linear-gradient(90deg,#ffffff,#d4d4d8);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+    line-height:1.3;
+  }
+  .hero-meta-cta__sub{
+    font-size:.78rem;
+    color:#a1a1aa;
+    margin-top:4px;
+    font-weight:500;
+    line-height:1.45;
+  }
+  .hero-meta-cta__more{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:8px;
+    font-size:.7rem;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
     color:rgba(255,255,255,0.85);
-    backdrop-filter:blur(6px);
-    -webkit-backdrop-filter:blur(6px);
   }
-  .cta-scarcity__dot{
-    width:8px;height:8px;border-radius:50%;
-    background:#22c55e;
-    box-shadow:0 0 12px #22c55e;
-    animation:pulseDot 1.8s ease-in-out infinite;
-    flex-shrink:0;
+  .hero-meta-cta__divider{
+    color:rgba(255,255,255,0.4);
+    margin-right:2px;
   }
-  @keyframes pulseDot{
-    0%,100%{opacity:1;transform:scale(1);}
-    50%{opacity:.55;transform:scale(.78);}
+  .hero-meta-cta__arrow{
+    display:inline-block;
+    animation:metaArrowBounce 1.8s ease-in-out infinite;
+  }
+  @keyframes metaArrowBounce{
+    0%,100%{transform:translateY(0);opacity:.85;}
+    50%{transform:translateY(3px);opacity:1;}
   }
   /* Pulse no botão principal — sutil, não agressivo */
   .hero-cta-overlay .btn-glow{
@@ -2819,7 +2906,13 @@ if ('requestIdleCallback' in window) {
     50%{box-shadow:0 0 0 8px rgba(255,255,255,0),0 8px 28px rgba(0,0,0,.5);}
   }
   @media(prefers-reduced-motion:reduce){
-    .cta-scarcity__dot,.hero-cta-overlay .btn-glow{animation:none;}
+    .hero-meta-cta__arrow,.hero-cta-overlay .btn-glow{animation:none;}
+  }
+  @media(max-width:480px){
+    .hero-meta-cta{padding:12px 18px;max-width:100%;}
+    .hero-meta-cta__title{font-size:.82rem;}
+    .hero-meta-cta__sub{font-size:.72rem;}
+    .hero-meta-cta__more{font-size:.65rem;}
   }
 </style>
 
@@ -2827,11 +2920,16 @@ if ('requestIdleCallback' in window) {
      A nova hero tem área preta inferior pequena, então o botão fica no fundo
      preto sólido logo abaixo, mantendo a continuidade visual. -->
 <div class="hero-cta-overlay">
-  <!-- Microcopy de escassez (gatilho de conversão) -->
-  <div class="cta-scarcity" aria-label="Toque no botão para conhecer Método Agenda Cheia">
-    <span class="cta-scarcity__dot" aria-hidden="true"></span>
-    <span>Vagas limitadas pra este mês</span>
-  </div>
+  <!-- HERO META CTA — agenda cheia / previsível / saber mais (link de rolagem) -->
+  <a href="#clientes" class="hero-meta-cta" aria-label="Conheça o método: agenda cheia de forma previsível, vire referência no nicho e cobre mais caro">
+    <div class="hero-meta-cta__title">Agenda cheia. De forma previsível.</div>
+    <div class="hero-meta-cta__sub">Vire referência no nicho e cobre mais caro</div>
+    <div class="hero-meta-cta__more">
+      <span class="hero-meta-cta__divider" aria-hidden="true">⏤</span>
+      Saber mais
+      <span class="hero-meta-cta__arrow" aria-hidden="true">↓</span>
+    </div>
+  </a>
   <div class="stats-cta-btns">
     <a href="https://form.respondi.app/uAUC0yJx" target="_blank" rel="noopener noreferrer" class="btn-glow">
       <span style="display:flex;flex-direction:column;align-items:center;line-height:1.25;">
@@ -2862,7 +2960,7 @@ if ('requestIdleCallback' in window) {
       </div>
       <div class="stats-grid-item">
         <div class="stat-num gradient-premium" style="font-size:clamp(1.05rem,2.2vw,1.45rem);line-height:1.1;letter-spacing:-.02em;font-weight:800;">Eikon<br/>Ink</div>
-        <div style="font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#71717a;margin-top:.35rem;line-height:1.35;">Maior Assessoria de Marketing<br/>no Mercado da Tattoo</div>
+        <div style="font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#71717a;margin-top:.35rem;line-height:1.35;">+ de 4 Anos atuando<br/>nichado no mercado da Tattoo</div>
       </div>
     </div>
 
@@ -3203,6 +3301,25 @@ if ('requestIdleCallback' in window) {
   <div class="foot-links">
     <a href="#clientes">Clientes</a>
     <a href="https://wa.me/5562999281417?text=Sou%20tatuador%20e%20quero%20lotar%20minha%20agenda%20e%20aumentar%20o%20meu%20faturamento!%20Acabei%20de%20ver%20o%20v%C3%ADdeo%20do%20Jo%C3%A3o%20sobre%20a%20Eikon..." target="_blank" rel="noopener noreferrer">Contato</a>
+  </div>
+  <!-- INSTAGRAM — 2 perfis -->
+  <div class="foot-social" aria-label="Siga nossos perfis no Instagram">
+    <a href="https://www.instagram.com/eikoninkmarketing/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Eikon Ink Marketing">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/>
+      </svg>
+      <span>@eikoninkmarketing</span>
+    </a>
+    <a href="https://www.instagram.com/joaoflavioads/" target="_blank" rel="noopener noreferrer" aria-label="Instagram João Flávio">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1.1" fill="currentColor" stroke="none"/>
+      </svg>
+      <span>@joaoflavioads</span>
+    </a>
   </div>
   <p>© 2025 Eikon Ink Marketing · Todos os direitos reservados</p>
   <p style="margin-top:6px;">Marketing especializado para tatuadores · Brasil · EUA · Europa</p>
