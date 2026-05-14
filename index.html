@@ -63,6 +63,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://scripts.converteai.net">
 <link rel="preconnect" href="https://eikoninkmarketing.com.br">
+
+<!-- PRECONNECT — destinos de conversão (form + WhatsApp + pixel) -->
+<link rel="preconnect" href="https://form.respondi.app">
+<link rel="dns-prefetch" href="https://form.respondi.app">
+<link rel="dns-prefetch" href="https://wa.me">
+<link rel="dns-prefetch" href="https://connect.facebook.net">
+<link rel="dns-prefetch" href="https://raw.githubusercontent.com">
+
+<!-- PRELOAD — hero image (LCP candidate) -->
+<link rel="preload" as="image" href="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/herotattooservico.png" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap&font-display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & ROOT ===== */
@@ -857,6 +867,28 @@ section{padding:100px 24px;position:relative;z-index:1;}
 .testimonials-section .section-badge{color:rgba(255,255,255,0.85);}
 .testimonials-section .section-title{color:#fff;max-width:920px;margin-left:auto;margin-right:auto;}
 .testimonials-section .section-sub{color:rgba(255,255,255,0.68);max-width:760px;}
+
+/* ===== TESTIMONIALS TEXT SECTION (movida pra baixo do quemsomos.png)
+   Fundo sólido #000 idêntico ao da seção .quem-somos-feature pra emendar
+   sem quebra visual. position:relative + z-index:2 evita que o bg-fixed
+   global (partículas/aurora/spotlight) vaze e crie tom diferente. ===== */
+.testimonials-text-section{
+  background:#000;
+  position:relative;
+  z-index:2;
+  overflow:hidden;
+  padding:1.5rem 24px 3rem;
+}
+.testimonials-text-section .container{
+  position:relative;
+  z-index:1;
+}
+@media(max-width:768px){
+  .testimonials-text-section{padding:1rem 0 2rem;}
+}
+@media(max-width:480px){
+  .testimonials-text-section{padding:.75rem 0 1.75rem;}
+}
 .testimonial-videos-grid{
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;
   margin-top:58px;max-width:1080px;margin-left:auto;margin-right:auto;
@@ -1075,17 +1107,18 @@ label{font-size:11px;font-weight:700;color:var(--muted2);letter-spacing:1.5px;te
 
 /* ===== FOOTER ===== */
 /* ═══════════════════════════════════════════════════════════
-   FOOTER — TEMA ESCURO (coerente com toda LP dark)
-   Como a seção quem-somos branca foi removida, o footer volta ao dark.
+   FOOTER — TEMA CLARO (branco com texto preto)
+   Bloco institucional final, alto contraste pra fechar a página.
    ═══════════════════════════════════════════════════════════ */
 footer{
-  background:linear-gradient(180deg,#0a0a0a 0%,#050505 60%,#000000);
-  border-top:1px solid rgba(255,255,255,0.10);
+  background:#ffffff;
+  color:#000000;
+  border-top:1px solid rgba(0,0,0,0.10);
   padding:56px 24px 36px;
   text-align:center;
   position:relative;
   z-index:1;
-  box-shadow:0 -1px 0 rgba(255,255,255,0.06),inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow:0 -1px 0 rgba(0,0,0,0.06),inset 0 1px 0 rgba(0,0,0,0.04);
 }
 .foot-logo{
   font-family:'Space Grotesk',sans-serif;
@@ -1097,19 +1130,19 @@ footer{
   text-transform:uppercase;
 }
 .foot-logo .logo-e{
-  background:linear-gradient(135deg,#ffffff,#a1a1aa);
+  background:linear-gradient(135deg,#000000,#52525b);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 1px 2px rgba(255,255,255,0.10));
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,0.10));
 }
 .foot-logo .logo-ink{
-  color:#F0F4FF;
+  color:#18181b;
   letter-spacing:2px;
 }
 .foot-line{
   width:80px;height:2px;
-  background:linear-gradient(90deg,transparent,#ffffff,#a1a1aa,#ffffff,transparent);
+  background:linear-gradient(90deg,transparent,#000000,#52525b,#000000,transparent);
   margin:0 auto 24px;
-  box-shadow:0 0 12px rgba(255,255,255,0.25);
+  box-shadow:0 0 12px rgba(0,0,0,0.18);
   border-radius:2px;
 }
 .foot-links{
@@ -1121,19 +1154,19 @@ footer{
 }
 .foot-links a{
   font-size:13px;
-  color:rgba(240,244,255,0.75);
+  color:rgba(0,0,0,0.78);
   text-decoration:none;
   transition:color .25s,letter-spacing .2s;
   font-weight:500;
   letter-spacing:0.6px;
 }
 .foot-links a:hover{
-  color:#ffffff;
+  color:#000000;
   letter-spacing:1px;
 }
 footer p{
   font-size:12.5px;
-  color:rgba(240,244,255,0.52);
+  color:rgba(0,0,0,0.62);
   line-height:1.9;
   font-weight:400;
   letter-spacing:0.35px;
@@ -2619,18 +2652,38 @@ section.hero-image-only::before{
 <!-- ═══════════════════════════════════════════════════════════
      META PIXEL (Facebook) — ID: 200096279305740
      Eventos: PageView (automático) + InitiateCheckout (nos CTAs)
+     Adiado 1.5s pra não competir com LCP/hero. Eventos antes
+     disso (improvável) entram na fila e disparam quando carregar.
      ═══════════════════════════════════════════════════════════ -->
 <script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '200096279305740');
-fbq('track', 'PageView');
+// Stub do fbq pra capturar chamadas antes do script carregar
+window.fbq = window.fbq || function(){(window.fbq.q = window.fbq.q || []).push(arguments)};
+window.fbq.loaded = !1; window.fbq.version = '2.0'; window.fbq.queue = [];
+
+function __loadMetaPixel(){
+  if (window.__metaPixelLoaded) return;
+  window.__metaPixelLoaded = true;
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq && f.fbq.loaded)return;
+  if(!f._fbq)f._fbq=f.fbq;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=window.fbq.q||[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '200096279305740');
+  fbq('track', 'PageView');
+}
+// Dispara após LCP (1.5s) OU no primeiro scroll/interação — o que vier antes
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(__loadMetaPixel, { timeout: 2000 });
+} else {
+  setTimeout(__loadMetaPixel, 1500);
+}
+['scroll','mousemove','touchstart','keydown'].forEach(ev => {
+  window.addEventListener(ev, __loadMetaPixel, { once: true, passive: true });
+});
 </script>
 </head>
 <body>
@@ -2676,15 +2729,109 @@ fbq('track', 'PageView');
     src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/herotattooservico.png"
     alt="Eikon Ink Marketing — 1º Maior Assessoria de Marketing no Mercado da Tattoo"
     class="hero-continua__img"
-    loading="lazy"
+    loading="eager"
+    fetchpriority="high"
     decoding="async"
   />
 </section>
+
+<!-- ============================================================
+     VSL — Vídeo de vendas hospedado (ConverteAI / SmartPlayer)
+     Posicionado acima do primeiro CTA pra capturar atenção
+     antes do clique. Wrapper em fundo preto, centralizado,
+     largura máx. 720px (formato 16:9 — horizontal).
+     ============================================================ -->
+<section class="vsl-section" aria-label="Vídeo de apresentação Eikon">
+  <div class="vsl-container">
+    <script type="text/javascript">
+      var s = document.createElement("script");
+      s.src = "https://scripts.converteai.net/lib/js/smartplayer-wc/v4/sdk.js";
+      s.async = !0;
+      document.head.appendChild(s);
+    </script>
+    <div id="ifr_69ac4c367d6df7c08d8a6da0_wrapper" style="margin: 0 auto; width: 100%;">
+      <div style="position: relative; padding: 56.25% 0 0 0;" id="ifr_69ac4c367d6df7c08d8a6da0_aspect">
+        <iframe frameborder="0" allowfullscreen src="about:blank"
+          id="ifr_69ac4c367d6df7c08d8a6da0"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+          referrerpolicy="origin"
+          onload="this.onload=null, this.src='https://scripts.converteai.net/6924efa6-6db1-48a2-a62a-9b14ee9dce10/players/69ac4c367d6df7c08d8a6da0/v4/embed.html'+(location.search||'?')+'&vl='+encodeURIComponent(location.href)"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vsl-section {
+    background: #000;
+    padding: 2.5rem 1rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .vsl-container {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 20px 60px -10px rgba(0,0,0,0.8);
+  }
+  @media (min-width: 768px) {
+    .vsl-section { padding: 3.5rem 1rem 2rem; }
+  }
+
+  /* ===== SCARCITY BADGE + PULSE no primeiro CTA (gatilho de conversão) ===== */
+  .cta-scarcity{
+    display:flex;align-items:center;justify-content:center;gap:8px;
+    margin:0 auto 14px;
+    padding:7px 16px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:100px;
+    width:fit-content;
+    font-size:.72rem;
+    font-weight:600;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:rgba(255,255,255,0.85);
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+  .cta-scarcity__dot{
+    width:8px;height:8px;border-radius:50%;
+    background:#22c55e;
+    box-shadow:0 0 12px #22c55e;
+    animation:pulseDot 1.8s ease-in-out infinite;
+    flex-shrink:0;
+  }
+  @keyframes pulseDot{
+    0%,100%{opacity:1;transform:scale(1);}
+    50%{opacity:.55;transform:scale(.78);}
+  }
+  /* Pulse no botão principal — sutil, não agressivo */
+  .hero-cta-overlay .btn-glow{
+    position:relative;
+    animation:btnPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes btnPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.35),0 8px 24px rgba(0,0,0,.4);}
+    50%{box-shadow:0 0 0 8px rgba(255,255,255,0),0 8px 28px rgba(0,0,0,.5);}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .cta-scarcity__dot,.hero-cta-overlay .btn-glow{animation:none;}
+  }
+</style>
 
 <!-- BOTÕES CTA — fluxo normal abaixo da hero (não mais position:absolute).
      A nova hero tem área preta inferior pequena, então o botão fica no fundo
      preto sólido logo abaixo, mantendo a continuidade visual. -->
 <div class="hero-cta-overlay">
+  <!-- Microcopy de escassez (gatilho de conversão) -->
+  <div class="cta-scarcity" aria-label="Toque no botão para conhecer Método Agenda Cheia">
+    <span class="cta-scarcity__dot" aria-hidden="true"></span>
+    <span>Vagas limitadas pra este mês</span>
+  </div>
   <div class="stats-cta-btns">
     <a href="https://form.respondi.app/uAUC0yJx" target="_blank" rel="noopener noreferrer" class="btn-glow">
       <span style="display:flex;flex-direction:column;align-items:center;line-height:1.25;">
@@ -2911,8 +3058,30 @@ fbq('track', 'PageView');
       </a>
     </div>
 
-    <div style="text-align:center;margin-top:.75rem;"><div class="section-badge" style="display:inline-flex;" data-premium>Depoimento de Parceiros</div></div>
+  </div><!-- /.container.center -->
+</section>
 
+<!-- ═══════════════════════════════════════════════════════════
+     QUEM SOMOS — IMAGEM EM DESTAQUE (após CTA final, antes do footer)
+     ═══════════════════════════════════════════════════════════ -->
+<section class="quem-somos-feature" aria-label="Quem é a Eikon">
+  <div class="quem-somos-feature-img-wrap">
+    <img
+      src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/quemsomos.png"
+      alt="Quem somos — Eikon Ink Marketing"
+      class="quem-somos-feature-img"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DEPOIMENTOS DE TEXTO — Movido para baixo da imagem quemsomos.png
+     (era abaixo da galeria de vídeos antes)
+     ═══════════════════════════════════════════════════════════ -->
+<section class="testimonials-text-section" id="depoimentos-texto" aria-label="Depoimentos em texto">
+  <div class="container center">
 
       <div class="cases-carousel-wrap testi-carousel-wrap">
         <button type="button" class="carousel-btn carousel-btn-prev" aria-label="Anterior" data-testi-prev>
@@ -3021,21 +3190,6 @@ fbq('track', 'PageView');
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 7l5 5-5 5M6 12h12" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
       </div>
-  </div><!-- /.container.center -->
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════
-     QUEM SOMOS — IMAGEM EM DESTAQUE (após CTA final, antes do footer)
-     ═══════════════════════════════════════════════════════════ -->
-<section class="quem-somos-feature" aria-label="Quem é a Eikon">
-  <div class="quem-somos-feature-img-wrap">
-    <img
-      src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/quemsomos.png"
-      alt="Quem somos — Eikon Ink Marketing"
-      class="quem-somos-feature-img"
-      loading="lazy"
-      decoding="async"
-    />
   </div>
 </section>
 
