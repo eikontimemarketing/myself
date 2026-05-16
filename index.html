@@ -73,6 +73,8 @@
 
 <!-- PRELOAD — hero image (LCP candidate) -->
 <link rel="preload" as="image" href="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/herotattooservico.png" fetchpriority="high">
+<!-- PRELOAD — vídeo institucional "Quem é a Eikon" (carrega lazy) -->
+<link rel="preload" as="video" href="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/black-1.mp4" type="video/mp4">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap&font-display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & ROOT ===== */
@@ -1378,6 +1380,190 @@ footer p{
    ═══════════════════════════════════════════════════════════ */
 .section-divider{height:0;background:transparent;border:0;display:none;}
 
+/* ╔══════════════════════════════════════════════════════════════════════════
+   ║  ▓▓▓ CINEMATIC DIVIDER — Sombra subindo + Partículas + Hairline ▓▓▓
+   ║
+   ║  Engenharia cinematográfica premium:
+   ║   1. Container 64px height com gradient vertical (preto→profundo→preto)
+   ║   2. Pseudo ::before = sombra superior INTERNA (profundidade ilusória)
+   ║   3. Camada "shadow-rise" = blob escuro subindo de baixo pra cima (4s)
+   ║   4. 12 partículas brancas micro flutuando para cima (light leak)
+   ║   5. Hairline horizontal central com glow pulsante (3s)
+   ║
+   ║  Estética inspirada em: Apple Event opens, Linear hero transitions,
+   ║  Vercel "Ship" page section breaks.
+   ╚══════════════════════════════════════════════════════════════════════════ */
+
+.cinematic-divider{
+  position:relative;
+  width:100%;
+  height:64px;
+  background:linear-gradient(180deg,
+    #000000 0%,
+    #050505 22%,
+    #0c0c0c 50%,
+    #050505 78%,
+    #000000 100%);
+  overflow:hidden;
+  isolation:isolate;
+  z-index:3;
+  /* Sombra superior INTERNA (cria ilusão de "buraco" / profundidade no topo) */
+  box-shadow:
+    inset 0 14px 22px -8px rgba(0,0,0,.95),
+    inset 0 -14px 22px -8px rgba(0,0,0,.95);
+}
+
+/* Sombra escura subindo (efeito de "fumaça preta" emergindo) */
+.cinematic-divider__shadow-rise{
+  position:absolute;
+  left:50%;
+  bottom:-30%;
+  transform:translateX(-50%);
+  width:120%;
+  height:140%;
+  background:radial-gradient(
+    ellipse 60% 100% at center bottom,
+    rgba(0,0,0,.85) 0%,
+    rgba(20,20,22,.55) 30%,
+    rgba(40,40,45,.20) 60%,
+    transparent 100%
+  );
+  filter:blur(8px);
+  animation:cinematicShadowRise 5.2s ease-in-out infinite;
+  z-index:1;
+  pointer-events:none;
+}
+
+@keyframes cinematicShadowRise{
+  0%, 100%{
+    transform:translateX(-50%) translateY(0);
+    opacity:.85;
+  }
+  50%{
+    transform:translateX(-50%) translateY(-12%);
+    opacity:1;
+  }
+}
+
+/* Partículas micro brancas subindo (light leak) */
+.cinematic-divider__particles{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  /* Máscara horizontal para sumir nas bordas */
+  mask-image:linear-gradient(90deg, transparent 0%, #000 25%, #000 75%, transparent 100%);
+  -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 25%, #000 75%, transparent 100%);
+}
+.cinematic-divider__particles span{
+  position:absolute;
+  bottom:-4px;
+  width:2px;
+  height:2px;
+  background:#ffffff;
+  border-radius:50%;
+  opacity:0;
+  box-shadow:
+    0 0 4px rgba(255,255,255,.95),
+    0 0 10px rgba(255,255,255,.55),
+    0 0 18px rgba(255,255,255,.30);
+  animation:cinematicParticleFloat 6s ease-in infinite;
+}
+
+/* Posicionamento + delays escalonados pra movimento orgânico */
+.cinematic-divider__particles span:nth-child(1){  left:8%;  width:1.5px;height:1.5px;animation-delay:0s;   animation-duration:5.5s;}
+.cinematic-divider__particles span:nth-child(2){  left:16%; width:2px;  height:2px;  animation-delay:-1.2s;animation-duration:6.8s;}
+.cinematic-divider__particles span:nth-child(3){  left:24%; width:1px;  height:1px;  animation-delay:-2.4s;animation-duration:7.2s;}
+.cinematic-divider__particles span:nth-child(4){  left:32%; width:2.5px;height:2.5px;animation-delay:-0.6s;animation-duration:5.8s;}
+.cinematic-divider__particles span:nth-child(5){  left:40%; width:1.5px;height:1.5px;animation-delay:-3.0s;animation-duration:6.4s;}
+.cinematic-divider__particles span:nth-child(6){  left:48%; width:2px;  height:2px;  animation-delay:-1.8s;animation-duration:7.0s;}
+.cinematic-divider__particles span:nth-child(7){  left:56%; width:1px;  height:1px;  animation-delay:-4.2s;animation-duration:5.6s;}
+.cinematic-divider__particles span:nth-child(8){  left:64%; width:2px;  height:2px;  animation-delay:-2.7s;animation-duration:6.6s;}
+.cinematic-divider__particles span:nth-child(9){  left:72%; width:1.5px;height:1.5px;animation-delay:-0.9s;animation-duration:7.4s;}
+.cinematic-divider__particles span:nth-child(10){ left:80%; width:2.5px;height:2.5px;animation-delay:-3.6s;animation-duration:5.9s;}
+.cinematic-divider__particles span:nth-child(11){ left:88%; width:1px;  height:1px;  animation-delay:-1.5s;animation-duration:6.2s;}
+.cinematic-divider__particles span:nth-child(12){ left:92%; width:2px;  height:2px;  animation-delay:-4.8s;animation-duration:6.9s;}
+
+@keyframes cinematicParticleFloat{
+  0%{
+    transform:translateY(0) scale(.6);
+    opacity:0;
+  }
+  15%{
+    opacity:.9;
+    transform:translateY(-20%) scale(1);
+  }
+  85%{
+    opacity:.7;
+    transform:translateY(-90%) scale(.85);
+  }
+  100%{
+    transform:translateY(-130%) scale(.4);
+    opacity:0;
+  }
+}
+
+/* Hairline horizontal central com glow pulsante */
+.cinematic-divider__hairline{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:55%;
+  height:1px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,.15) 15%,
+    rgba(255,255,255,.50) 50%,
+    rgba(255,255,255,.15) 85%,
+    transparent 100%);
+  z-index:3;
+  pointer-events:none;
+  box-shadow:
+    0 0 8px rgba(255,255,255,.20),
+    0 0 16px rgba(255,255,255,.10);
+  animation:cinematicHairlinePulse 3s ease-in-out infinite;
+}
+
+@keyframes cinematicHairlinePulse{
+  0%, 100%{
+    opacity:.55;
+    width:55%;
+  }
+  50%{
+    opacity:1;
+    width:62%;
+  }
+}
+
+/* Mobile — divider mais discreto, partículas menores */
+@media (max-width:768px){
+  .cinematic-divider{
+    height:48px;
+  }
+  .cinematic-divider__particles span{
+    /* Mantém base size, mas roda animação mais lenta */
+    animation-duration:8s !important;
+  }
+  .cinematic-divider__hairline{
+    width:70%;
+  }
+}
+
+/* Reduced motion — sem animações */
+@media (prefers-reduced-motion: reduce){
+  .cinematic-divider__shadow-rise,
+  .cinematic-divider__particles span,
+  .cinematic-divider__hairline{
+    animation:none !important;
+  }
+  .cinematic-divider__particles span{
+    opacity:.4;
+    bottom:50%;
+  }
+}
+/* ═══ FIM DO CINEMATIC DIVIDER ═══════════════════════════════════════════ */
+
 /* ── STATS ── tamanho médio profissional + efeito GLASSMORPHISM 3D escuro */
 .stat-num{
   font-size:1.75rem;font-weight:800;letter-spacing:-.03em;line-height:1;
@@ -2481,6 +2667,37 @@ section.hero-image-only::before{
   height:auto;
   border-radius:0;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   VÍDEO INSTITUCIONAL "Quem é a Eikon" — substitui quemsomos.png
+   Responsivo + GPU compositor + estilo idêntico ao img anterior
+   ═══════════════════════════════════════════════════════════ */
+.quem-somos-feature-video{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  border-radius:0;
+  background:#000;
+  object-fit:cover;
+  object-position:center center;
+  /* GPU compositor para suavidade */
+  transform:translateZ(0);
+  -webkit-backface-visibility:hidden;
+          backface-visibility:hidden;
+  will-change:transform;
+  /* Anti-interação acidental */
+  -webkit-user-drag:none;
+  user-select:none;
+  pointer-events:none;
+}
+
+@media(max-width:768px){
+  .quem-somos-feature-video{
+    width:100vw;
+    max-width:100vw;
+  }
+}
 @media(max-width:768px){
   .quem-somos-feature{padding:1rem 0;}
   .quem-somos-feature-img-wrap{
@@ -2780,6 +2997,28 @@ if ('requestIdleCallback' in window) {
     decoding="async"
   />
 </section>
+
+<!-- ╔═══════════════════════════════════════════════════════════════════════╗
+     ║ ▓▓▓ CINEMATIC DIVIDER — sombra subindo + light leak orgânico ▓▓▓     ║
+     ║                                                                       ║
+     ║ Substitui o divider rígido por uma transição cinematográfica que     ║
+     ║ "respira" entre as seções. Composto por:                              ║
+     ║  1. Gradient vertical preto → cinza escuro → preto (profundidade)    ║
+     ║  2. Light leak diagonal subindo (partículas brancas)                 ║
+     ║  3. Sombra interna superior (ilusão de profundidade)                 ║
+     ║  4. Linha hairline central com glow pulsante                         ║
+     ║                                                                       ║
+     ║ Animação contínua — não tem início nem fim, parece "líquido vivo".  ║
+     ╚═══════════════════════════════════════════════════════════════════════╝ -->
+<div class="cinematic-divider" aria-hidden="true">
+  <div class="cinematic-divider__shadow-rise"></div>
+  <div class="cinematic-divider__particles">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span>
+  </div>
+  <div class="cinematic-divider__hairline"></div>
+</div>
 
 <!-- ============================================================
      VSL — Vídeo de vendas hospedado (ConverteAI / SmartPlayer)
@@ -3164,13 +3403,19 @@ if ('requestIdleCallback' in window) {
      ═══════════════════════════════════════════════════════════ -->
 <section class="quem-somos-feature" aria-label="Quem é a Eikon">
   <div class="quem-somos-feature-img-wrap">
-    <img
-      src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/quemsomos.png"
-      alt="Quem somos — Eikon Ink Marketing"
-      class="quem-somos-feature-img"
-      loading="lazy"
-      decoding="async"
-    />
+    <video
+      class="quem-somos-feature-img quem-somos-feature-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="metadata"
+      aria-label="Quem é a Eikon — apresentação institucional"
+      disablepictureinpicture
+      disableremoteplayback
+      style="background:#000">
+      <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/black-1.mp4" type="video/mp4"/>
+    </video>
   </div>
 </section>
 
@@ -3557,7 +3802,15 @@ const vidObs = new IntersectionObserver(entries => {
     else { v.pause(); }
   });
 }, { threshold: .25 });
-document.querySelectorAll('.testimonial-video-frame video').forEach(v => vidObs.observe(v));
+document.querySelectorAll('.testimonial-video-frame video, .quem-somos-feature-video').forEach(v => vidObs.observe(v));
+
+// Pausa vídeo institucional quando aba inativa (economiza bateria + GPU)
+document.addEventListener('visibilitychange', () => {
+  document.querySelectorAll('.quem-somos-feature-video').forEach(v => {
+    if (document.hidden) v.pause();
+    else if (v.getBoundingClientRect().top < window.innerHeight) v.play().catch(() => {});
+  });
+});
 
 // TYPEWRITER EFFECT — Before/After section
 (function() {
