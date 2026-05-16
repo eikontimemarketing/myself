@@ -1852,6 +1852,984 @@ section h3.heading-display{
 
 /* Acessibilidade — Reduced motion (regra unificada está no critical-perf-css abaixo) */
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   ▓▓▓ EIKON v2 — UPGRADE PACK ▓▓▓
+   Baseado em análise das LPs Offline Club + MVM Creators.
+   14 efeitos visuais portados, adaptados ao sistema atual.
+   Todo o upgrade está abaixo — encapsulado para fácil rollback.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── 0. DISPLAY-P3 COLOR UPGRADE ──────────────────────────────────────────
+   Cores em display-p3 são ~30% mais saturadas em telas Wide-Color
+   (MacBooks, iPhones, iPads Pro). Navegador escolhe automaticamente.
+   Aqui aplicamos só nos brancos e cinzas críticos do design system. */
+@supports (color: color(display-p3 1 1 1)) {
+  :root {
+    --text-100: color(display-p3 1 1 1);
+    --text-200: color(display-p3 0.894 0.894 0.898);
+    --text-300: color(display-p3 0.631 0.631 0.667);
+    --text-400: color(display-p3 0.443 0.443 0.478);
+    --text-500: color(display-p3 0.322 0.322 0.357);
+  }
+}
+
+/* ─── 1. GLASSMORPHISM COM GLOW INSET RADIAL ─────────────────────────────────
+   Padrão exato extraído da Offline Club. Aplica visual premium aos cards. */
+.glass-premium{
+  border-radius:24px;
+  background:radial-gradient(58.69% 43.16% at 50% 87.61%, rgba(120,120,120,.18) 0%, rgba(0,0,0,.45) 100%);
+  box-shadow:0 0 36px 0 rgba(255,255,255,.22) inset,
+             0 2px 4px rgba(0,0,0,.5),
+             0 24px 60px -10px rgba(0,0,0,.5);
+  backdrop-filter:blur(12px) saturate(150%);
+  -webkit-backdrop-filter:blur(12px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  transition:box-shadow .5s ease, transform .5s ease, border-color .5s ease;
+}
+.glass-premium:hover{
+  box-shadow:0 0 60px 0 rgba(255,255,255,.32) inset,
+             0 2px 4px rgba(0,0,0,.5),
+             0 40px 100px -10px rgba(255,255,255,.10),
+             0 0 0 1px rgba(255,255,255,.14);
+  border-color:rgba(255,255,255,.22);
+}
+/* Variante intensa — para pricing pro / cards de destaque */
+.glass-premium--strong{
+  background:radial-gradient(70% 50% at 50% 92%, rgba(140,140,140,.30) 0%, rgba(0,0,0,.55) 100%);
+  box-shadow:0 0 66px 0 rgba(255,255,255,.30) inset,
+             0 4px 8px rgba(0,0,0,.6),
+             0 32px 80px -10px rgba(0,0,0,.6);
+}
+
+/* ─── 2. BOTÃO COM BRILHO VIAJANTE (skewX + animação) ────────────────────────
+   Inspirado no botão MVM. Faixa branca atravessa o botão a cada 2.4s.
+   Aplica via classe .btn-runner em qualquer .btn-glow existente. */
+.btn-glow.btn-runner{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+}
+.btn-glow.btn-runner::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-30%;
+  width:80px;
+  height:100%;
+  background:linear-gradient(90deg, transparent 0%, rgba(255,255,255,.85) 50%, transparent 100%);
+  box-shadow:0 0 24px 8px rgba(255,255,255,.45);
+  transform:skewX(-22deg);
+  mix-blend-mode:plus-lighter;
+  pointer-events:none;
+  z-index:3;
+  animation:btnRunnerSweep 2.6s cubic-bezier(.45,.05,.55,.95) infinite;
+  animation-delay:.5s;
+}
+@keyframes btnRunnerSweep{
+  0%   { left:-30%; opacity:0; }
+  10%  { opacity:.2; }
+  50%  { opacity:.6; }
+  90%  { opacity:.2; }
+  100% { left:130%; opacity:0; }
+}
+.btn-glow.btn-runner:hover::after{ animation-duration:1.3s; }
+
+/* ─── 3. ÍCONE VOADOR NO BOTÃO HOVER (left 14% → 85% + rotate) ───────────────
+   Adaptado do MVM. Aplica via classe .btn-flyicon.
+   A seta sai da esquerda, voa pra direita e gira 360° no hover. */
+.btn-glow.btn-flyicon{
+  position:relative;
+  padding-left:3.5rem !important;
+  padding-right:1.75rem !important;
+  transition:padding .55s cubic-bezier(.22,.61,.36,1), background .3s, box-shadow .3s;
+}
+.btn-glow.btn-flyicon svg{
+  position:absolute;
+  top:50%;
+  left:1.1rem;
+  width:1.15rem;
+  height:1.15rem;
+  transform:translateY(-50%);
+  transition:left .55s cubic-bezier(.22,.61,.36,1), transform .55s cubic-bezier(.22,.61,.36,1);
+  color:#000 !important;
+}
+.btn-glow.btn-flyicon:hover{
+  padding-left:1.75rem !important;
+  padding-right:3.5rem !important;
+}
+.btn-glow.btn-flyicon:hover svg{
+  left:calc(100% - 2.25rem);
+  transform:translateY(-50%) rotate(360deg);
+}
+
+/* ─── 4. AVATAR STACK INTERATIVO ─────────────────────────────────────────────
+   Pega o efeito Offline Club: hover num avatar faz os outros desfocar + dessaturar. */
+.avatar-stack{
+  display:inline-flex;
+  align-items:center;
+  padding:.45rem .9rem .45rem .55rem;
+  border-radius:999px;
+  background:radial-gradient(80% 100% at 30% 0%, rgba(255,255,255,.06) 0%, rgba(0,0,0,.4) 100%);
+  border:1px solid rgba(255,255,255,.10);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 8px 24px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.04) inset;
+  transition:all .4s ease;
+}
+.avatar-stack:hover{
+  background:radial-gradient(80% 100% at 30% 0%, rgba(255,255,255,.10) 0%, rgba(0,0,0,.5) 100%);
+  border-color:rgba(255,255,255,.20);
+}
+.avatar-stack .avatar{
+  width:34px;height:34px;
+  border-radius:50%;
+  border:2px solid #0a0a0a;
+  margin-left:-12px;
+  background:#1a1a1c;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;
+  color:#fff;
+  letter-spacing:.05em;
+  flex-shrink:0;
+  position:relative;
+  transition:transform .4s ease, filter .4s ease, z-index 0s linear .4s;
+  cursor:default;
+  box-shadow:0 2px 6px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.08) inset;
+}
+.avatar-stack .avatar:first-child{margin-left:0;}
+.avatar-stack .avatar:nth-child(1){background:linear-gradient(135deg,#7a7a82,#3a3a40);}
+.avatar-stack .avatar:nth-child(2){background:linear-gradient(135deg,#a8a8b2,#5a5a64);}
+.avatar-stack .avatar:nth-child(3){background:linear-gradient(135deg,#909096,#48484e);}
+.avatar-stack .avatar:nth-child(4){background:linear-gradient(135deg,#bababa,#6a6a6a);}
+.avatar-stack .avatar:nth-child(5){background:linear-gradient(135deg,#8a8a90,#3e3e44);}
+
+/* Avatar com foto real — substitui o background gradient pela imagem */
+.avatar-stack .avatar-photo{
+  background:#1a1a1c !important;
+  overflow:hidden;
+  padding:0;
+}
+.avatar-stack .avatar-photo img{
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+  transition:filter .35s ease;
+}
+.avatar-stack:hover .avatar-photo:not(:hover) img{
+  /* O blur/saturate herda do .avatar-stack — img não precisa redeclarar */
+}
+.avatar-stack .avatar:hover{
+  transform:translateX(-6px) translateY(-2px) scale(1.1);
+  filter:saturate(1.4) brightness(1.15);
+  z-index:5;
+  transition:transform .35s cubic-bezier(.22,.61,.36,1), filter .35s, z-index 0s;
+}
+.avatar-stack:hover .avatar:not(:hover){
+  filter:blur(1.5px) saturate(0) brightness(.7);
+}
+.avatar-stack .stack-label{
+  margin-left:.65rem;
+  font-size:.78rem;
+  font-weight:600;
+  color:#e4e4e7;
+  letter-spacing:.02em;
+  white-space:nowrap;
+}
+.avatar-stack .stack-label strong{
+  color:#fff;
+  font-weight:700;
+}
+.avatar-stack .stack-label small{
+  display:block;
+  font-size:.65rem;
+  color:#71717a;
+  font-weight:500;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin-top:.05rem;
+}
+@media (max-width:480px){
+  .avatar-stack{padding:.4rem .75rem .4rem .45rem;}
+  .avatar-stack .avatar{width:28px;height:28px;margin-left:-10px;font-size:.62rem;}
+  .avatar-stack .stack-label{font-size:.72rem;}
+}
+
+/* ─── 5. PILLAR SPOTLIGHT GRID — Hover blur-zoom inverso ─────────────────────
+   Adaptado do MVM. Hover num pilar faz os OUTROS desfocarem e diminuírem.
+   Aplica via classe .pillar-spotlight no wrapper do grid. */
+@media (hover:hover){
+  .pillar-spotlight{ --zoom-out:.97; --zoom-in:1.015; }
+  .pillar-spotlight:hover .pillar-card{
+    filter:blur(1.5px) saturate(.85);
+    opacity:.55;
+    transform:scale(var(--zoom-out));
+    transition:all .45s cubic-bezier(.22,.61,.36,1);
+  }
+  .pillar-spotlight .pillar-card{
+    transition:all .45s cubic-bezier(.22,.61,.36,1);
+    will-change:transform, filter, opacity;
+  }
+  .pillar-spotlight .pillar-card:hover{
+    filter:blur(0) saturate(1.1) !important;
+    opacity:1 !important;
+    transform:scale(var(--zoom-in)) translateY(-10px) !important;
+    z-index:10;
+  }
+  /* Mobile: desliga o efeito (já tem o is-stacked do scroll) */
+  @media (max-width:768px){
+    .pillar-spotlight:hover .pillar-card,
+    .pillar-spotlight .pillar-card{
+      filter:none !important;
+      opacity:1 !important;
+      transform:none;
+    }
+  }
+}
+
+/* ─── 6. VINHETA CIRCULAR EM ELEMENTOS DECORATIVOS ──────────────────────────
+   Funde imagens decorativas (globos, blobs) com o fundo via mask radial.
+   Aplica via classe .vignette-fade. */
+.vignette-fade{
+  mask-image:radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
+.vignette-fade-strong{
+  mask-image:radial-gradient(ellipse at center, #000 20%, transparent 65%);
+  -webkit-mask-image:radial-gradient(ellipse at center, #000 20%, transparent 65%);
+}
+
+/* ─── 7. FLOAT / FLOATE (cards "respirando") ─────────────────────────────────
+   Movimento sutil vertical/horizontal, 4px de amplitude. */
+@keyframes eikon-float{
+  0%, 100%{ transform:translateY(0); }
+  50%     { transform:translateY(-5px); }
+}
+@keyframes eikon-floate{
+  0%, 100%{ transform:translateX(0); }
+  50%     { transform:translateX(-4px); }
+}
+.float-y{ animation:eikon-float 3s ease-in-out infinite; }
+.float-x{ animation:eikon-floate 3.5s ease-in-out infinite; }
+.float-y-slow{ animation:eikon-float 5s ease-in-out infinite; }
+
+/* ─── 8. BLINK BRIGHTNESS — Lâmpada com mau contato ──────────────────────────
+   Pisca duas vezes rapidinho a cada 5s. Aplica em logos/ícones-chave. */
+@keyframes eikon-blink{
+  0%   { filter:brightness(1) drop-shadow(0 8px 30px rgba(0,0,0,.5)); }
+  2%   { filter:brightness(2.8) drop-shadow(0 8px 30px rgba(0,0,0,.5)); }
+  4%   { filter:brightness(1) drop-shadow(0 8px 30px rgba(0,0,0,.5)); }
+  8%   { filter:brightness(1.9) drop-shadow(0 8px 30px rgba(0,0,0,.5)); }
+  12%  { filter:brightness(1) drop-shadow(0 8px 30px rgba(0,0,0,.5)); }
+  100% { filter:brightness(1) drop-shadow(0 8px 30px rgba(0,0,0,.5)); }
+}
+.blink-brightness{
+  animation:eikon-blink 6s ease-in-out infinite;
+  animation-delay:3s;
+}
+/* Em mobile desliga — drop-shadow + brightness é pesado */
+@media (max-width:768px){
+  .blink-brightness{ animation:none !important; }
+}
+@media (prefers-reduced-motion: reduce){
+  .blink-brightness{ animation:none !important; }
+}
+
+/* ─── 9. PULSE LIVE BADGE ────────────────────────────────────────────────────
+   Pulso de 10% de escala — para badges tipo "AO VIVO" ou "VAGAS LIMITADAS". */
+@keyframes eikon-pulse{
+  0%, 100%{ transform:scale(1); box-shadow:0 0 0 0 rgba(255,255,255,.4); }
+  50%     { transform:scale(1.08); box-shadow:0 0 0 8px rgba(255,255,255,0); }
+}
+.pulse-live{
+  animation:eikon-pulse 2s ease-in-out infinite;
+}
+
+/* ─── 10. MARQUEE COM LOGO INLINE (EIKON branding no rolê) ───────────────────
+   Insere o logo Eikon entre as bandeiras no marquee de países.
+   O logo é um SVG inline circular com glow sutil. */
+.marquee-track .marquee-logo{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:44px;height:44px;
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.18) 0%, rgba(0,0,0,.5) 100%);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 0 14px rgba(255,255,255,.10) inset, 0 4px 10px rgba(0,0,0,.4);
+  flex-shrink:0;
+  position:relative;
+}
+.marquee-track .marquee-logo::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  border-radius:50%;
+  background:conic-gradient(from 0deg, transparent, rgba(255,255,255,.4), transparent 30%);
+  animation:marqueeLogoSpin 4s linear infinite;
+  z-index:-1;
+  filter:blur(3px);
+  opacity:.6;
+}
+@keyframes marqueeLogoSpin{
+  to{ transform:rotate(360deg); }
+}
+.marquee-track .marquee-logo span{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:800;
+  font-size:.78rem;
+  color:#fff;
+  letter-spacing:-.02em;
+  text-shadow:0 0 8px rgba(255,255,255,.4);
+}
+@media (max-width:768px){
+  .marquee-track .marquee-logo{ width:36px;height:36px; }
+  .marquee-track .marquee-logo::before{ animation-duration:6s; }
+}
+
+/* ─── 11. CAROUSEL TIMING LINEAR (anti-tranco) ───────────────────────────────
+   Swiper por padrão usa cubic-bezier — força linear para loops contínuos. */
+.cases-carousel,
+.cases-carousel-wrap{
+  scroll-behavior:smooth;
+}
+/* Já era linear via animação CSS no .marquee-track — só garantia */
+.marquee-track{
+  animation-timing-function:linear !important;
+}
+
+/* ─── 12. OVERLAY GRADIENT FADE BOTTOM (em imagens decorativas) ──────────────
+   Funde imagens com o fundo escuro. */
+.fade-bottom{
+  position:relative;
+}
+.fade-bottom::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(0deg, #000 0%, transparent 50%);
+  pointer-events:none;
+  z-index:2;
+}
+
+/* ─── 13. SECTION-LABEL UPGRADE (dot mais vivo) ──────────────────────────────
+   O pulse atual é meio fraco. Substituímos por um pulse mais expressivo. */
+.section-label::before{
+  animation:eikon-label-dot 1.8s ease-in-out infinite !important;
+}
+@keyframes eikon-label-dot{
+  0%, 100%{ opacity:1; transform:scale(1); box-shadow:0 0 8px rgba(255,255,255,.6); }
+  50%     { opacity:.7; transform:scale(1.3); box-shadow:0 0 14px rgba(255,255,255,.9); }
+}
+
+/* ─── 14. UPGRADE GERAL DOS CARDS DE PRICING (glass premium) ─────────────────
+   Aplica o glow inset radial nos cards de pricing existentes. */
+.pricing-free{
+  background:radial-gradient(58.69% 43.16% at 50% 87.61%, rgba(120,120,120,.16) 0%, rgba(0,0,0,.5) 100%) !important;
+  backdrop-filter:blur(14px) saturate(150%) !important;
+  -webkit-backdrop-filter:blur(14px) saturate(150%) !important;
+  box-shadow:0 0 36px 0 rgba(255,255,255,.18) inset,
+             0 2px 4px rgba(0,0,0,.5),
+             0 24px 60px -10px rgba(0,0,0,.5) !important;
+}
+.pricing-pro{
+  box-shadow:0 0 66px 0 rgba(255,255,255,.26) inset,
+             0 4px 12px rgba(0,0,0,.6),
+             0 32px 80px -10px rgba(0,0,0,.65),
+             0 0 0 1px rgba(255,255,255,.14) !important;
+}
+
+/* ─── 15. STATS DIVIDER UPGRADE (linha vertical com gradient) ────────────────
+   Os divisores entre stats do hero ficam mais elegantes. */
+.hero-stats-divider{
+  border-left:1px solid transparent;
+  border-right:1px solid transparent;
+  border-image:linear-gradient(180deg, transparent 0%, rgba(255,255,255,.22) 50%, transparent 100%) 1;
+  border-image-slice:1;
+}
+
+/* ─── 16. PILLAR CARD GLOW INSET (combina com o efeito Offline) ──────────────
+   Adiciona um glow inset suave nos pillars sem quebrar o estilo atual. */
+.pillar-card{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.05) inset,
+    0 0 36px rgba(255,255,255,.06) inset,
+    0 30px 60px -20px rgba(0,0,0,.5),
+    0 0 0 1px rgba(255,255,255,0.02) !important;
+}
+.pillar-card:hover{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.10) inset,
+    0 0 60px rgba(255,255,255,.14) inset,
+    0 40px 100px -20px rgba(0,0,0,.7),
+    0 0 0 1px rgba(255,255,255,0.12),
+    0 0 80px -10px rgba(255,255,255,.14) !important;
+}
+
+/* ─── 17. PERF — Mobile kill switch dos novos efeitos ───────────────────────
+   Em mobile, mata animações caras dos novos efeitos. */
+@media (max-width:768px){
+  .btn-glow.btn-runner::after,
+  .marquee-track .marquee-logo::before{
+    animation:none !important;
+  }
+  .glass-premium,
+  .glass-premium--strong{
+    backdrop-filter:none !important;
+    -webkit-backdrop-filter:none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .btn-glow.btn-runner::after,
+  .marquee-track .marquee-logo::before,
+  .float-y, .float-x, .float-y-slow,
+  .blink-brightness,
+  .pulse-live{
+    animation:none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ▓▓▓ DEPOIMENTOS — CARROSSEL HORIZONTAL COM SCROLL SNAP ▓▓▓
+   Padrão Apple/Netflix: scroll horizontal nativo + setas + dots + swipe.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.testi-carousel-wrap{
+  position:relative;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 4%,#000 96%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 4%,#000 96%,transparent 100%);
+}
+.testi-carousel{
+  display:flex;
+  gap:1.5rem;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  padding:1rem 2rem 2rem;
+  scrollbar-width:none;
+  -ms-overflow-style:none;
+  outline:none;
+}
+.testi-carousel::-webkit-scrollbar{display:none;}
+
+/* Cada testi-card vira slide horizontal */
+.testi-carousel > .testi-card{
+  flex:0 0 320px;
+  scroll-snap-align:center;
+  scroll-snap-stop:always;
+  /* Card mantém min-height pra cards de tamanhos diferentes não ficarem desalinhados */
+  min-height:auto;
+  /* PERF: pula render se fora da tela */
+  content-visibility:auto;
+  contain-intrinsic-size:auto 480px;
+}
+@media (min-width:640px){
+  .testi-carousel > .testi-card{flex:0 0 360px;}
+}
+@media (min-width:1024px){
+  .testi-carousel > .testi-card{flex:0 0 380px;}
+  .testi-carousel{padding:1.5rem 3rem 2.5rem;gap:1.75rem;}
+}
+@media (min-width:1280px){
+  .testi-carousel > .testi-card{flex:0 0 400px;}
+}
+
+/* Botões nav — mesma estética dos do .cases-carousel */
+.testi-carousel-wrap .carousel-btn-prev{left:.5rem;}
+.testi-carousel-wrap .carousel-btn-next{right:.5rem;}
+@media (min-width:1024px){
+  .testi-carousel-wrap .carousel-btn-prev{left:1rem;}
+  .testi-carousel-wrap .carousel-btn-next{right:1rem;}
+}
+
+/* Swipe hint — só mobile, reaproveita CSS existente */
+
+/* Dots */
+.testi-carousel-wrap .carousel-dots{
+  display:flex;
+  justify-content:center;
+  gap:.5rem;
+  margin-top:.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ▓▓▓ MODULE FOCUS — Scroll-driven Blur/Focus dos 5 módulos da mentoria ▓▓▓
+   Só o módulo no "centro de leitura" fica nítido. Demais ficam borrados.
+   Estilo Apple Vision Pro / Linear / sites premium.
+   Performance: zero scroll listener, só IntersectionObserver.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.module-focus-container .module-focus-item{
+  /* Estado padrão (todos borrados levemente, foco "à espera") */
+  filter:blur(3px) saturate(.6);
+  opacity:.45;
+  transform:scale(.985);
+  transition:
+    filter .55s cubic-bezier(.22,.61,.36,1),
+    opacity .55s cubic-bezier(.22,.61,.36,1),
+    transform .55s cubic-bezier(.22,.61,.36,1);
+  will-change:filter, opacity, transform;
+}
+
+/* Estado FOCADO — módulo está no centro de leitura */
+.module-focus-container .module-focus-item.is-focused{
+  filter:blur(0) saturate(1);
+  opacity:1;
+  transform:scale(1);
+}
+
+/* Mobile — blur menos intenso (em telas pequenas blur forte fica "sujo") */
+@media (max-width:768px){
+  .module-focus-container .module-focus-item{
+    filter:blur(2px) saturate(.7);
+    opacity:.55;
+    transform:scale(.99);
+  }
+}
+
+/* Acessibilidade — quem pediu reduced-motion vê tudo nítido */
+@media (prefers-reduced-motion: reduce){
+  .module-focus-container .module-focus-item,
+  .module-focus-container .module-focus-item.is-focused{
+    filter:none !important;
+    opacity:1 !important;
+    transform:none !important;
+    transition:none !important;
+  }
+}
+
+/* Estado pré-JS — antes do IntersectionObserver inicializar, evita blur
+   permanente caso o JS falhe. Removido pelo boot. */
+.module-focus-container:not([data-focus-ready]) .module-focus-item{
+  filter:none;
+  opacity:1;
+  transform:none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ▓▓▓ CARD PREMIUM — DESTAQUE DOURADO/CHAMPANHE ▓▓▓
+   Aplica o "wow effect" no plano de maior valor. Hierarquia visual clara.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Wrapper — eleva e dá mais protagonismo */
+.pricing-premium-wrap{
+  position:relative;
+  z-index:2;
+}
+@media (min-width:1024px){
+  .pricing-premium-wrap{
+    transform:scale(1.04);
+  }
+}
+
+/* Card em si — gradient escuro com toques dourados/champanhe */
+.pricing-premium-highlight{
+  background:linear-gradient(145deg, #0c0c0e 0%, #1a1815 35%, #211e18 55%, #1a1815 75%, #0c0c0e 100%) !important;
+  border:1.5px solid rgba(217, 184, 109, 0.35) !important;
+  box-shadow:
+    0 0 0 1px rgba(217, 184, 109, 0.20) inset,
+    0 0 80px -10px rgba(217, 184, 109, 0.30) inset,
+    0 0 60px rgba(217, 184, 109, 0.10),
+    0 24px 60px rgba(0,0,0,.55),
+    0 0 0 6px rgba(217, 184, 109, 0.05) !important;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Borda animada dourada — conic-gradient girando lentamente */
+.pricing-premium-highlight::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:inherit;
+  padding:1.5px;
+  background:conic-gradient(
+    from var(--premium-angle, 0deg),
+    rgba(217, 184, 109, 0) 0%,
+    rgba(217, 184, 109, 0.4) 12%,
+    rgba(247, 215, 145, 0.95) 18%,
+    rgba(217, 184, 109, 0.4) 24%,
+    rgba(217, 184, 109, 0) 35%,
+    rgba(217, 184, 109, 0) 100%
+  );
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation:premiumBorderSpin 5s linear infinite;
+  opacity:.9;
+  z-index:0;
+  pointer-events:none;
+}
+@property --premium-angle{
+  syntax:"<angle>";
+  inherits:false;
+  initial-value:0deg;
+}
+@keyframes premiumBorderSpin{
+  to{--premium-angle:360deg;}
+}
+
+/* Shine sweep dourado contínuo (sutil, não cansa) */
+.pricing-premium-highlight::after{
+  content:"";
+  position:absolute;
+  top:-50%;
+  right:-30%;
+  width:60%;
+  height:200%;
+  background:radial-gradient(ellipse at center,
+    rgba(247, 215, 145, 0.12) 0%,
+    rgba(217, 184, 109, 0.06) 30%,
+    transparent 60%);
+  transform:rotate(15deg);
+  pointer-events:none;
+  z-index:0;
+  animation:premiumShineDrift 8s ease-in-out infinite alternate;
+}
+@keyframes premiumShineDrift{
+  0%   { transform:rotate(15deg) translateY(0); opacity:.8; }
+  100% { transform:rotate(15deg) translateY(-20px); opacity:1; }
+}
+
+/* Conteúdo do card fica acima do shine */
+.pricing-premium-highlight > *{ position:relative; z-index:1; }
+
+/* PREÇO — gradient champanhe animado */
+.pricing-premium-highlight .premium-price{
+  background:linear-gradient(135deg,
+    #f7d791 0%,
+    #d9b86d 30%,
+    #fff3cf 50%,
+    #d9b86d 70%,
+    #f7d791 100%);
+  background-size:200% 200%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  color:transparent;
+  animation:premiumPriceShine 4s ease-in-out infinite;
+  text-shadow:0 0 30px rgba(217, 184, 109, 0.25);
+}
+@keyframes premiumPriceShine{
+  0%, 100%{ background-position:0% 50%; }
+  50%     { background-position:100% 50%; }
+}
+
+/* BADGE PREMIUM (removida — mantido CSS por compatibilidade) */
+.pricing-premium-highlight .premium-badge{
+  background:linear-gradient(135deg, #f7d791 0%, #d9b86d 50%, #b8954a 100%) !important;
+  color:#1a1410 !important;
+  box-shadow:
+    0 0 0 1px rgba(247, 215, 145, 0.4),
+    0 4px 12px rgba(217, 184, 109, 0.4),
+    inset 0 1px 0 rgba(255, 248, 220, 0.6) !important;
+  text-shadow:0 1px 0 rgba(255, 248, 220, 0.3);
+}
+
+/* H3 "Acesso Premium" com gradient dourado */
+.pricing-premium-highlight h3{
+  background:linear-gradient(135deg, #fff3cf 0%, #f7d791 60%, #d9b86d 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  color:transparent !important;
+}
+
+/* Checks na lista de bullets ficam dourados */
+.pricing-premium-highlight ul li svg{
+  color:#f7d791 !important;
+  filter:drop-shadow(0 0 4px rgba(247, 215, 145, 0.4));
+}
+
+/* Linha separadora elegante entre "Tudo do Completo +" e os 3 exclusivos */
+.pricing-premium-highlight .premium-base-item{
+  padding-bottom:.85rem;
+  margin-bottom:.25rem;
+  border-bottom:1px solid rgba(217, 184, 109, 0.20);
+  position:relative;
+}
+.pricing-premium-highlight .premium-base-item::after{
+  content:"+ DIFERENCIAIS EXCLUSIVOS";
+  position:absolute;
+  bottom:-0.7rem;
+  right:0;
+  font-size:.55rem;
+  font-weight:800;
+  letter-spacing:.18em;
+  color:#d9b86d;
+  background:linear-gradient(145deg, #0c0c0e 0%, #1a1815 100%);
+  padding:.15rem .55rem;
+  border:1px solid rgba(217, 184, 109, 0.30);
+  border-radius:99px;
+  text-shadow:0 0 6px rgba(217, 184, 109, 0.4);
+}
+/* Os 3 exclusivos ganham um leve glow ao redor */
+.pricing-premium-highlight .premium-exclusive-item{
+  position:relative;
+}
+.pricing-premium-highlight .premium-exclusive-item svg{
+  filter:drop-shadow(0 0 6px rgba(247, 215, 145, 0.55)) !important;
+}
+
+@media (max-width:640px){
+  .pricing-premium-highlight .premium-base-item::after{
+    font-size:.50rem;
+    padding:.12rem .45rem;
+    letter-spacing:.14em;
+  }
+}
+
+/* Botão Premium com toque dourado no hover */
+.pricing-premium-highlight .btn-glow.btn-runner{
+  background:linear-gradient(180deg, #ffffff 0%, #f4f4f5 100%) !important;
+  box-shadow:
+    0 0 0 1px rgba(217, 184, 109, 0.4),
+    0 8px 24px rgba(217, 184, 109, 0.30),
+    0 16px 48px rgba(0,0,0,.4) !important;
+  transition:transform .3s ease, box-shadow .3s ease, background .3s ease !important;
+}
+.pricing-premium-highlight .btn-glow.btn-runner:hover{
+  background:linear-gradient(180deg, #fff3cf 0%, #f7d791 100%) !important;
+  transform:translateY(-2px);
+  box-shadow:
+    0 0 0 1px rgba(217, 184, 109, 0.6),
+    0 12px 36px rgba(217, 184, 109, 0.45),
+    0 20px 60px rgba(0,0,0,.5) !important;
+}
+.pricing-premium-highlight .btn-glow.btn-runner::after{
+  background:linear-gradient(90deg, transparent 0%, rgba(247, 215, 145, 0.9) 50%, transparent 100%) !important;
+  box-shadow:0 0 24px 8px rgba(247, 215, 145, 0.55) !important;
+}
+
+/* ─── TEMA CLARO da seção investimento — overrides PREMIUM ─── */
+/* Quando a seção tem .bg-pricing-light, o card premium MANTÉM o tema dourado */
+.bg-pricing-light .pricing-premium-highlight{
+  background:linear-gradient(145deg, #0c0c0e 0%, #1a1815 35%, #211e18 55%, #1a1815 75%, #0c0c0e 100%) !important;
+  border:1.5px solid rgba(217, 184, 109, 0.35) !important;
+  box-shadow:
+    0 0 0 1px rgba(217, 184, 109, 0.20) inset,
+    0 0 80px -10px rgba(217, 184, 109, 0.30) inset,
+    0 0 60px rgba(217, 184, 109, 0.10),
+    0 32px 80px rgba(0,0,0,.30),
+    0 0 0 6px rgba(217, 184, 109, 0.06) !important;
+}
+.bg-pricing-light .pricing-premium-highlight::before,
+.bg-pricing-light .pricing-premium-highlight::after{ display:block !important; }
+.bg-pricing-light .pricing-premium-highlight h3{
+  color:transparent !important;
+}
+.bg-pricing-light .pricing-premium-highlight .heading-display.premium-price{
+  /* mantém gradient champanhe — não inverte */
+  color:transparent !important;
+}
+.bg-pricing-light .pricing-premium-highlight p,
+.bg-pricing-light .pricing-premium-highlight li,
+.bg-pricing-light .pricing-premium-highlight span{
+  color:#d4d4d8 !important;
+}
+.bg-pricing-light .pricing-premium-highlight p[style*="color:#a1a1aa"]{
+  color:#a1a1aa !important;
+}
+.bg-pricing-light .pricing-premium-highlight strong[style*="color:#fff"]{
+  color:#fff !important;
+}
+.bg-pricing-light .pricing-premium-highlight ul li svg{
+  color:#f7d791 !important;
+}
+.bg-pricing-light .pricing-premium-highlight .premium-badge{
+  background:linear-gradient(135deg, #f7d791 0%, #d9b86d 50%, #b8954a 100%) !important;
+  color:#1a1410 !important;
+}
+
+/* Mobile — reduz a escala e suaviza efeitos */
+@media (max-width:1023px){
+  .pricing-premium-wrap{ transform:none; }
+}
+@media (max-width:768px){
+  .pricing-premium-highlight::before,
+  .pricing-premium-highlight::after{ animation:none !important; }
+  .pricing-premium-highlight .premium-price{ animation:none !important; }
+  .pricing-premium-highlight{
+    box-shadow:
+      0 0 0 1px rgba(217, 184, 109, 0.20) inset,
+      0 0 40px -10px rgba(217, 184, 109, 0.25) inset,
+      0 12px 30px rgba(0,0,0,.4) !important;
+  }
+}
+@media (prefers-reduced-motion: reduce){
+  .pricing-premium-highlight::before,
+  .pricing-premium-highlight::after,
+  .pricing-premium-highlight .premium-price{
+    animation:none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ▓▓▓ SEÇÃO INVESTIMENTO — TEMA CLARO (LIGHT MODE) ▓▓▓
+   Inversão total de contraste: fundo branco + textos pretos.
+   Aplicada via classe .bg-pricing-light na <section>.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.bg-pricing-light{
+  background:linear-gradient(180deg, #ffffff 0%, #f4f4f5 50%, #ffffff 100%) !important;
+  color:#0a0a0a;
+}
+
+/* Desliga os blobs/mesh orbs decorativos escuros (estavam pensados pra fundo preto) */
+.bg-pricing-light .mesh-orb,
+.bg-pricing-light .blob,
+.bg-pricing-light > [aria-hidden="true"]{
+  display:none !important;
+}
+
+/* Section label invertido — fundo escuro com texto branco em vez do contrário */
+.bg-pricing-light .section-label{
+  color:#0a0a0a !important;
+  background:rgba(0,0,0,0.04) !important;
+  border:1px solid rgba(0,0,0,0.15) !important;
+  backdrop-filter:blur(8px);
+}
+.bg-pricing-light .section-label::before{
+  background:#0a0a0a !important;
+  box-shadow:0 0 8px rgba(0,0,0,0.4) !important;
+}
+@keyframes labelDotDark{
+  0%, 100%{ opacity:1; transform:scale(1); box-shadow:0 0 8px rgba(0,0,0,.4); }
+  50%     { opacity:.6; transform:scale(1.3); box-shadow:0 0 12px rgba(0,0,0,.7); }
+}
+.bg-pricing-light .section-label::before{
+  animation:labelDotDark 1.8s ease-in-out infinite !important;
+}
+
+/* Título principal — gradient preto/cinza escuro (substitui o branco animado) */
+.bg-pricing-light h2.title-gradient{
+  background:linear-gradient(100deg, #000 0%, #000 28%, #525252 50%, #000 72%, #000 100%) !important;
+  background-size:200% auto !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  background-clip:text !important;
+  color:transparent !important;
+}
+.bg-pricing-light .gradient-text{
+  background:linear-gradient(135deg, #000 0%, #525252 100%) !important;
+  -webkit-background-clip:text !important;
+  -webkit-text-fill-color:transparent !important;
+  background-clip:text !important;
+}
+
+/* Subtítulo e parágrafos cinzas → cinza escuro legível */
+.bg-pricing-light p[style*="color:#a1a1aa"],
+.bg-pricing-light p[style*="color:#71717a"]{
+  color:#3f3f46 !important;
+}
+.bg-pricing-light strong[style*="color:#fff"]{
+  color:#000 !important;
+}
+
+/* ─── CARDS DE PRICING — Tema claro premium ─── */
+.bg-pricing-light .pricing-free{
+  background:linear-gradient(145deg, #ffffff 0%, #f9fafb 100%) !important;
+  border:1px solid rgba(0,0,0,0.10) !important;
+  box-shadow:
+    0 0 36px 0 rgba(0,0,0,.04) inset,
+    0 2px 4px rgba(0,0,0,.06),
+    0 16px 40px -10px rgba(0,0,0,.10) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+.bg-pricing-light .pricing-pro{
+  background:linear-gradient(145deg, #0a0a0a 0%, #18181b 55%, #0a0a0a 100%) !important;
+  border:1px solid rgba(0,0,0,0.30) !important;
+  box-shadow:
+    0 0 60px 0 rgba(255,255,255,.10) inset,
+    0 4px 12px rgba(0,0,0,.20),
+    0 24px 60px -10px rgba(0,0,0,.30),
+    0 0 0 1px rgba(0,0,0,0.15) !important;
+}
+.bg-pricing-light .pricing-pro::before,
+.bg-pricing-light .pricing-pro::after{
+  display:none !important;
+}
+
+/* Card Parcelado (fundo branco) — TODOS os textos pretos */
+.bg-pricing-light .pricing-free h3{ color:#71717a !important; }
+.bg-pricing-light .pricing-free p,
+.bg-pricing-light .pricing-free ul,
+.bg-pricing-light .pricing-free li,
+.bg-pricing-light .pricing-free span{ color:#27272a !important; }
+.bg-pricing-light .pricing-free p[style*="color:#71717a"],
+.bg-pricing-light .pricing-free span[style*="color:#71717a"]{ color:#71717a !important; }
+.bg-pricing-light .pricing-free .heading-display{ color:#000 !important; }
+.bg-pricing-light .pricing-free strong[style*="color:#fff"]{ color:#000 !important; font-weight:700; }
+.bg-pricing-light .pricing-free svg[style*="color:#fff"]{ color:#000 !important; }
+.bg-pricing-light .pricing-free svg{ color:#000 !important; }
+
+/* Botão do card Parcelado — fundo preto + texto branco (inversão) */
+.bg-pricing-light .pricing-free a[href*="hub.la"]{
+  background:#000 !important;
+  color:#fff !important;
+  border:1.5px solid #000 !important;
+  box-shadow:0 4px 16px rgba(0,0,0,.20), 0 0 0 1px rgba(0,0,0,.05) inset !important;
+  transition:transform .25s ease, box-shadow .25s ease !important;
+}
+.bg-pricing-light .pricing-free a[href*="hub.la"]:hover{
+  background:#18181b !important;
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.30) !important;
+}
+
+/* Card À Vista (PRO — continua escuro, contraste forte com o fundo branco da seção) */
+.bg-pricing-light .pricing-pro h3{ color:#fff !important; }
+.bg-pricing-light .pricing-pro .heading-display{ color:#fff !important; }
+.bg-pricing-light .pricing-pro p,
+.bg-pricing-light .pricing-pro li,
+.bg-pricing-light .pricing-pro span{ color:#d4d4d8 !important; }
+.bg-pricing-light .pricing-pro p[style*="color:#a1a1aa"]{ color:#a1a1aa !important; }
+.bg-pricing-light .pricing-pro strong[style*="color:#fff"]{ color:#fff !important; }
+.bg-pricing-light .pricing-pro svg{ color:#fff !important; }
+.bg-pricing-light .pricing-pro .pulse-live{ background:#fff !important; color:#000 !important; }
+
+/* Card 3D — desliga o tilt no card branco (pode dar leve flicker) */
+.bg-pricing-light .pricing-free.card-3d{ transform:none !important; }
+
+/* ─── CAIXA DE OBJEÇÃO — agora invertida (preta sobre fundo branco) ─── */
+.bg-pricing-light .objection-box{
+  background:linear-gradient(135deg, #0a0a0a 0%, #18181b 100%) !important;
+  color:#fff !important;
+  box-shadow:
+    0 24px 60px rgba(0,0,0,.20),
+    0 0 0 1px rgba(0,0,0,.10) !important;
+}
+.bg-pricing-light .objection-box p[style*="color:#71717a"]{ color:#a1a1aa !important; }
+.bg-pricing-light .objection-box h3{
+  color:#fff !important;
+}
+.bg-pricing-light .objection-box h3 span[style*="color:#a1a1aa"]{
+  color:#71717a !important;
+}
+.bg-pricing-light .objection-box h3 strong{ color:#fff !important; }
+.bg-pricing-light .objection-box ul li{ color:#e4e4e7 !important; }
+.bg-pricing-light .objection-box ul li svg{ fill:#fff !important; }
+.bg-pricing-light .objection-box ul li strong{ color:#fff !important; }
+.bg-pricing-light .objection-box > div[style*="border-top"]{
+  border-top-color:rgba(255,255,255,0.12) !important;
+}
+.bg-pricing-light .objection-box > div[style*="border-top"] p{
+  color:#fff !important;
+}
+
+/* Mobile: ajusta sombras (lighter shadows funcionam melhor em fundos claros) */
+@media (max-width:768px){
+  .bg-pricing-light .pricing-free,
+  .bg-pricing-light .pricing-pro{
+    box-shadow:0 8px 24px rgba(0,0,0,.10) !important;
+  }
+}
+/* ═══════════════════════════════════════════════════════════════════════════
+   FIM DO UPGRADE PACK
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 </style>
 
 <script type="application/ld+json">
@@ -2162,33 +3140,29 @@ iframe[data-lazy-video]{background:#0a0a0a;}
     <h1 class="fade-up" style="margin:0 auto;max-width:1000px;">
       <span class="visually-hidden">Método Guest — O sistema operacional Eikon que acelera o Tatuador para o crescimento e o sucesso em todo seu Guest. Validado em +35 países e R$1MM investidos em tráfego pago.</span>
       <span class="hero-logo-wrap">
-        <img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/Eikon.jpg" alt="Método Guest — EIKON" class="hero-logo" width="1640" height="881" fetchpriority="high" decoding="sync" loading="eager"/>
+        <img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/Eikon.jpg" alt="Método Guest — EIKON" class="hero-logo blink-brightness" width="1640" height="881" fetchpriority="high" decoding="sync" loading="eager"/>
       </span>
     </h1>
 
     <div class="fade-up mt-10 flex items-center justify-center gap-x-4 flex-wrap gap-y-3">
-      <a href="#investimento" class="btn-glow px-7 py-3.5 text-sm font-semibold rounded-xl flex items-center gap-2">
-        Quero ter acesso ao "Método Guest"
+      <a href="#investimento" class="btn-glow btn-runner px-7 py-3.5 text-sm font-semibold rounded-xl flex items-center gap-2">
+        Quero o método
         <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7l5 5-5 5M6 12h12" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
       <a href="#cases" class="btn-outline px-7 py-3.5 text-sm font-semibold rounded-xl flex items-center gap-1">
-        Ver casos reais
+        Ver cases
       </a>
     </div>
 
     <!-- STATS -->
-    <div class="fade-up mt-10 sm:mt-14 grid grid-cols-3 gap-6 max-w-md mx-auto">
-      <div class="text-center">
-        <div class="stat-num" data-target="140" data-suffix="+">0</div>
-        <div class="text-xs mt-1 font-semibold uppercase tracking-wider" style="color:#71717a;">Tatuadores ativos</div>
-      </div>
-      <div class="text-center" style="border-left:1px solid rgba(255,255,255,.12);border-right:1px solid rgba(255,255,255,.12);">
+    <div class="fade-up mt-10 sm:mt-14 grid grid-cols-2 gap-6 max-w-md mx-auto">
+      <div class="text-center" style="border-right:1px solid rgba(255,255,255,.12);padding-right:1.5rem;">
         <div class="stat-num" data-target="30" data-suffix="+">0</div>
         <div class="text-xs mt-1 font-semibold uppercase tracking-wider" style="color:#71717a;">Países atendidos</div>
       </div>
-      <div class="text-center">
+      <div class="text-center" style="padding-left:1.5rem;">
         <div class="stat-num" style="font-size:clamp(1.5rem,3.2vw,2.1rem);line-height:1;letter-spacing:-.02em;">Eikon Ink</div>
-        <div class="text-xs mt-1 font-semibold uppercase tracking-wider" style="color:#71717a;line-height:1.3;">Maior Assessoria de Marketing<br/>no Mercado da Tattoo</div>
+        <div class="text-xs mt-1 font-semibold uppercase tracking-wider" style="color:#71717a;line-height:1.3;">Maior Assessoria<br/>do Mercado da Tattoo</div>
       </div>
     </div>
   </div>
@@ -2202,30 +3176,36 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 
 <!-- ═══ PAÍSES VALIDADOS — MARQUEE ═══ -->
 <section class="bg-logos py-10 overflow-hidden">
-  <div class="mx-auto max-w-7xl px-6 lg:px-8 mb-10">
-    <p class="text-center text-xs font-bold uppercase tracking-[.18em]" style="color:#52525b;">Países onde Tatuadores da Eikon já operaram</p>
-  </div>
   <div class="marquee-outer">
     <div class="marquee-track">
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Irlanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#FF883E"/></svg></span> Dublin · €9–12k/viagem</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="França"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#002654"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE1126"/></svg></span> Paris · ICP fácil</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Barcelona · alto ticket</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Itália"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg></span> Milão / Roma · realismo</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Bélgica"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#000"/><rect x="20" width="20" height="40" fill="#FAE042"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span> Bruxelas · network Richard</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Alemanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#000"/><rect y="13.33" width="60" height="13.33" fill="#DD0000"/><rect y="26.66" width="60" height="13.34" fill="#FFCE00"/></svg></span> Berlim · electronic</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Suíça"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#D52B1E"/><rect x="26" y="9" width="8" height="22" fill="#fff"/><rect x="19" y="16" width="22" height="8" fill="#fff"/></svg></span> Zurique · premium</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Holanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#AE1C28"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#21468B"/></svg></span> Amsterdã · fineline</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Áustria"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#ED2939"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#ED2939"/></svg></span> Viena</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Brasil"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#009C3B"/><polygon points="30,5 55,20 30,35 5,20" fill="#FFDF00"/><circle cx="30" cy="20" r="7.5" fill="#002776"/></svg></span> Brasil</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Irlanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#FF883E"/></svg></span> Irlanda</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="França"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#002654"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE1126"/></svg></span> França</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Espanha</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Portugal"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="24" height="40" fill="#006600"/><rect x="24" width="36" height="40" fill="#FF0000"/><circle cx="24" cy="20" r="7.5" fill="#FFD700" stroke="#fff" stroke-width="0.8"/><circle cx="24" cy="20" r="4" fill="#fff"/><circle cx="24" cy="20" r="2.5" fill="#003399"/></svg></span> Portugal</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Itália"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg></span> Itália</span>
+      <span class="marquee-logo" aria-hidden="true"><span>EIKON</span></span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Bélgica"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#000"/><rect x="20" width="20" height="40" fill="#FAE042"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span> Bélgica</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Alemanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#000"/><rect y="13.33" width="60" height="13.33" fill="#DD0000"/><rect y="26.66" width="60" height="13.34" fill="#FFCE00"/></svg></span> Alemanha</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Suíça"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#D52B1E"/><rect x="26" y="9" width="8" height="22" fill="#fff"/><rect x="19" y="16" width="22" height="8" fill="#fff"/></svg></span> Suíça</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Holanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#AE1C28"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#21468B"/></svg></span> Holanda</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Áustria"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#ED2939"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#ED2939"/></svg></span> Áustria</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Noruega"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#EF2B2D"/><rect x="20" width="8" height="40" fill="#fff"/><rect y="16" width="60" height="8" fill="#fff"/><rect x="22" width="4" height="40" fill="#002868"/><rect y="18" width="60" height="4" fill="#002868"/></svg></span> Noruega</span>
+      <span class="marquee-logo" aria-hidden="true"><span>EIKON</span></span>
       <!-- Duplicate for seamless loop -->
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Irlanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#FF883E"/></svg></span> Dublin · €9–12k/viagem</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="França"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#002654"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE1126"/></svg></span> Paris · ICP fácil</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Barcelona · alto ticket</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Itália"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg></span> Milão / Roma · realismo</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Bélgica"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#000"/><rect x="20" width="20" height="40" fill="#FAE042"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span> Bruxelas · network Richard</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Alemanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#000"/><rect y="13.33" width="60" height="13.33" fill="#DD0000"/><rect y="26.66" width="60" height="13.34" fill="#FFCE00"/></svg></span> Berlim · electronic</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Suíça"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#D52B1E"/><rect x="26" y="9" width="8" height="22" fill="#fff"/><rect x="19" y="16" width="22" height="8" fill="#fff"/></svg></span> Zurique · premium</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Holanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#AE1C28"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#21468B"/></svg></span> Amsterdã · fineline</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Áustria"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#ED2939"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#ED2939"/></svg></span> Viena</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Brasil"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#009C3B"/><polygon points="30,5 55,20 30,35 5,20" fill="#FFDF00"/><circle cx="30" cy="20" r="7.5" fill="#002776"/></svg></span> Brasil</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Irlanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#FF883E"/></svg></span> Irlanda</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="França"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#002654"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE1126"/></svg></span> França</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Espanha</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Portugal"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="24" height="40" fill="#006600"/><rect x="24" width="36" height="40" fill="#FF0000"/><circle cx="24" cy="20" r="7.5" fill="#FFD700" stroke="#fff" stroke-width="0.8"/><circle cx="24" cy="20" r="4" fill="#fff"/><circle cx="24" cy="20" r="2.5" fill="#003399"/></svg></span> Portugal</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Itália"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg></span> Itália</span>
+      <span class="marquee-logo" aria-hidden="true"><span>EIKON</span></span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Bélgica"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#000"/><rect x="20" width="20" height="40" fill="#FAE042"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span> Bélgica</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Alemanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#000"/><rect y="13.33" width="60" height="13.33" fill="#DD0000"/><rect y="26.66" width="60" height="13.34" fill="#FFCE00"/></svg></span> Alemanha</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Suíça"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#D52B1E"/><rect x="26" y="9" width="8" height="22" fill="#fff"/><rect x="19" y="16" width="22" height="8" fill="#fff"/></svg></span> Suíça</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Holanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#AE1C28"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#21468B"/></svg></span> Holanda</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Áustria"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#ED2939"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#ED2939"/></svg></span> Áustria</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Noruega"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#EF2B2D"/><rect x="20" width="8" height="40" fill="#fff"/><rect y="16" width="60" height="8" fill="#fff"/><rect x="22" width="4" height="40" fill="#002868"/><rect y="18" width="60" height="4" fill="#002868"/></svg></span> Noruega</span>
     </div>
   </div>
 </section>
@@ -2238,7 +3218,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <div class="mesh-orb mesh-orb-b" aria-hidden="true"></div>
 
   <!-- ▓▓ GLOBO TERRESTRE SAAS — BACKGROUND ▓▓ -->
-  <div class="globe-bg" aria-hidden="true">
+  <div class="globe-bg vignette-fade-strong" aria-hidden="true">
     <svg viewBox="-300 -300 600 600" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <!-- Gradient para o disco do globo -->
@@ -2317,15 +3297,15 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <!-- ▓▓ CONTEÚDO DA SEÇÃO ▓▓ -->
   <div class="pillars-content mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
-      <div class="fade-up flex justify-center mb-4"><span class="section-label">O Sistema · Método Guest</span></div>
+      <div class="fade-up flex justify-center mb-4"><span class="section-label">O Método</span></div>
       <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;">
-        Conheça o <span class="gradient-text">"Método Guest"</span> e veja como Tatuadores estão lotando agenda, cobrando mais caro.
+        Conheça o <span class="gradient-text">Método Guest</span>
       </h2>
-      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;"><strong style="color:#fff;font-weight:600;">+35 países</strong> e <strong style="color:#fff;font-weight:600;">R$1MM</strong> investidos em tráfego pago.</p>
+      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">Validado em <strong style="color:#fff;font-weight:600;">+35 países</strong> com <strong style="color:#fff;font-weight:600;">R$1MM</strong> investidos em tráfego.</p>
     </div>
 
     <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:max-w-6xl">
-      <div class="pillars-grid-wrap pillars-stack">
+      <div class="pillars-grid-wrap pillars-stack pillar-spotlight">
 
         <!-- PILAR 1 -->
         <div class="pillar-card meio" style="--stack-i:0;">
@@ -2461,11 +3441,10 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 
   <div class="cases-content mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
-      <div class="fade-up flex justify-center mb-4"><span class="section-label">Cases Reais</span></div>
+      <div class="fade-up flex justify-center mb-4"><span class="section-label">Cases</span></div>
       <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;">
-        Alguns Tatuadores de <span class="gradient-text">100 pra mais</span><br/>com resultados, previsibilidade e crescimento na Tattoo acelerado!
+        Resultados de quem<br/>aplicou o <span class="gradient-text">método</span>
       </h2>
-      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">O que Tatuadores falam sobre o <strong style="color:#fff;font-weight:600;">"Método Guest"?</strong></p>
     </div>
 
     <div class="mx-auto mt-14 sm:mt-16 max-w-7xl">
@@ -2596,51 +3575,51 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 
 <div class="section-divider"></div>
 
-<!-- ═══ LINHA DO TEMPO 90 DIAS ═══ -->
+<!-- ═══ LINHA DO TEMPO — MENTORIA MÉTODO GUEST ═══ -->
 <section id="linha-tempo" class="bg-process py-20 sm:py-24">
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
-      <div class="fade-up flex justify-center mb-4"><span class="section-label">Linha do Tempo · Da decisão ao embarque</span></div>
+      <div class="fade-up flex justify-center mb-4"><span class="section-label">O que você recebe</span></div>
       <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;">
-        O que realmente é distorção de tempo e <span class="gradient-text">Agenda Fechada</span> que o "Método Guest" ENTREGA?
+        Tudo o que está dentro<br/>da <span class="gradient-text">mentoria</span>
       </h2>
-      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;"><strong style="color:#fff;">"Não é talvez ou será que funciona para mim?"</strong> — MÉTODO GUEST é único, ele levou <strong style="color:#fff;">4 anos</strong> para garantir agenda cheia e previsibilidade.</p>
+      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">5 módulos. Acesso vitalício. <strong style="color:#fff;">Resultado real.</strong></p>
     </div>
     <div class="mx-auto mt-16 max-w-3xl">
-      <div class="space-y-10" id="process-linee">
+      <div class="space-y-10 module-focus-container" id="process-linee">
 
-        <div data-reveal="up" data-stagger="1" class="process-step relative" data-step="01">
+        <div data-reveal="up" data-stagger="1" class="process-step module-focus-item relative" data-step="01">
           <div class="process-connector"></div>
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 1 e 2 · Diagnóstico</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Escolha do País e Previsibilidade</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">Definimos juntos o país que você vai viajar de forma estratégica. <strong style="color:#fff;">Agenda fechada antes mesmo de embarcar.</strong></p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Módulo 1 · Inteligência de País</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Os melhores países para fazer Guest</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;">Saiba <strong style="color:#fff;">como não cometer o maior erro</strong> dos tatuadores — aqueles que voltam no prejuízo e transformam o sonho em <strong style="color:#fff;">pesadelo</strong>.</p>
         </div>
 
-        <div data-reveal="up" data-stagger="2" class="process-step relative" data-step="02">
+        <div data-reveal="up" data-stagger="2" class="process-step module-focus-item relative" data-step="02">
           <div class="process-connector"></div>
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 3 e 4 · Conexão</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Estúdios Parceiros + Network Tattoo</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">A EIKON tem <strong style="color:#fff;">+200 tatuadores</strong> no método. Conectamos você com donos de estúdio no país escolhido — chegou, sentou, tatuou.</p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Módulo 2 · Network Validado</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Acesso aos estúdios parceiros</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;"><strong style="color:#fff;">Chegou, sentou, tatuou.</strong> Sem se preocupar com tinta, material ou faturamento — tudo preparado.</p>
         </div>
 
-        <div data-reveal="up" data-stagger="3" class="process-step relative" data-step="03">
+        <div data-reveal="up" data-stagger="3" class="process-step module-focus-item relative" data-step="03">
           <div class="process-connector"></div>
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 5, 6 e 7 · Tráfego e Conversão</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Funil de Visita + Atendimento Reverso</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">Funil de Visita ligado e Atendimento Reverso em <strong style="color:#fff;">+4 idiomas</strong>. Clientes dispostos a pagar <strong style="color:#fff;">5x, 6x até 7x</strong> o valor do seu trampo.</p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Módulo 3 · Conversão Premium</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Atendimento Reverso</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;">O método de vendas mais avançado da tattoo. Cliente vem até você. Resultado: <strong style="color:#fff;">6x mais caro na sessão.</strong></p>
         </div>
 
-        <div data-reveal="up" data-stagger="4" class="process-step relative" data-step="04">
+        <div data-reveal="up" data-stagger="4" class="process-step module-focus-item relative" data-step="04">
           <div class="process-connector"></div>
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 8, 9 e 10 · Embarque</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Você Viaja com Agenda Fechada</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">Você embarca com a agenda cheia. Sem se preocupar com tinta, material ou faturamento — tudo preparado. <strong style="color:#fff;">Você só realiza o sonho.</strong></p>
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Módulo 4 · Tráfego que Lota Agenda</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Tráfego e funis validados</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;">Sistema já testado em <strong style="color:#fff;">+50 Guest reais</strong>. Você embarca com a <strong style="color:#fff;">agenda cheia</strong> antes da viagem.</p>
         </div>
 
-        <div data-reveal="up" data-stagger="5" class="process-step" data-step="05">
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Semana 11 e 12 · Colheita</p>
-          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Prova Social + Posicionamento</h3>
-          <p class="leading-relaxed" style="color:#a1a1aa;">Depoimentos gerados e posicionamento nas redes. Volta com <strong style="color:#fff;">autoridade</strong>, referência no seu estilo e podendo cobrar mais caro no Brasil.</p>
+        <div data-reveal="up" data-stagger="5" class="process-step module-focus-item" data-step="05">
+          <p class="text-xs font-bold uppercase tracking-[.16em] mb-1" style="color:#71717a;">Módulo 5 · Colheita e Posicionamento</p>
+          <h3 class="heading-display text-lg mb-2" style="color:#fff;">Posicionamento + colheita</h3>
+          <p class="leading-relaxed" style="color:#a1a1aa;">Aproveite a viagem para se posicionar como autoridade. Volte ao Brasil <strong style="color:#fff;">cobrando mais R$</strong> em cada sessão.</p>
         </div>
 
       </div>
@@ -2691,15 +3670,24 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 
   <div class="testi-content mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
-      <div class="fade-up flex justify-center mb-4"><span class="section-label">Quem Aplicou</span></div>
+      <div class="fade-up flex justify-center mb-4"><span class="section-label">Depoimentos</span></div>
       <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;">
-        Tatuadores que pararam de tentar sozinhos<br/>e <span class="gradient-text">deixaram o marketing com quem entende</span>
+        Veja o que os tatuadores<br/>falam sobre o <span class="gradient-text">método</span>
       </h2>
-      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">Depoimentos reais de quem aplicou o <strong style="color:#fff;font-weight:600;">Método Guest</strong>. Sem ator, sem encenação — só tatuador falando o que mudou na agenda, no faturamento e na cabeça.</p>
+      <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">A EIKON atua na tattoo há <strong style="color:#fff;">+4 anos.</strong> Não somos <strong style="color:#fff;">"Guru da Tattoo".</strong></p>
     </div>
 
-    <div class="mx-auto mt-14 sm:mt-16 max-w-2xl lg:max-w-7xl">
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <div class="mx-auto mt-14 sm:mt-16 max-w-7xl">
+      <div class="testi-carousel-wrap">
+        <!-- Botões nav (desktop) -->
+        <button type="button" class="carousel-btn carousel-btn-prev" aria-label="Anterior depoimento" data-testi-prev>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="carousel-btn carousel-btn-next" aria-label="Próximo depoimento" data-testi-next>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+
+        <div class="testi-carousel" id="testi-carousel" tabindex="0" aria-label="Carrossel de depoimentos">
 
         <!-- TESTIMONIAL 1 — G INK TATTOO -->
         <div class="testi-card meio" data-reveal="up" data-stagger="1">
@@ -2781,7 +3769,18 @@ iframe[data-lazy-video]{background:#0a0a0a;}
           </div>
         </div>
 
-      </div>
+        </div><!-- /.testi-carousel -->
+
+        <!-- Hint de swipe mobile -->
+        <div class="swipe-hint">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Arraste para ver mais
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <!-- Dots -->
+        <div class="carousel-dots" id="testi-carousel-dots"></div>
+      </div><!-- /.testi-carousel-wrap -->
     </div>
   </div>
 </section>
@@ -2789,7 +3788,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 <div class="section-divider"></div>
 
 <!-- ═══ INVESTIMENTO ═══ -->
-<section id="investimento" class="bg-pricing relative isolate py-20 sm:py-24 px-6 lg:px-8">
+<section id="investimento" class="bg-pricing bg-pricing-light relative isolate py-20 sm:py-24 px-6 lg:px-8">
   <!-- Mesh orbs ambient -->
   <div class="mesh-orb mesh-orb-a" aria-hidden="true" style="opacity:.25;"></div>
   <div class="mesh-orb mesh-orb-b" aria-hidden="true" style="opacity:.2;"></div>
@@ -2799,54 +3798,48 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <div class="mx-auto max-w-4xl text-center">
     <div class="fade-up flex justify-center mb-4"><span class="section-label">Investimento</span></div>
     <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;line-height:1.1;letter-spacing:-.035em;text-wrap:balance;">
-      Por <span class="gradient-text">R$335</span> você faz <strong style="color:#fff;">1 tatuagem.</strong><br/>Por <span class="gradient-text">R$335</span> você também garante<br/>o método que <strong style="color:#fff;">enche sua agenda.</strong>
+      Seu acesso ao <span class="gradient-text">Método Guest</span>
     </h2>
-    <p class="fade-up mt-6 text-lg leading-relaxed mx-auto max-w-2xl" style="color:#a1a1aa;">Acesso vitalício. <strong style="color:#fff;">Garantia blindada de 30 dias.</strong> Se você não fechar 1 cliente, devolvemos cada centavo. Sem juros, sem letra miúda, <strong style="color:#fff;">sem promessa de guru</strong>.</p>
+    <p class="fade-up mt-6 text-lg leading-relaxed mx-auto max-w-2xl" style="color:#a1a1aa;">Acesso vitalício · <strong style="color:#fff;">Garantia de 30 dias</strong> · 0% de risco.</p>
   </div>
   <div class="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
     <div class="card-3d-wrap" data-reveal="scale">
       <div class="card-3d pricing-free rounded-3xl p-8 sm:mx-8 sm:rounded-b-none sm:p-10 lg:mx-0 lg:rounded-tr-none lg:rounded-bl-3xl">
-        <h3 class="text-base font-bold" style="color:#a1a1aa;">Parcelado</h3>
+        <h3 class="text-base font-bold" style="color:#a1a1aa;">Completo · Aulas e Acompanhamento</h3>
         <p class="mt-4 flex items-baseline gap-x-2">
-          <span class="text-xs font-semibold" style="color:#71717a;">3x de</span>
-          <span class="heading-display text-5xl" style="color:#fff;letter-spacing:-.04em;">R$335</span>
+          <span class="heading-display text-5xl" style="color:#fff;letter-spacing:-.04em;">R$197</span>
+          <span class="text-base" style="color:#a1a1aa;">à vista</span>
         </p>
-        <p class="mt-1 text-xs" style="color:#71717a;">no cartão · sem juros · acesso liberado na confirmação</p>
-        <p class="mt-6 text-base" style="color:#a1a1aa;">Pra tatuador que quer entrar no jogo agora. <strong style="color:#fff;">1 cliente fechado já paga o investimento inteiro.</strong></p>
+        <p class="mt-1 text-xs" style="color:#71717a;">ou <strong style="color:#a1a1aa;">6x de R$32,84</strong> sem juros · acesso imediato</p>
+        <p class="mt-6 text-base" style="color:#a1a1aa;">Entre no jogo agora. <strong style="color:#fff;">1 cliente fechado já paga o curso.</strong></p>
         <ul role="list" class="mt-8 space-y-3 text-sm sm:mt-10" style="color:#d4d4d8;">
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Os 4 Módulos do Método Guest</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Lista de estúdios parceiros (15 países)</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Atendimento Reverso em 4 idiomas</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Templates de DM</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Melhores Lojas de Supply na Europa</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Comunidade Eikon Tattoo</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Garantia blindada de 30 dias</li>
+          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Tenha os países para fazer Guest</li>
+          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Acesso a vários estúdios na Europa</li>
+          <li class="flex gap-x-3 items-start"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0 mt-0.5" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg><span><strong style="color:#fff;">(Atendimento Reverso)</strong> aprenda a vender em 4 idiomas e ganhar <strong style="color:#fff;">6x mais</strong> na sua sessão</span></li>
+          <li class="flex gap-x-3 items-start"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0 mt-0.5" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg><span>Estratégia para se tornar autoridade e referência no mercado e cobrar <strong style="color:#fff;">+R$</strong> no BR</span></li>
+          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Lista das melhores lojas de Supply na Europa</li>
+          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Grupo no WhatsApp · maior comunidade de Guest</li>
+          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg><strong style="color:#fff;">30 DIAS DE GARANTIA</strong></li>
         </ul>
-        <a href="https://pay.hub.la/AiZ62hvlKooA2wiKSAVY" target="_blank" rel="noopener noreferrer" class="mt-8 block rounded-xl px-3.5 py-2.5 text-center text-sm font-semibold transition-all sm:mt-10" style="color:#fff;background:transparent;border:1.5px solid rgba(255,255,255,.22);">Quero entrar com R$335 →</a>
+        <a href="https://pay.hub.la/1Zgfs5qIEPczxeYjZMcT" target="_blank" rel="noopener noreferrer" class="mt-8 block rounded-xl px-3.5 py-2.5 text-center text-sm font-semibold transition-all sm:mt-10" style="color:#fff;background:transparent;border:1.5px solid rgba(255,255,255,.22);">Entrar com R$197 →</a>
       </div>
     </div>
-    <div class="card-3d-wrap" data-reveal="scale">
-      <div class="card-3d pricing-pro rounded-3xl p-8 shadow-2xl sm:p-10">
-        <div class="flex items-center justify-between mb-1">
-          <h3 class="text-base font-bold" style="color:#fff;">À Vista</h3>
-          <span style="font-size:.65rem;font-weight:700;background:#fff;border-radius:999px;padding:.2rem .7rem;color:#000;letter-spacing:.1em;">ESCOLHA DE 8 EM 10</span>
-        </div>
+    <div class="card-3d-wrap pricing-premium-wrap" data-reveal="scale">
+      <div class="card-3d pricing-pro pricing-premium-highlight rounded-3xl p-8 shadow-2xl sm:p-10">
+        <h3 class="text-base font-bold mb-1" style="color:#fff;">Acesso Premium</h3>
         <p class="mt-4 flex items-baseline gap-x-2">
-          <span class="heading-display text-5xl" style="color:#fff;letter-spacing:-.04em;">R$997</span>
-          <span class="text-base" style="color:#a1a1aa;">único</span>
+          <span class="heading-display text-5xl premium-price" style="letter-spacing:-.04em;">R$497</span>
+          <span class="text-base" style="color:#a1a1aa;">à vista</span>
         </p>
-        <p class="mt-1 text-xs" style="color:#a1a1aa;">pagamento à vista · economia + bônus exclusivos</p>
-        <p class="mt-6 text-base" style="color:#d4d4d8;">Pra tatuador que <strong style="color:#fff;">decide rápido e quer todos os bônus</strong>. Auditoria de portfólio, mentoria coletiva e 1h de mentoria 1:1 inclusas.</p>
+        <p class="mt-1 text-xs" style="color:#a1a1aa;">ou <strong style="color:#fff;">6x de R$82,84</strong> sem juros · todos os bônus</p>
+        <p class="mt-6 text-base" style="color:#d4d4d8;">Pra quem quer <strong style="color:#fff;">Método Guest + Mentoria Avançada</strong> na Tattoo.</p>
         <ul role="list" class="mt-8 space-y-3 text-sm sm:mt-10" style="color:#e4e4e7;">
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg><strong>Tudo do parcelado +</strong></li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Auditoria de portfólio</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Mentoria Coletiva com Heads da Eikon</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Edição de Vídeo IA · idioma local</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Planilha de ROI</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>Bônus: PDF "Piores Países Para Guest na Europa"</li>
-          <li class="flex gap-x-3 items-center"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>1H de mentoria nos primeiros 30 dias</li>
+          <li class="flex gap-x-3 items-center premium-base-item"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg><strong style="color:#fff;">Tudo do plano Completo +</strong></li>
+          <li class="flex gap-x-3 items-start premium-exclusive-item"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0 mt-0.5" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg><span><strong style="color:#fff;">Mentoria Eikon</strong> — uma call toda semana sobre o mercado da Tattoo</span></li>
+          <li class="flex gap-x-3 items-center premium-exclusive-item"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg><strong style="color:#fff;">Edição de Vídeo IA</strong> · idioma local</li>
+          <li class="flex gap-x-3 items-center premium-exclusive-item"><svg viewBox="0 0 20 20" fill="currentColor" class="size-5 shrink-0" style="color:#fff;"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg><strong style="color:#fff;">Planilha de ROI</strong> na Tattoo</li>
         </ul>
-        <a href="https://pay.hub.la/AiZ62hvlKooA2wiKSAVY" target="_blank" rel="noopener noreferrer" class="btn-glow mt-8 block px-3.5 py-3 text-center text-sm font-semibold rounded-xl sm:mt-10">Garantir vaga à vista (todos os bônus) →</a>
+        <a href="https://pay.hub.la/AiZ62hvlKooA2wiKSAVY" target="_blank" rel="noopener noreferrer" class="btn-glow btn-runner mt-8 block px-3.5 py-3 text-center text-sm font-semibold rounded-xl sm:mt-10">Garantir acesso premium · R$497 →</a>
       </div>
     </div>
   </div>
@@ -2854,47 +3847,30 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <!-- ═══ QUEBRA DE OBJEÇÃO — CAIXA BRANCA ═══ -->
   <div class="mx-auto mt-16 max-w-3xl">
     <div class="fade-up objection-box" style="background:linear-gradient(135deg,#ffffff 0%,#f4f4f5 100%);border-radius:24px;padding:2.5rem 2rem;color:#000;box-shadow:0 24px 60px rgba(255,255,255,.12),0 0 0 1px rgba(255,255,255,.4);position:relative;overflow:hidden;">
-      <p class="text-xs font-bold uppercase tracking-[.18em] mb-3" style="color:#71717a;">Fazendo as contas</p>
-      <h3 class="heading-display text-2xl sm:text-3xl mb-6" style="color:#000;line-height:1.15;letter-spacing:-.025em;">R$997 é menos do que <span style="text-decoration:line-through;color:#a1a1aa;">você imagina</span> — e te entrega muito mais.</h3>
+      <p class="text-xs font-bold uppercase tracking-[.18em] mb-3" style="color:#71717a;">Faça as contas</p>
+      <h3 class="heading-display text-2xl sm:text-3xl mb-6" style="color:#000;line-height:1.15;letter-spacing:-.025em;">1 cliente fechado já <span style="text-decoration:line-through;color:#a1a1aa;">paga</span> e <strong>sobra.</strong></h3>
       <ul class="space-y-3 text-base" style="color:#1f1f23;">
         <li class="flex gap-x-3 items-start">
           <svg viewBox="0 0 20 20" fill="#000" class="size-5 shrink-0 mt-1"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>
-          <span><strong>Tranquilidade de saber</strong> que toda semana tem cliente novo fechando contigo.</span>
+          <span><strong>Cliente novo</strong> toda semana fechando contigo.</span>
         </li>
         <li class="flex gap-x-3 items-start">
           <svg viewBox="0 0 20 20" fill="#000" class="size-5 shrink-0 mt-1"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>
-          <span><strong>Sessão garantida, estúdio crescendo</strong> e você virando referência no seu estilo.</span>
+          <span><strong>Estúdio crescendo</strong> e você virando referência no seu estilo.</span>
         </li>
         <li class="flex gap-x-3 items-start">
           <svg viewBox="0 0 20 20" fill="#000" class="size-5 shrink-0 mt-1"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z"/></svg>
-          <span><strong>Menos do que 1 mês de academia + suplemento.</strong> 30% do valor de 1 cliente fechado.</span>
+          <span><strong>Menos que 1 mês de academia.</strong> 30% do valor de 1 sessão.</span>
         </li>
       </ul>
       <div style="margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid rgba(0,0,0,.10);">
         <p class="text-base sm:text-lg" style="color:#000;font-weight:600;line-height:1.45;">
-          <strong>Apenas 1 cliente fechado já se paga</strong> — e a real é que sempre vem muito mais.
+          <strong>Sempre vem muito mais que 1.</strong>
         </p>
       </div>
     </div>
   </div>
 
-  <!-- GARANTIA -->
-  <div class="mx-auto mt-16 max-w-3xl">
-    <div class="fade-up" style="background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.10);border-radius:24px;padding:2rem 2rem;backdrop-filter:blur(12px);">
-      <div class="flex flex-col sm:flex-row items-start gap-6">
-        <div class="flex-shrink-0">
-          <div style="width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#fff,#e4e4e7);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(255,255,255,.22);">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" class="size-7"><path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-        </div>
-        <div class="flex-1">
-          <p class="text-xs font-bold uppercase tracking-[.16em] mb-2" style="color:#a1a1aa;">Garantia Blindada · 30 Dias</p>
-          <h3 class="heading-display text-2xl mb-3" style="color:#fff;line-height:1.2;letter-spacing:-.02em;text-wrap:balance;">Aplicou e não fechou 1 cliente?<br/>A gente devolve <span class="gradient-text">100% do seu dinheiro.</span></h3>
-          <p class="text-sm leading-relaxed" style="color:#a1a1aa;">Você tem <strong style="color:#fff;">30 dias</strong> pra aplicar o Método Guest. Se não fechar pelo menos <strong style="color:#fff;">1 cliente na Europa ou no Brasil</strong>, devolvemos o valor integral. <strong style="color:#fff;">+4 anos vivendo de Tattoo · +200 tatuadores atendidos</strong> — cada estratégia foi validada no campo, não na teoria.</p>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
 
 <!-- ═══ CTA BANNER ═══ -->
@@ -2902,18 +3878,16 @@ iframe[data-lazy-video]{background:#0a0a0a;}
   <div class="absolute inset-0 -z-10 pointer-events-none" style="background:radial-gradient(ellipse at 20% 50%,rgba(255,255,255,.10) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(255,255,255,.06) 0%,transparent 50%);"></div>
   <div class="absolute inset-0 -z-10" style="background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);"></div>
   <div class="mx-auto max-w-3xl text-center">
-    <p class="fade-up text-xs font-bold uppercase tracking-[.18em] mb-4" style="color:#a1a1aa;">Vagas Limitadas · 23 Tatuadores</p>
+    <p class="fade-up text-xs font-bold uppercase tracking-[.18em] mb-4" style="color:#a1a1aa;">Próximo Passo</p>
     <h2 class="fade-up heading-display text-4xl sm:text-5xl title-gradient" style="color:#fff;line-height:1.15;letter-spacing:-.035em;text-wrap:balance;">
-      Você não precisa de mais um curso.<br/>Precisa de um <span class="gradient-text">sistema que funciona</span><br/>e garante sua <span class="gradient-text">agenda cheia!</span>
+      Sua próxima viagem<br/>começa <span class="gradient-text">aqui.</span>
     </h2>
-    <p class="fade-up mt-6 text-base sm:text-lg leading-relaxed mx-auto" style="color:#a1a1aa;max-width:560px;">De <strong style="color:#fff;">50 vagas abertas</strong> resta apenas <strong style="color:#fff;">23 vagas</strong> — limite real pra garantir acompanhamento, estratégia e resultado. <strong style="color:#fff;">Sem improviso e aqui não existe GURU da Tattoo!</strong></p>
     <div class="fade-up mt-10 flex items-center justify-center gap-4 flex-wrap">
-      <a href="https://form.respondi.app/elWVwOha" target="_blank" rel="noopener noreferrer" class="btn-glow px-8 py-4 text-sm font-semibold rounded-xl flex items-center gap-2" style="box-shadow:0 8px 36px rgba(255,255,255,.28),0 0 0 1px rgba(255,255,255,.5);">
+      <a href="https://form.respondi.app/elWVwOha" target="_blank" rel="noopener noreferrer" class="btn-glow btn-runner px-8 py-4 text-sm font-semibold rounded-xl flex items-center gap-2" style="box-shadow:0 8px 36px rgba(255,255,255,.28),0 0 0 1px rgba(255,255,255,.5);">
         Garantir minha vaga
         <svg class="size-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7l5 5-5 5M6 12h12" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
-    <p class="fade-up mt-5 text-sm" style="color:#71717a;">Atendimento humano · Sem bot · Resposta em até 2 horas</p>
   </div>
 </section>
 
@@ -3333,6 +4307,170 @@ iframe[data-lazy-video]{background:#0a0a0a;}
     updateUI();
     window.addEventListener('resize', updateUI, {passive:true});
   }
+
+  /* ────── 6b. TESTI CAROUSEL — depoimentos em scroll horizontal ────── */
+  function initTestiCarousel(){
+    const carousel = document.getElementById('testi-carousel');
+    if(!carousel) return;
+    const dotsWrap = document.getElementById('testi-carousel-dots');
+    const btnPrev = document.querySelector('[data-testi-prev]');
+    const btnNext = document.querySelector('[data-testi-next]');
+    const items = carousel.querySelectorAll('.testi-card');
+    if(!items.length) return;
+
+    // Dots
+    if(dotsWrap){
+      dotsWrap.innerHTML = '';
+      items.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'carousel-dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', 'Ir ao depoimento ' + (i + 1));
+        dot.addEventListener('click', () => scrollToIndex(i));
+        dotsWrap.appendChild(dot);
+      });
+    }
+
+    function scrollToIndex(i){
+      const item = items[i];
+      if(!item) return;
+      const carouselRect = carousel.getBoundingClientRect();
+      const itemRect = item.getBoundingClientRect();
+      const target = carousel.scrollLeft + (itemRect.left - carouselRect.left) - 24;
+      carousel.scrollTo({left: target, behavior: 'smooth'});
+    }
+
+    function getCurrentIndex(){
+      const scrollLeft = carousel.scrollLeft;
+      const itemWidth = items[0].offsetWidth + parseFloat(getComputedStyle(carousel).gap || 24);
+      return Math.round(scrollLeft / itemWidth);
+    }
+
+    function updateUI(){
+      const idx = getCurrentIndex();
+      if(dotsWrap){
+        dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
+          d.classList.toggle('is-active', i === idx);
+        });
+      }
+      if(btnPrev) btnPrev.disabled = carousel.scrollLeft <= 4;
+      if(btnNext){
+        const maxScroll = carousel.scrollWidth - carousel.clientWidth - 4;
+        btnNext.disabled = carousel.scrollLeft >= maxScroll;
+      }
+    }
+
+    if(btnPrev) btnPrev.addEventListener('click', () => {
+      scrollToIndex(Math.max(0, getCurrentIndex() - 1));
+    });
+    if(btnNext) btnNext.addEventListener('click', () => {
+      scrollToIndex(Math.min(items.length - 1, getCurrentIndex() + 1));
+    });
+
+    let scrollTicking = false;
+    carousel.addEventListener('scroll', () => {
+      if(!scrollTicking){
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+          updateUI();
+          scrollTicking = false;
+        });
+      }
+    }, {passive:true});
+
+    carousel.addEventListener('keydown', (e) => {
+      if(e.key === 'ArrowLeft'){
+        e.preventDefault();
+        scrollToIndex(Math.max(0, getCurrentIndex() - 1));
+      } else if(e.key === 'ArrowRight'){
+        e.preventDefault();
+        scrollToIndex(Math.min(items.length - 1, getCurrentIndex() + 1));
+      }
+    });
+
+    updateUI();
+    window.addEventListener('resize', updateUI, {passive:true});
+  }
+
+  /* ────── 7. MODULE FOCUS — Blur/Focus dos módulos da mentoria ────── */
+  /* Estilo Apple Vision Pro: só o módulo no centro do viewport fica nítido.
+     Os outros ficam borrados/dessaturados. Tudo via IntersectionObserver. */
+  function initModuleFocus(){
+    const container = document.querySelector('.module-focus-container');
+    if(!container) return;
+    const items = container.querySelectorAll('.module-focus-item');
+    if(!items.length) return;
+
+    // Acessibilidade — respeita reduced-motion
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      items.forEach(el => el.classList.add('is-focused'));
+      container.setAttribute('data-focus-ready','');
+      return;
+    }
+
+    // Fallback se IO não existe — mostra tudo nítido
+    if(!('IntersectionObserver' in window)){
+      items.forEach(el => el.classList.add('is-focused'));
+      container.setAttribute('data-focus-ready','');
+      return;
+    }
+
+    // "Zona de foco" = faixa horizontal de 30% no centro do viewport.
+    // rootMargin shrinks o viewport por cima e por baixo, criando essa faixa.
+    // top:-35% bottom:-35% → só os 30% centrais contam como "visíveis"
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-focused');
+        } else {
+          entry.target.classList.remove('is-focused');
+        }
+      });
+    }, {
+      rootMargin:'-35% 0px -35% 0px',
+      threshold:0
+    });
+
+    items.forEach(el => io.observe(el));
+
+    // Marca container como pronto (remove CSS de fallback pré-JS)
+    container.setAttribute('data-focus-ready','');
+
+    // Garantia: se o usuário chega na seção e nenhum módulo está focado
+    // (caso entre os ranges), foca no que está mais próximo do centro.
+    function ensureOneFocused(){
+      const focused = container.querySelectorAll('.module-focus-item.is-focused');
+      if(focused.length > 0) return;
+      const viewportCenter = window.innerHeight / 2;
+      let nearest = null;
+      let nearestDist = Infinity;
+      items.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if(rect.bottom < 0 || rect.top > window.innerHeight) return;
+        const elCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(elCenter - viewportCenter);
+        if(dist < nearestDist){
+          nearestDist = dist;
+          nearest = el;
+        }
+      });
+      if(nearest) nearest.classList.add('is-focused');
+    }
+    // Throttle: só verifica a cada 200ms via scroll
+    let ensureTicking = false;
+    window.addEventListener('scroll', () => {
+      if(!ensureTicking){
+        ensureTicking = true;
+        setTimeout(() => {
+          ensureOneFocused();
+          ensureTicking = false;
+        }, 200);
+      }
+    }, {passive:true});
+    // Chamada inicial
+    ensureOneFocused();
+  }
+
   function initButtonGlow(){
     if(!window.matchMedia('(hover:hover)').matches) return;
     const BRILHO_W = 18;
@@ -3365,6 +4503,8 @@ iframe[data-lazy-video]{background:#0a0a0a;}
     initScrollFade();
     initLazyVideos();
     initCasesCarousel();
+    initTestiCarousel();
+    initModuleFocus();
     initButtonGlow();
   }
 
