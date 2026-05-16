@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#000000"/>
 <meta name="color-scheme" content="dark"/>
-<meta name="format-detection" content="telephone=no"/>
-
 <title>Método Guest — EIKON | O Sistema Que Move o Tatuador Brasileiro Para a Europa</title>
 <meta name="description" content="O sistema que mais de 150 tatuadores brasileiros estão usando para fechar agenda em euro ANTES de embarcar. Dublin, Paris, Barcelona, Itália. Caso real: €4.900 em 7 dias com R$1.500 de tráfego."/>
 <meta property="og:title" content="Método Guest — EIKON · Tatuador, sua arte vale 6x mais em outro CEP."/>
@@ -15,83 +13,38 @@
 <meta name="robots" content="index, follow, max-image-preview:large"/>
 <meta name="author" content="EIKON Agência"/>
 <meta name="keywords" content="Método Guest, tatuador Europa, guest tatuagem internacional, EIKON, tatuador brasileiro Europa, agência tatuador, marketing tatuador"/>
-
-<!-- ▓▓ RESOURCE HINTS — Camada 1: preconnect crítico para LCP ▓▓ -->
-<link rel="preconnect" href="https://eikoninkmarketing.com.br" crossorigin/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin/>
-
-<!-- ▓▓ PRELOAD VÍDEO HERO (above-the-fold — máxima prioridade) ▓▓ -->
+<!-- ▓▓ PRELOAD VÍDEO HERO (acima da dobra — alta prioridade) ▓▓ -->
 <link rel="preload" as="video" href="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/heroofc.mp4" type="video/mp4" fetchpriority="high"/>
-
-<!-- ▓▓ RESOURCE HINTS — Camada 2: dns-prefetch para recursos secundários ▓▓ -->
 <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link rel="dns-prefetch" href="https://scripts.converteai.net"/>
 <link rel="preconnect" href="https://scripts.converteai.net" crossorigin/>
+
+<!-- ▓▓ PRELOAD VSL PRÉ-CTA — Otimização máxima de carregamento ▓▓ -->
 <link rel="dns-prefetch" href="https://cdn.converteai.net"/>
 <link rel="dns-prefetch" href="https://images.converteai.net"/>
 <link rel="dns-prefetch" href="https://api.vturb.com.br"/>
 <link rel="dns-prefetch" href="https://license.vturb.com"/>
-<link rel="preconnect" href="https://cdn.converteai.net" crossorigin/>
 
-<!-- ▓▓ PRELOADS — Scripts e fontes críticos ▓▓ -->
+<!-- ▓▓ PRELOAD VÍDEO INSTITUCIONAL "Quem é a Eikon" ▓▓ -->
+<link rel="dns-prefetch" href="https://eikoninkmarketing.com.br"/>
+<link rel="preconnect" href="https://eikoninkmarketing.com.br" crossorigin/>
+<link rel="preconnect" href="https://cdn.converteai.net" crossorigin/>
 <link rel="preload" as="fetch" href="https://cdn.converteai.net/6924efa6-6db1-48a2-a62a-9b14ee9dce10/6a0826209db6343a2a42699d/main.m3u8" crossorigin/>
 <link rel="preload" as="script" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js"/>
 <link rel="preload" as="script" href="https://scripts.converteai.net/6924efa6-6db1-48a2-a62a-9b14ee9dce10/players/6a082626dca0bf66780c0a96/v4/player.js"/>
-<link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2" crossorigin/>
-
-<!-- ▓▓ SCRIPT INLINE — Performance Timing (early measurement) ▓▓ -->
 <script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
-
-<!-- ▓▓ SPECULATION RULES API — Pre-render dos links de pagamento (Chrome 121+) ▓▓ -->
-<script type="speculationrules">
-{
-  "prerender": [{
-    "where": { "href_matches": "https://pay.hub.la/*" },
-    "eagerness": "moderate"
-  }],
-  "prefetch": [{
-    "where": { "href_matches": "https://wa.me/*" },
-    "eagerness": "conservative"
-  }]
-}
-</script>
-
-<!-- ▓▓ Fonts (display=swap garante render imediato sem FOIT) ▓▓ -->
+<!-- Preload da fonte CRÍTICA (Inter 700) — usada no hero, evita FOIT -->
+<link rel="preload" as="font" type="font/woff2" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7.woff2" crossorigin/>
+<!-- Fonts: peso reduzido — só pesos efetivamente usados + display=swap p/ render instantâneo -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;800;900&display=swap" rel="stylesheet"/>
 <!-- CRITICAL CSS INLINE — Tailwind utilities mínimas pro hero renderizar antes do CDN carregar -->
 <style>
 /* ═════ Critical CSS — render imediato (above the fold) ═════
    Subset de utilidades Tailwind usadas no hero/header.
    Tailwind CDN sobrescreve depois sem afetar visual. */
-
-/* ▓▓ PERFORMANCE: content-visibility nas seções abaixo da dobra ▓▓
-   Economiza ~40% no render inicial. O browser SKIP de pintar essas seções
-   até que entrem perto da viewport. contain-intrinsic-size reserva espaço
-   para evitar layout shift quando elas aparecerem. */
-.pillars-section,
-.cases-section,
-#linha-tempo,
-.testi-section,
-#investimento,
-.final-wrapper{
-  content-visibility:auto;
-  contain-intrinsic-size:1px 1200px;
-}
-
-/* GPU layer hint para vídeos full-bleed (compositor independente) */
-.hero-video,
-.eikon-intro-video,
-.final-wrapper-video,
-.bg-video-layer{
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-  perspective:1000px;
-  -webkit-perspective:1000px;
-}
-
-
 .mx-auto{margin-left:auto;margin-right:auto;}
 .max-w-6xl{max-width:72rem;}
 .max-w-7xl{max-width:80rem;}
@@ -485,245 +438,126 @@ body::before{
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ▓▓▓ STATE-OF-THE-ART HEADLINE SWEEP — Sistema premium 4 camadas ▓▓▓
+   ▓▓▓ HEADLINE PREMIUM SWEEP — Degradê branco→preto com GLOW seguindo ▓▓▓
    
-   Engenharia tipográfica de elite:
-   1. CAMADA BASE: degradê multi-stop branco/preto com background-size 400%
-   2. SHINE OVERLAY: faixa branca brilhante sobre as letras (com mix-blend-mode)
-   3. ROTATING GLOW: halo dourado/branco rotacionando sincronizado
-   4. CINEMATIC BLUR: micro-blur dinâmico nos picos de movimento
+   Técnica avançada de tipografia premium para LPs:
+   1. Camada 1 (background-clip:text): degradê branco/preto em movimento RÁPIDO
+   2. Camada 2 (drop-shadow): halo branco sincronizado com a posição do gradient
+   3. Camada 3 (text-shadow): glow externo respondendo à passagem das cores
+   4. Animação cubic-bezier suave (não linear) para naturalidade
    
-   Animação composta de 3 keyframes simultâneos com timings diferentes
-   = movimento orgânico que NUNCA se repete da mesma forma
-   
-   Performance: 100% GPU compositor, zero JavaScript, zero repaint do layout
+   Aplicado em: H2 principais + stats grandes
+   Performance: 100% GPU compositor, sem repaint do layout
    ═══════════════════════════════════════════════════════════════════════════ */
-
-/* ─── VARIANTE A: TEMA DARK (texto sobre fundo escuro) ────────────────── */
 .headline-premium{
   position:relative;
   display:inline-block;
-  /* Camada 1 — Background gradient com 8 paradas para movimento orgânico */
   background:linear-gradient(
-    110deg,
+    100deg,
     #ffffff 0%,
-    #f5f5f7 8%,
-    #ffffff 16%,
-    #2a2a2a 24%,
-    #525252 30%,
-    #ffffff 38%,
-    #ffffff 50%,
-    #f5f5f7 58%,
-    #2a2a2a 66%,
-    #525252 72%,
-    #ffffff 80%,
-    #ffffff 92%,
+    #ffffff 15%,
+    #1a1a1a 30%,
+    #ffffff 45%,
+    #ffffff 60%,
+    #1a1a1a 75%,
+    #ffffff 90%,
     #ffffff 100%
   );
-  background-size:400% auto;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  color:transparent;
-  /* GPU layer permanente para suavidade */
-  transform:translateZ(0);
-  will-change:background-position, filter;
-  /* 3 animações simultâneas com timings ligeiramente diferentes 
-     = nunca sincroniza, movimento "vivo" */
-  animation:
-    sotaHeadlineSweep 3.8s cubic-bezier(.65,.05,.36,1) infinite,
-    sotaHeadlineGlow 5.2s ease-in-out infinite,
-    sotaHeadlineFloat 7.1s ease-in-out infinite;
-}
-
-/* Animação 1 — Sweep do degradê (rápida, 3.8s) */
-@keyframes sotaHeadlineSweep{
-  0%   { background-position:0% center; }
-  100% { background-position:-400% center; }
-}
-
-/* Animação 2 — Halo branco respondendo à passagem dos picos escuros */
-@keyframes sotaHeadlineGlow{
-  0%{
-    filter:drop-shadow(0 0 8px rgba(255,255,255,.15))
-           drop-shadow(0 0 18px rgba(255,255,255,.08));
-  }
-  18%{
-    /* Pico 1 — quando faixa escura passa */
-    filter:drop-shadow(0 0 25px rgba(255,255,255,.55))
-           drop-shadow(0 0 50px rgba(255,255,255,.30))
-           drop-shadow(0 0 90px rgba(255,255,255,.15));
-  }
-  35%{
-    filter:drop-shadow(0 0 6px rgba(255,255,255,.10))
-           drop-shadow(0 0 14px rgba(255,255,255,.05));
-  }
-  58%{
-    /* Pico 2 — segunda passagem */
-    filter:drop-shadow(0 0 28px rgba(255,255,255,.60))
-           drop-shadow(0 0 55px rgba(255,255,255,.32))
-           drop-shadow(0 0 100px rgba(255,255,255,.18));
-  }
-  78%{
-    filter:drop-shadow(0 0 5px rgba(255,255,255,.08))
-           drop-shadow(0 0 12px rgba(255,255,255,.04));
-  }
-  100%{
-    filter:drop-shadow(0 0 8px rgba(255,255,255,.15))
-           drop-shadow(0 0 18px rgba(255,255,255,.08));
-  }
-}
-
-/* Animação 3 — Float sutil (movimento Y de ±1.5px) cria sensação 3D */
-@keyframes sotaHeadlineFloat{
-  0%, 100%{ transform:translateZ(0) translateY(0); }
-  50%     { transform:translateZ(0) translateY(-1.5px); }
-}
-
-/* Pseudo-elemento overlay com shine adicional (camada de profundidade) */
-.headline-premium::after{
-  content:attr(data-text);
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:linear-gradient(
-    110deg,
-    transparent 30%,
-    rgba(255,255,255,.4) 48%,
-    rgba(255,255,255,.85) 50%,
-    rgba(255,255,255,.4) 52%,
-    transparent 70%
-  );
   background-size:300% auto;
-  background-position:200% center;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
   color:transparent;
-  pointer-events:none;
-  /* Esse shine atravessa as letras de tempos em tempos */
-  animation:sotaHeadlineShineFlash 6s ease-in-out infinite;
-  animation-delay:1.2s;
-  mix-blend-mode:screen;
+  /* Animação principal — gradient se movendo rapidamente */
+  animation:headlinePremiumSweep 4.5s cubic-bezier(.45,.05,.55,.95) infinite;
+  /* GPU layer */
+  transform:translateZ(0);
+  /* Filter drop-shadow cria glow QUE TAMBÉM segue o gradient (efeito 3D) */
+  filter:drop-shadow(0 0 18px rgba(255,255,255,.25));
+  /* Sincronização do glow com a passagem do gradient */
+  animation-name:headlinePremiumSweep, headlinePremiumGlow;
+  animation-duration:4.5s, 4.5s;
+  animation-timing-function:cubic-bezier(.45,.05,.55,.95), ease-in-out;
+  animation-iteration-count:infinite, infinite;
 }
 
-@keyframes sotaHeadlineShineFlash{
-  0%, 85%, 100% { background-position:200% center; opacity:0; }
-  90%, 95%      { background-position:-100% center; opacity:1; }
+@keyframes headlinePremiumSweep{
+  0%   { background-position:0% center; }
+  100% { background-position:-300% center; }
 }
 
+@keyframes headlinePremiumGlow{
+  0%, 100%{
+    filter:drop-shadow(0 0 12px rgba(255,255,255,.18))
+           drop-shadow(0 0 28px rgba(255,255,255,.10));
+  }
+  25%{
+    filter:drop-shadow(0 0 22px rgba(255,255,255,.45))
+           drop-shadow(0 0 45px rgba(255,255,255,.25));
+  }
+  50%{
+    filter:drop-shadow(0 0 8px rgba(255,255,255,.10))
+           drop-shadow(0 0 18px rgba(255,255,255,.05));
+  }
+  75%{
+    filter:drop-shadow(0 0 22px rgba(255,255,255,.45))
+           drop-shadow(0 0 45px rgba(255,255,255,.25));
+  }
+}
 
-/* ─── VARIANTE B: TEMA LIGHT (texto sobre fundo claro/branco) ─────────── */
+/* Variante com glow REVERSO (preto) — para títulos sobre fundos claros */
 .headline-premium-dark{
   position:relative;
   display:inline-block;
-  /* Degradê espelhado — preto dominante com pulsos brancos */
   background:linear-gradient(
-    110deg,
-    #0a0a0a 0%,
-    #1a1a1a 8%,
-    #0a0a0a 16%,
-    #d4d4d8 24%,
-    #f5f5f7 30%,
-    #0a0a0a 38%,
-    #0a0a0a 50%,
-    #1a1a1a 58%,
-    #d4d4d8 66%,
-    #f5f5f7 72%,
-    #0a0a0a 80%,
-    #0a0a0a 92%,
-    #0a0a0a 100%
+    100deg,
+    #1a1a1a 0%,
+    #1a1a1a 15%,
+    #ffffff 30%,
+    #1a1a1a 45%,
+    #1a1a1a 60%,
+    #ffffff 75%,
+    #1a1a1a 90%,
+    #1a1a1a 100%
   );
-  background-size:400% auto;
+  background-size:300% auto;
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
   color:transparent;
   transform:translateZ(0);
-  will-change:background-position, filter;
-  animation:
-    sotaHeadlineSweep 3.8s cubic-bezier(.65,.05,.36,1) infinite,
-    sotaHeadlineGlowDark 5.2s ease-in-out infinite,
-    sotaHeadlineFloat 7.1s ease-in-out infinite;
+  animation:headlinePremiumSweep 4.5s cubic-bezier(.45,.05,.55,.95) infinite,
+            headlinePremiumGlowDark 4.5s ease-in-out infinite;
 }
 
-@keyframes sotaHeadlineGlowDark{
-  0%{
-    filter:drop-shadow(0 1px 2px rgba(0,0,0,.15));
+@keyframes headlinePremiumGlowDark{
+  0%, 100%{
+    filter:drop-shadow(0 0 8px rgba(0,0,0,.20));
   }
-  18%{
-    /* Pico — letras "iluminam" com halo branco no momento que a luz passa */
-    filter:drop-shadow(0 0 18px rgba(255,255,255,.65))
-           drop-shadow(0 0 40px rgba(255,255,255,.35))
-           drop-shadow(0 0 80px rgba(255,255,255,.20))
-           drop-shadow(0 1px 2px rgba(0,0,0,.15));
+  25%, 75%{
+    filter:drop-shadow(0 0 16px rgba(255,255,255,.50))
+           drop-shadow(0 0 32px rgba(255,255,255,.25));
   }
-  35%{
-    filter:drop-shadow(0 1px 2px rgba(0,0,0,.15));
-  }
-  58%{
-    filter:drop-shadow(0 0 22px rgba(255,255,255,.70))
-           drop-shadow(0 0 45px rgba(255,255,255,.40))
-           drop-shadow(0 0 90px rgba(255,255,255,.22))
-           drop-shadow(0 1px 2px rgba(0,0,0,.15));
-  }
-  78%, 100%{
-    filter:drop-shadow(0 1px 2px rgba(0,0,0,.15));
+  50%{
+    filter:drop-shadow(0 0 8px rgba(0,0,0,.20));
   }
 }
 
-.headline-premium-dark::after{
-  content:attr(data-text);
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:linear-gradient(
-    110deg,
-    transparent 30%,
-    rgba(255,255,255,.6) 48%,
-    rgba(255,255,255,.95) 50%,
-    rgba(255,255,255,.6) 52%,
-    transparent 70%
-  );
-  background-size:300% auto;
-  background-position:200% center;
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  color:transparent;
-  pointer-events:none;
-  animation:sotaHeadlineShineFlash 6s ease-in-out infinite;
-  animation-delay:1.2s;
-  mix-blend-mode:overlay;
-}
-
-/* Mobile — animações 30% mais lentas (economia GPU + bateria) */
+/* Mobile — animação mais lenta (economia GPU) */
 @media (max-width:768px){
   .headline-premium,
   .headline-premium-dark{
-    animation-duration:5s, 7s, 9.5s !important;
-    will-change:auto;
-  }
-  .headline-premium::after,
-  .headline-premium-dark::after{
-    animation-duration:8s !important;
+    animation-duration:6s, 6s !important;
   }
 }
 
-/* Reduced motion — congela visualmente */
+/* Reduced motion — congela no estado intermediário */
 @media (prefers-reduced-motion: reduce){
   .headline-premium,
-  .headline-premium-dark,
-  .headline-premium::after,
-  .headline-premium-dark::after{
+  .headline-premium-dark{
     animation:none !important;
     background-position:50% center !important;
     filter:none !important;
-    will-change:auto;
   }
 }
 
@@ -5130,121 +4964,6 @@ section h3.heading-display{
    ╚══════════════════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   ▓▓▓ FINAL WRAPPER — 3 últimas seções compartilham 1 vídeo de fundo ▓▓▓
-   
-   Estratégia:
-   1. UM <video> com position:absolute cobre 100% do wrapper
-   2. UM overlay escuro CONTÍNUO cobre 100% do wrapper
-   3. As 3 seções (Quem é a Eikon + CTA + Footer) ficam EMPILHADAS por cima
-   4. As seções precisam ter background TRANSPARENTE pra ver o vídeo abaixo
-   5. JS já gerencia este vídeo via .eikon-intro-video (pause off-viewport)
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-.final-wrapper{
-  position:relative;
-  isolation:isolate;
-  overflow:hidden;
-  background:#000; /* fallback caso video demore a carregar */
-}
-
-/* Vídeo único cobre TODA a altura do wrapper */
-.final-wrapper-video{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  z-index:0;
-  pointer-events:none;
-  transform:translateZ(0);
-  will-change:transform;
-}
-
-/* Overlay escuro CONTÍNUO sobre o vídeo (cobre toda a área) */
-.final-wrapper-overlay{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-  background:
-    linear-gradient(180deg,
-      rgba(0,0,0,.55) 0%,
-      rgba(0,0,0,.40) 33%,
-      rgba(0,0,0,.40) 66%,
-      rgba(0,0,0,.65) 100%),
-    radial-gradient(ellipse at center,
-      rgba(0,0,0,0) 0%,
-      rgba(0,0,0,.35) 100%);
-}
-
-/* As 3 seções ficam acima do vídeo + overlay (z-index:2) */
-.final-content-layer{
-  position:relative;
-  z-index:2;
-  background:transparent !important; /* deixa o vídeo aparecer */
-}
-
-/* Anula backgrounds das 3 sections que estavam com gradient/cor */
-.final-wrapper .vsl-precta-section,
-.final-wrapper .bg-cta,
-.final-wrapper .footer-dark,
-.final-wrapper section.bg-cta.cta-with-video,
-.final-wrapper footer.footer-dark.footer-with-video{
-  background:transparent !important;
-  background-color:transparent !important;
-  background-image:none !important;
-}
-
-/* Sobrescreve a regra antiga .footer-dark.footer-with-video (linha 4837) */
-.footer-dark.footer-with-video{
-  background:transparent !important;
-  overflow:visible !important; /* já é parent do wrapper */
-}
-
-/* Sobrescreve a regra antiga .bg-cta.cta-with-video */
-.bg-cta.cta-with-video{
-  background:transparent !important;
-}
-
-/* Quem é a Eikon — seção do vídeo institucional dentro do wrapper */
-.final-wrapper .vsl-precta-section{
-  padding:0 !important;
-  margin:0;
-}
-.final-wrapper .vsl-precta-wrap{
-  position:relative;
-  z-index:2;
-}
-
-/* Garante que o video black-1.mp4 (Quem é a Eikon) fica visível ACIMA do rodape de fundo */
-.final-wrapper .vsl-precta-wrap video{
-  position:relative;
-  z-index:2;
-}
-
-/* Mobile — sem alterações de layout, só ajusta sombra do overlay */
-@media (max-width:768px){
-  .final-wrapper-overlay{
-    background:
-      linear-gradient(180deg,
-        rgba(0,0,0,.65) 0%,
-        rgba(0,0,0,.50) 33%,
-        rgba(0,0,0,.50) 66%,
-        rgba(0,0,0,.75) 100%);
-  }
-}
-
-/* Reduced motion — JS pausa o vídeo via initIntroVideo */
-@media (prefers-reduced-motion: reduce){
-  .final-wrapper-video{ display:none; }
-}
-
-/* ╔══════════════════════════════════════════════════════════════════════════
-   ║  FIM DO FINAL WRAPPER
-   ╚══════════════════════════════════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════════════════════════════════
    ▓▓▓ SOCIAL ICONS — Apenas ícones limpos pequenos ▓▓▓
    Sem botão de fundo, sem label. Só os ícones SVG redirecionando.
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -5655,7 +5374,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
       <span class="visually-hidden">Método Guest — O sistema operacional Eikon que acelera o Tatuador para o crescimento e o sucesso em todo seu Guest. Validado em +35 países e R$1MM investidos em tráfego pago.</span>
       <span class="hero-logo-wrap">
         <video
-style="background:#000"           class="hero-logo hero-video blink-brightness"
+          class="hero-logo hero-video blink-brightness"
           autoplay
           loop
           muted
@@ -5684,11 +5403,11 @@ style="background:#000"           class="hero-logo hero-video blink-brightness"
     <!-- STATS -->
     <div class="fade-up mt-10 sm:mt-14 grid grid-cols-2 gap-6 max-w-md mx-auto">
       <div class="text-center" style="border-right:1px solid rgba(255,255,255,.12);padding-right:1.5rem;">
-        <div class="stat-num headline-premium" data-target="30" data-suffix="+" data-text="0">0</div>
+        <div class="stat-num headline-premium" data-target="30" data-suffix="+">0</div>
         <div class="text-xs mt-1 font-semibold uppercase tracking-wider" style="color:#71717a;">Países atendidos</div>
       </div>
       <div class="text-center" style="padding-left:1.5rem;">
-        <div class="stat-num headline-premium" style="font-size:clamp(1.5rem,3.2vw,2.1rem);line-height:1;letter-spacing:-.02em;" data-text="Eikon Ink">Eikon Ink</div>
+        <div class="stat-num headline-premium" style="font-size:clamp(1.5rem,3.2vw,2.1rem);line-height:1;letter-spacing:-.02em;">Eikon Ink</div>
         <div class="text-xs mt-1 font-semibold uppercase tracking-wider" style="color:#71717a;line-height:1.3;">Maior Assessoria<br/>do Mercado da Tattoo</div>
       </div>
     </div>
@@ -5839,7 +5558,7 @@ style="background:#000"           class="hero-logo hero-video blink-brightness"
   <div class="pillars-content mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">O Método</span></div>
-      <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium" style="line-height:1.15;" data-text="Conheça o Método Guest">
+      <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium" style="line-height:1.15;">
         Conheça o <span class="gradient-text">Método Guest</span>
       </h2>
       <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">Validado em <strong style="color:#fff;font-weight:600;">+35 países</strong> com <strong style="color:#fff;font-weight:600;">R$1MM</strong> investidos em tráfego.</p>
@@ -5995,7 +5714,7 @@ style="background:#000"           class="hero-logo hero-video blink-brightness"
   <div class="cases-content mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">Cases</span></div>
-      <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium-dark" style="line-height:1.15;" data-text="Resultados de quemaplicou o método">
+      <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium-dark" style="line-height:1.15;">
         Resultados de quem<br/>aplicou o <span class="gradient-text">método</span>
       </h2>
     </div>
@@ -6133,7 +5852,7 @@ style="background:#000"           class="hero-logo hero-video blink-brightness"
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">O que você recebe</span></div>
-      <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium" style="line-height:1.15;" data-text="Tudo o que está dentroda mentoria">
+      <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium" style="line-height:1.15;">
         Tudo o que está dentro<br/>da <span class="gradient-text">mentoria</span>
       </h2>
       <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">5 módulos. Acesso vitalício. <strong style="color:#fff;">Resultado real.</strong></p>
@@ -6224,7 +5943,7 @@ style="background:#000"           class="hero-logo hero-video blink-brightness"
   <div class="testi-content mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-3xl text-center">
       <div class="fade-up flex justify-center mb-4"><span class="section-label">Depoimentos</span></div>
-      <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium" style="line-height:1.15;" data-text="Veja o que os tatuadoresfalam sobre o método">
+      <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium" style="line-height:1.15;">
         Veja o que os tatuadores<br/>falam sobre o <span class="gradient-text">método</span>
       </h2>
       <p class="fade-up mt-6 text-lg leading-relaxed" style="color:#a1a1aa;">A EIKON atua na tattoo há <strong style="color:#fff;">+4 anos.</strong> Não somos <strong style="color:#fff;">"Guru da Tattoo".</strong></p>
@@ -6350,7 +6069,7 @@ style="background:#000"           class="hero-logo hero-video blink-brightness"
   </div>
   <div class="mx-auto max-w-4xl text-center">
     <div class="fade-up flex justify-center mb-4"><span class="section-label">Investimento</span></div>
-    <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium-dark" style="line-height:1.1;letter-spacing:-.035em;text-wrap:balance;" data-text="Seu acesso ao Método Guest">
+    <h2 class="fade-up heading-display text-4xl sm:text-5xl headline-premium-dark" style="line-height:1.1;letter-spacing:-.035em;text-wrap:balance;">
       Seu acesso ao Método Guest
     </h2>
     <p class="fade-up mt-6 text-lg leading-relaxed mx-auto max-w-2xl" style="color:#a1a1aa;">Acesso vitalício · <strong style="color:#fff;">Garantia de 30 dias</strong> · 0% de risco.</p>
@@ -6426,19 +6145,29 @@ style="background:#000"           class="hero-logo hero-video blink-brightness"
 
 </section>
 
-<!-- ╔═══════════════════════════════════════════════════════════════════════
-     ║  ▓▓▓ FINAL SECTIONS WRAPPER — Vídeo único de fundo contínuo ▓▓▓
-     ║  
-     ║  As 3 últimas seções (Quem é a Eikon + CTA Final + Footer) compartilham
-     ║  UM ÚNICO vídeo de fundo `rodape.mp4` que cobre toda a área, sem cortes.
-     ║  Antes: 3 vídeos independentes criavam "linhas de corte" entre seções.
-     ║  Agora: 1 video fixed-position, 3 camadas de conteúdo flutuando sobre.
-     ╚═══════════════════════════════════════════════════════════════════════ -->
-<div class="final-wrapper">
+<!-- ═══ VÍDEO INSTITUCIONAL EIKON — Full width, sem textos ═══ -->
+<section class="vsl-precta-section relative isolate overflow-hidden">
+  <div class="vsl-precta-wrap" data-reveal="scale">
+    <video
+      class="eikon-intro-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="metadata"
+      aria-label="Apresentação da equipe Eikon"
+      disablepictureinpicture
+      disableremoteplayback>
+      <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/black-1.mp4" type="video/mp4"/>
+    </video>
+  </div>
+</section>
 
-  <!-- VÍDEO ÚNICO DE FUNDO — cobre toda a área das 3 seções abaixo -->
+<!-- ═══ CTA BANNER — FINAL COM REDES SOCIAIS ═══ -->
+<section class="bg-cta cta-with-video relative isolate py-24 px-6 lg:px-8 overflow-hidden">
+  <!-- VÍDEO DE FUNDO MP4 — full coverage, loop, muted -->
   <video
-style="background:#000"     class="final-wrapper-video eikon-intro-video"
+    class="bg-video-layer eikon-intro-video"
     autoplay
     loop
     muted
@@ -6449,89 +6178,83 @@ style="background:#000"     class="final-wrapper-video eikon-intro-video"
     disableremoteplayback>
     <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/rodape.mp4" type="video/mp4"/>
   </video>
-  <!-- Overlay escuro contínuo cobrindo as 3 seções -->
-  <div class="final-wrapper-overlay" aria-hidden="true"></div>
+  <!-- Overlay escuro pra garantir legibilidade do texto/ícones -->
+  <div class="bg-video-overlay" aria-hidden="true"></div>
 
-  <!-- ═══ SEÇÃO 1: Quem é a Eikon (black-1.mp4 — fica POR CIMA do rodape de fundo) ═══ -->
-  <section class="vsl-precta-section final-content-layer relative isolate overflow-hidden">
-    <div class="vsl-precta-wrap" data-reveal="scale">
-      <video
-style="background:#000"         class="eikon-intro-video"
-        autoplay
-        loop
-        muted
-        playsinline
-        preload="metadata"
-        aria-label="Apresentação da equipe Eikon"
-        disablepictureinpicture
-        disableremoteplayback>
-        <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/black-1.mp4" type="video/mp4"/>
-      </video>
+  <div class="absolute inset-0 -z-10 pointer-events-none" style="background:radial-gradient(ellipse at 20% 50%,rgba(255,255,255,.10) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(255,255,255,.06) 0%,transparent 50%);"></div>
+  <div class="absolute inset-0 -z-10" style="background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);"></div>
+  <div class="mx-auto max-w-3xl text-center cta-content-layer">
+    <!-- Headline principal (substitui o eyebrow + h2 antigos) -->
+    <h2 class="fade-up heading-display text-3xl sm:text-4xl lg:text-5xl title-gradient" style="color:#fff;line-height:1.15;letter-spacing:-.035em;text-wrap:balance;text-transform:uppercase;">
+      Sua próxima viagem<br/>começa <span class="gradient-text">aqui</span>
+    </h2>
+
+    <!-- Redes sociais — 3 ícones limpos pequenos -->
+    <div class="fade-up mt-10 flex items-center justify-center gap-5">
+
+      <!-- Instagram CEO (João Flávio) -->
+      <a href="https://www.instagram.com/joaoflavioads/" target="_blank" rel="noopener noreferrer"
+         class="social-icon"
+         aria-label="Instagram do CEO João Flávio">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+        </svg>
+      </a>
+
+      <!-- Instagram Empresa Eikon -->
+      <a href="https://www.instagram.com/eikoninkmarketing/" target="_blank" rel="noopener noreferrer"
+         class="social-icon"
+         aria-label="Instagram da Eikon Ink Marketing">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+        </svg>
+      </a>
+
+      <!-- WhatsApp — mensagem pré-preenchida -->
+      <a href="https://wa.me/5562999281417?text=Tenho%20interesse%20em%20investir%20no%20M%C3%A9todo%20Guest.%20Posso%20tirar%20algumas%20d%C3%BAvidas%3F"
+         target="_blank" rel="noopener noreferrer"
+         class="social-icon social-icon-whatsapp"
+         aria-label="Falar no WhatsApp com a Eikon">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/>
+        </svg>
+      </a>
+
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ═══ SEÇÃO 2: CTA "Sua próxima viagem começa aqui" ═══ -->
-  <section class="bg-cta cta-with-video final-content-layer relative isolate py-24 px-6 lg:px-8 overflow-hidden">
-    <div class="absolute inset-0 -z-10 pointer-events-none" style="background:radial-gradient(ellipse at 20% 50%,rgba(255,255,255,.10) 0%,transparent 50%),radial-gradient(ellipse at 80% 50%,rgba(255,255,255,.06) 0%,transparent 50%);"></div>
-    <div class="absolute inset-0 -z-10" style="background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:24px 24px;mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 50%, #000 30%, transparent 80%);"></div>
-    <div class="mx-auto max-w-3xl text-center cta-content-layer">
-      <!-- Headline principal (substitui o eyebrow + h2 antigos) -->
-      <h2 class="fade-up heading-display text-3xl sm:text-4xl lg:text-5xl title-gradient" style="color:#fff;line-height:1.15;letter-spacing:-.035em;text-wrap:balance;text-transform:uppercase;">
-        Sua próxima viagem<br/>começa <span class="gradient-text">aqui</span>
-      </h2>
+<!-- ═══ FOOTER COMPLETO ═══ -->
+<footer class="footer-dark footer-with-video">
 
-      <!-- Redes sociais — 3 ícones limpos pequenos -->
-      <div class="fade-up mt-10 flex items-center justify-center gap-5">
+  <!-- VÍDEO DE FUNDO MP4 — mesmo do CTA, continuação visual -->
+  <video
+    class="bg-video-layer eikon-intro-video"
+    autoplay
+    loop
+    muted
+    playsinline
+    preload="metadata"
+    aria-hidden="true"
+    disablepictureinpicture
+    disableremoteplayback>
+    <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/rodape.mp4" type="video/mp4"/>
+  </video>
+  <!-- Overlay escuro pra legibilidade -->
+  <div class="bg-video-overlay" aria-hidden="true"></div>
 
-        <!-- Instagram CEO (João Flávio) -->
-        <a href="https://www.instagram.com/joaoflavioads/" target="_blank" rel="noopener noreferrer"
-           class="social-icon"
-           aria-label="Instagram do CEO João Flávio">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-          </svg>
-        </a>
-
-        <!-- Instagram Empresa Eikon -->
-        <a href="https://www.instagram.com/eikoninkmarketing/" target="_blank" rel="noopener noreferrer"
-           class="social-icon"
-           aria-label="Instagram da Eikon Ink Marketing">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-          </svg>
-        </a>
-
-        <!-- WhatsApp — mensagem pré-preenchida -->
-        <a href="https://wa.me/5562999281417?text=Tenho%20interesse%20em%20investir%20no%20M%C3%A9todo%20Guest.%20Posso%20tirar%20algumas%20d%C3%BAvidas%3F"
-           target="_blank" rel="noopener noreferrer"
-           class="social-icon social-icon-whatsapp"
-           aria-label="Falar no WhatsApp com a Eikon">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 20.464 3.488"/>
-          </svg>
-        </a>
-
+  <!-- Bottom bar -->
+  <div class="mx-auto max-w-7xl px-6 py-6 lg:px-8 footer-content-layer">
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-xs" style="color:#52525b;">© 2026 EIKON Agência · Método Guest. Todos os direitos reservados.</p>
+      <div class="flex gap-6 text-xs" style="color:#52525b;">
+        <a href="#" class="footer-bottom-link">Política de Privacidade</a>
+        <a href="#" class="footer-bottom-link">Termos de Uso</a>
+        <a href="#" class="footer-bottom-link">Cookies</a>
       </div>
     </div>
-  </section>
-
-  <!-- ═══ SEÇÃO 3: Footer Final ═══ -->
-  <footer class="footer-dark footer-with-video final-content-layer">
-
-    <!-- Bottom bar (vídeo de fundo é compartilhado via .final-wrapper) -->
-    <div class="mx-auto max-w-7xl px-6 py-6 lg:px-8 footer-content-layer">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-xs" style="color:#52525b;">© 2026 EIKON Agência · Método Guest. Todos os direitos reservados.</p>
-        <div class="flex gap-6 text-xs" style="color:#52525b;">
-          <a href="#" class="footer-bottom-link">Política de Privacidade</a>
-          <a href="#" class="footer-bottom-link">Termos de Uso</a>
-          <a href="#" class="footer-bottom-link">Cookies</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-</div><!-- /.final-wrapper -->
+  </div>
+</footer>
 
 </div><!-- /z-index wrapper -->
 
