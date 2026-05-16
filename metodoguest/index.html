@@ -5,6 +5,28 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#000000"/>
 <meta name="color-scheme" content="dark"/>
+<meta name="format-detection" content="telephone=no, date=no, address=no, email=no"/>
+<meta name="theme-color" content="#000000"/>
+
+<!-- Speculation Rules API — pré-renderiza destinos de conversão ao hover/tap -->
+<script type="speculationrules">
+{
+  "prerender": [
+    {
+      "source": "list",
+      "urls": ["https://form.respondi.app/uAUC0yJx"],
+      "eagerness": "moderate"
+    }
+  ],
+  "prefetch": [
+    {
+      "source": "document",
+      "where": { "href_matches": "https://wa.me/*" },
+      "eagerness": "conservative"
+    }
+  ]
+}
+</script>
 <title>Método Guest — EIKON | O Sistema Que Move o Tatuador Brasileiro Para a Europa</title>
 <meta name="description" content="O sistema que mais de 150 tatuadores brasileiros estão usando para fechar agenda em euro ANTES de embarcar. Dublin, Paris, Barcelona, Itália. Caso real: €4.900 em 7 dias com R$1.500 de tráfego."/>
 <meta property="og:title" content="Método Guest — EIKON · Tatuador, sua arte vale 6x mais em outro CEP."/>
@@ -5097,7 +5119,12 @@ section h3.heading-display{
 .testi-section,
 section.bg-process,
 section.bg-pricing,
-section.bg-cta{
+section.bg-cta,
+.pillars-section,
+.cases-section,
+.cases-section-light,
+.testi-section,
+.vsl-precta-section{
   content-visibility:auto;
   contain-intrinsic-size:auto 800px;
 }
@@ -5373,7 +5400,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
     <h1 class="fade-up" style="margin:0 auto;max-width:1400px;">
       <span class="visually-hidden">Método Guest — O sistema operacional Eikon que acelera o Tatuador para o crescimento e o sucesso em todo seu Guest. Validado em +35 países e R$1MM investidos em tráfego pago.</span>
       <span class="hero-logo-wrap">
-        <video
+        <video style="background:#000"
           class="hero-logo hero-video blink-brightness"
           autoplay
           loop
@@ -6148,7 +6175,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 <!-- ═══ VÍDEO INSTITUCIONAL EIKON — Full width, sem textos ═══ -->
 <section class="vsl-precta-section relative isolate overflow-hidden">
   <div class="vsl-precta-wrap" data-reveal="scale">
-    <video
+    <video style="background:#000"
       class="eikon-intro-video"
       autoplay
       loop
@@ -6166,7 +6193,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 <!-- ═══ CTA BANNER — FINAL COM REDES SOCIAIS ═══ -->
 <section class="bg-cta cta-with-video relative isolate py-24 px-6 lg:px-8 overflow-hidden">
   <!-- VÍDEO DE FUNDO MP4 — full coverage, loop, muted -->
-  <video
+  <video style="background:#000"
     class="bg-video-layer eikon-intro-video"
     autoplay
     loop
@@ -6228,7 +6255,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
 <footer class="footer-dark footer-with-video">
 
   <!-- VÍDEO DE FUNDO MP4 — mesmo do CTA, continuação visual -->
-  <video
+  <video style="background:#000"
     class="bg-video-layer eikon-intro-video"
     autoplay
     loop
@@ -6476,7 +6503,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
         card.style.transition = 'transform .6s cubic-bezier(.23,1,.32,1),box-shadow .6s ease';
         card.style.transform  = 'perspective(1400px) rotateX(0) rotateY(0) scale3d(1,1,1)';
         card.style.boxShadow  = '';
-      });
+      }, {passive: true});
     });
   }
 
@@ -6838,7 +6865,7 @@ iframe[data-lazy-video]{background:#0a0a0a;}
       }, {passive:true});
       btn.addEventListener('mouseleave', () => {
         btn.style.setProperty('--btn-left', last + '%');
-      });
+      }, {passive: true});
     });
   }
 
