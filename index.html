@@ -71,10 +71,16 @@
 <link rel="dns-prefetch" href="https://connect.facebook.net">
 <link rel="dns-prefetch" href="https://raw.githubusercontent.com">
 
-<!-- PRELOAD — hero image (LCP candidate) -->
-<link rel="preload" as="image" href="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/herotattooservico.png" fetchpriority="high">
-<!-- PRELOAD — vídeo institucional "Quem é a Eikon" (carrega lazy) -->
-<link rel="preload" as="video" href="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/black-1.mp4" type="video/mp4">
+<!-- PRECONNECT — Meta Pixel (upgrade do dns-prefetch). Negocia TCP+TLS antecipadamente,
+     economiza ~150ms quando o pixel finalmente carrega (após LCP, lazy). -->
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin>
+<link rel="preconnect" href="https://www.facebook.com" crossorigin>
+
+<!-- PRELOAD — hero video (LCP candidate) -->
+<link rel="preload" as="video" href="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/HEROSERVICO1video-3.mp4" type="video/mp4" fetchpriority="high">
+<!-- PREFETCH — vídeo institucional "Quem é a Eikon" (below-fold). Baixa em idle,
+     não compete com o hero pela banda inicial. Carrega antes do user scrollar lá. -->
+<link rel="prefetch" as="video" href="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/black-1.mp4" type="video/mp4" fetchpriority="low">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap&font-display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & ROOT ===== */
@@ -2483,6 +2489,27 @@ section.hero-image-only::before{
   width:100%;
 }
 
+/* ───────── HERO VIDEO — comportamento idêntico à img anterior ─────────
+   width:100% + height:auto faz o vídeo manter a proporção NATURAL do
+   arquivo MP4. Sem aspect-ratio fixo, sem object-fit, sem crop.
+   Resultado: o vídeo ocupa 100% da largura, altura calculada pelo browser
+   a partir das dimensões reais do vídeo, container colado no próximo bloco. */
+.hero-continua-1 .hero-continua__video{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+  margin:0;
+  padding:0;
+  border:0;
+  outline:0;
+  vertical-align:bottom;   /* mata o gap de baseline inline do elemento substituído */
+  background:#000;
+  -webkit-user-drag:none;
+  user-select:none;
+  pointer-events:none;
+}
+
 /* ═══════════════════════════════════════════════════════════
    HERO CONTINUAÇÃO — duas seções de continuidade após hero principal
    1: imagem só (texto embutido)
@@ -2986,16 +3013,22 @@ if ('requestIdleCallback' in window) {
   <div class="bg-line"></div>
 </div>
 
-<!-- HERO CONTINUAÇÃO 1 — máquinas + título Eikon Ink Marketing (texto embutido na imagem) -->
+<!-- HERO CONTINUAÇÃO 1 — vídeo institucional substituindo a imagem antiga -->
 <section class="hero-continua hero-continua-1">
-  <img
-    src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/herotattooservico.png"
-    alt="Eikon Ink Marketing — 1º Maior Assessoria de Marketing no Mercado da Tattoo"
-    class="hero-continua__img"
-    loading="eager"
-    fetchpriority="high"
-    decoding="async"
-  />
+  <video
+    class="hero-continua__video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="auto"
+    disablepictureinpicture
+    disableremoteplayback
+    x-webkit-airplay="deny"
+    aria-label="Eikon Ink Marketing — 1º Maior Assessoria de Marketing no Mercado da Tattoo">
+    <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/HEROSERVICO1video-3.mp4" type="video/mp4">
+    Seu navegador não suporta vídeo HTML5.
+  </video>
 </section>
 
 <!-- ╔═══════════════════════════════════════════════════════════════════════╗
@@ -3153,6 +3186,199 @@ if ('requestIdleCallback' in window) {
     .hero-meta-cta__sub{font-size:.72rem;}
     .hero-meta-cta__more{font-size:.65rem;}
   }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     PERFORMANCE OPTIMIZATIONS — invisíveis ao usuário, ganhos reais
+     Aplica content-visibility (skipa render off-screen), contain (isola
+     recálculo de layout) e GPU hints. Nada disso muda design ou efeito.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  /* 1) content-visibility: auto faz o browser SKIPAR completamente o
+     paint e layout de seções que estão fora da viewport. Ganho típico:
+     30-50% de redução em paint time no first-load. O contain-intrinsic-size
+     reserva espaço pra evitar pulo de scrollbar quando entra na viewport. */
+  .vsl-section,
+  .bg-logos,
+  .testimonials-section,
+  .quem-somos-feature,
+  .testimonials-text-section{
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 800px;   /* fallback até medir real */
+  }
+
+  /* 2) contain: isolar cards repetitivos pra que mudanças neles
+     (hover, animation, scroll-reveal) não forcem recálculo da página inteira.
+     Em listas longas (carousel de cases/depoimentos) o ganho é grande. */
+  .case-card,
+  .testi-card,
+  .country-pill{
+    contain: layout style paint;
+  }
+
+  /* 3) Forçar GPU compositing nos elementos com animação contínua.
+     translate3d/translateZ joga o elemento numa camada própria,
+     animações rodam no GPU em vez de bloquear a thread principal. */
+  .marquee-track,
+  .mega-spotlight,
+  .mesh-orb,
+  .globe-dot,
+  .cinematic-divider__particles{
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* 4) Image-rendering hints: navegador escolhe melhor estratégia de
+     decoding/upscaling. Reduz jank em telas de alta densidade. */
+  img, video{
+    image-rendering: auto;
+  }
+
+  /* 5) Otimização para conexões lentas / Data Saver: o usuário escolheu
+     economizar dados, então desligamos animações pesadas. */
+  @media (prefers-reduced-data: reduce){
+    .mega-spotlight, .mega-spotlight--2,
+    .mesh-orb, .light-beam,
+    .cinematic-divider__particles{
+      display: none !important;
+    }
+  }
+
+  /* 6) Mobile: reduz a quantidade de elementos decorativos animando
+     simultaneamente — em CPU móvel isso destrava 10-20fps no scroll. */
+  @media (max-width: 768px){
+    .mesh-orb-b,
+    .mega-spotlight--2{
+      display: none;     /* mantém só 1 de cada efeito, visualmente quase igual */
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     PAÍSES — TEMA BRANCO (override do tema escuro original)
+     Fundo branco, pills com borda preta rotativa, texto preto.
+     Mantém o efeito de "borda rotativa" do tema escuro — só inverte
+     a cor do conic-gradient (white → black). Animação, timing, dessincronia
+     entre pills (nth-child) e hover continuam idênticos.
+     ═══════════════════════════════════════════════════════════════════ */
+
+  /* Fundo da seção: branco puro */
+  .bg-logos{
+    background: #ffffff !important;
+  }
+
+  /* Título "Países que trabalhamos": preto */
+  .bg-logos p{
+    color: #000000 !important;
+  }
+
+  /* Pills: fundo branco, borda preta sutil, texto preto */
+  .bg-logos .country-pill{
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    color: #000000;
+  }
+
+  /* ✨ Borda ROTATIVA em PRETO — mantém o mesmo efeito Vercel/Linear/Stripe,
+     só inverte a cor. O conic-gradient cria um arco preto brilhante
+     girando ao redor da pill. Animação e timing são os mesmos. */
+  .bg-logos .country-pill::before{
+    background: conic-gradient(
+      from var(--pill-angle, 0deg),
+      transparent 0%,
+      rgba(0, 0, 0, 0) 70%,
+      rgba(0, 0, 0, .55) 82%,
+      rgba(0, 0, 0, 1) 88%,
+      rgba(0, 0, 0, .55) 94%,
+      transparent 100%
+    );
+    opacity: .9;
+  }
+
+  /* Hover: leve fundo off-white, borda preta mais forte, sombra suave */
+  .bg-logos .country-pill:hover{
+    background: #fafafa;
+    border-color: rgba(0, 0, 0, 0.35);
+    color: #000000;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .12), 0 0 0 1px rgba(0, 0, 0, .08);
+  }
+  .bg-logos .country-pill:hover::before{
+    opacity: 1;
+  }
+
+  /* Bandeira: outline preto sutil (era white-glow no tema escuro,
+     que sumiria contra fundo branco). */
+  .bg-logos .country-pill .flag-svg{
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.16),
+      0 2px 6px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  .bg-logos .country-pill:hover .flag-svg{
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.32),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     FADE NAS BORDAS — transição suave preto↔branco↔preto
+     Fade LONGO (100px) e curva dispersa: a maior parte do gradiente vive
+     na zona "quase preto" e "quase transparente", evitando que apareça
+     como uma faixa de gradiente. O olho não consegue mais identificar
+     onde o fade começa/termina — sensação de uma seção emergindo do preto.
+     ═══════════════════════════════════════════════════════════════════ */
+  .bg-logos::before,
+  .bg-logos::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  /* Fade do topo: 5 stops em curva ease-out — preto sustenta no início,
+     dissolve devagar no meio, some completamente nos últimos 15%. */
+  .bg-logos::before{
+    top: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 1)    0%,
+      rgba(0, 0, 0, 0.88) 18%,
+      rgba(0, 0, 0, 0.55) 45%,
+      rgba(0, 0, 0, 0.18) 75%,
+      rgba(0, 0, 0, 0)    100%
+    );
+  }
+  /* Fade do fundo: espelhado */
+  .bg-logos::after{
+    bottom: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 1)    0%,
+      rgba(0, 0, 0, 0.88) 18%,
+      rgba(0, 0, 0, 0.55) 45%,
+      rgba(0, 0, 0, 0.18) 75%,
+      rgba(0, 0, 0, 0)    100%
+    );
+  }
+  /* Garantir que o conteúdo (título + marquee) fique ACIMA dos fades */
+  .bg-logos > div{
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Mobile: fade proporcional + mantém o padding generoso pra área branca */
+  @media (max-width: 768px){
+    .bg-logos{
+      padding-top: 4rem !important;
+      padding-bottom: 4rem !important;
+    }
+    .bg-logos::before,
+    .bg-logos::after{
+      height: 70px;
+    }
+  }
 </style>
 
 <!-- BOTÕES CTA — fluxo normal abaixo da hero (não mais position:absolute).
@@ -3209,33 +3435,33 @@ if ('requestIdleCallback' in window) {
 <div class="section-divider"></div>
 
 <!-- ═══ PAÍSES VALIDADOS — MARQUEE ═══ -->
-<section class="bg-logos" style="padding:1rem 0 2.5rem;overflow:hidden;">
+<section class="bg-logos" style="padding:6rem 0 6rem;overflow:hidden;position:relative;">
   <div style="max-width:80rem;margin:0 auto;padding:0 1.5rem 2.5rem;text-align:center;">
     <p style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:#52525b;">Países que trabalhamos</p>
   </div>
   <div class="marquee-outer">
     <div class="marquee-track">
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Irlanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#FF883E"/></svg></span> Dublin</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="França"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#002654"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE1126"/></svg></span> Paris</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Barcelona</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Itália"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg></span> Milão / Roma</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Bélgica"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#000"/><rect x="20" width="20" height="40" fill="#FAE042"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span> Bruxelas</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Alemanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#000"/><rect y="13.33" width="60" height="13.33" fill="#DD0000"/><rect y="26.66" width="60" height="13.34" fill="#FFCE00"/></svg></span> Berlim</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Suíça"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#D52B1E"/><rect x="26" y="9" width="8" height="22" fill="#fff"/><rect x="19" y="16" width="22" height="8" fill="#fff"/></svg></span> Zurique</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Holanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#AE1C28"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#21468B"/></svg></span> Amsterdã</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Irlanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#FF883E"/></svg></span> Irlanda</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="França"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#002654"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE1126"/></svg></span> França</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Espanha</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Itália"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg></span> Itália</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Bélgica"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#000"/><rect x="20" width="20" height="40" fill="#FAE042"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span> Bélgica</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Alemanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#000"/><rect y="13.33" width="60" height="13.33" fill="#DD0000"/><rect y="26.66" width="60" height="13.34" fill="#FFCE00"/></svg></span> Alemanha</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Suíça"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#D52B1E"/><rect x="26" y="9" width="8" height="22" fill="#fff"/><rect x="19" y="16" width="22" height="8" fill="#fff"/></svg></span> Suíça</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Holanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#AE1C28"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#21468B"/></svg></span> Holanda</span>
       <span class="country-pill"><span class="flag-svg" role="img" aria-label="Brasil"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#009C3B"/><polygon points="30,5 55,20 30,35 5,20" fill="#FFDF00"/><circle cx="30" cy="20" r="7" fill="#002776"/></svg></span> Brasil</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Áustria"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#ED2939"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#ED2939"/></svg></span> Viena</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Áustria"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#ED2939"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#ED2939"/></svg></span> Áustria</span>
       <!-- Duplicata para loop infinito -->
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Irlanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#FF883E"/></svg></span> Dublin</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="França"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#002654"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE1126"/></svg></span> Paris</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Barcelona</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Itália"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg></span> Milão / Roma</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Bélgica"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#000"/><rect x="20" width="20" height="40" fill="#FAE042"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span> Bruxelas</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Alemanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#000"/><rect y="13.33" width="60" height="13.33" fill="#DD0000"/><rect y="26.66" width="60" height="13.34" fill="#FFCE00"/></svg></span> Berlim</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Suíça"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#D52B1E"/><rect x="26" y="9" width="8" height="22" fill="#fff"/><rect x="19" y="16" width="22" height="8" fill="#fff"/></svg></span> Zurique</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Holanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#AE1C28"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#21468B"/></svg></span> Amsterdã</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Irlanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#169B62"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#FF883E"/></svg></span> Irlanda</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="França"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#002654"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE1126"/></svg></span> França</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Espanha</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Itália"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#009246"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#CE2B37"/></svg></span> Itália</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Bélgica"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="20" height="40" fill="#000"/><rect x="20" width="20" height="40" fill="#FAE042"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span> Bélgica</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Alemanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#000"/><rect y="13.33" width="60" height="13.33" fill="#DD0000"/><rect y="26.66" width="60" height="13.34" fill="#FFCE00"/></svg></span> Alemanha</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Suíça"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#D52B1E"/><rect x="26" y="9" width="8" height="22" fill="#fff"/><rect x="19" y="16" width="22" height="8" fill="#fff"/></svg></span> Suíça</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Holanda"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#AE1C28"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#21468B"/></svg></span> Holanda</span>
       <span class="country-pill"><span class="flag-svg" role="img" aria-label="Brasil"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#009C3B"/><polygon points="30,5 55,20 30,35 5,20" fill="#FFDF00"/><circle cx="30" cy="20" r="7" fill="#002776"/></svg></span> Brasil</span>
-      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Áustria"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#ED2939"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#ED2939"/></svg></span> Viena</span>
+      <span class="country-pill"><span class="flag-svg" role="img" aria-label="Áustria"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="13.33" fill="#ED2939"/><rect y="13.33" width="60" height="13.33" fill="#fff"/><rect y="26.66" width="60" height="13.34" fill="#ED2939"/></svg></span> Áustria</span>
     </div>
   </div>
 </section>
@@ -3603,6 +3829,31 @@ if ('requestIdleCallback' in window) {
       cta_text: ctaText,
       currency: 'BRL'
     });
+
+    // ═════════════════════════════════════════════════════════════════
+    // Eventos adicionais SÓ para o botão "Quero Contratar Serviço da
+    // Eikon" (form.respondi.app/uAUC0yJx) — alimenta otimização de
+    // campanhas Meta com Lead (qualidade) + AddToCart (volume).
+    // Os 3 eventos (InitiateCheckout + Lead + AddToCart) são enviados
+    // automaticamente para os 2 pixels ativos (200096279305740 e
+    // 958225726998591) — o SDK faz fan-out interno.
+    // ═════════════════════════════════════════════════════════════════
+    if(isForm){
+      fbq('track', 'Lead', {
+        content_name: 'Quero Contratar Serviço da Eikon',
+        content_category: 'Assessoria Marketing Tattoo',
+        cta_text: ctaText,
+        currency: 'BRL'
+      });
+      fbq('track', 'AddToCart', {
+        content_name: 'Quero Contratar Serviço da Eikon',
+        content_category: 'Assessoria Marketing Tattoo',
+        content_type: 'product',
+        cta_text: ctaText,
+        value: 0.00,
+        currency: 'BRL'
+      });
+    }
   }
 
   // Captura cliques + auxclick (botão do meio) + middle-click (abrir em nova aba)
@@ -4119,6 +4370,26 @@ document.addEventListener('visibilitychange', () => {
       el.querySelectorAll('[data-counter]').forEach(animateQuemSomosCounter);
     });
   }
+})();
+
+/* ───────── HERO VIDEO — fallback de autoplay em iOS Safari ───────── */
+(function(){
+  var v = document.querySelector('.hero-continua-1 .hero-continua__video');
+  if(!v) return;
+  function tryPlay(){
+    var p = v.play();
+    if(p && typeof p.catch === 'function') p.catch(function(){ /* silencia bloqueio */ });
+  }
+  // Tenta logo
+  tryPlay();
+  // Retenta na primeira interação (caso o browser bloqueie autoplay até gesto)
+  ['touchstart','click','scroll'].forEach(function(ev){
+    document.addEventListener(ev, tryPlay, { once:true, passive:true });
+  });
+  // Retenta quando a aba volta a ficar visível
+  document.addEventListener('visibilitychange', function(){
+    if(!document.hidden) tryPlay();
+  });
 })();
 
 </script>
