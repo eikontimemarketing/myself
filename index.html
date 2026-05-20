@@ -2964,10 +2964,18 @@ section.hero-image-only::before{
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
-     META PIXEL (Facebook) — ID: 200096279305740
-     Eventos: PageView (automático) + InitiateCheckout (nos CTAs)
-     Adiado 1.5s pra não competir com LCP/hero. Eventos antes
-     disso (improvável) entram na fila e disparam quando carregar.
+     META PIXEL (Facebook) — IDs: 200096279305740 + 958225726998591
+     Eventos disparados nesta página:
+       • PageView         → no carregamento (automático)
+       • ViewContent      → quando usuário passa de 50% de scroll (1x/sessão)
+       • InitiateCheckout → clique em CTA conversor (form + WhatsApp)
+       • AddToCart        → clique no CTA principal do form Respondi
+     ATENÇÃO: o evento "Lead" foi REMOVIDO desta página e deve disparar
+     APENAS na thank-you page do form Respondi (após submit confirmado).
+     Disparar Lead no clique faz o Meta otimizar pra "clicadores",
+     não pra leads reais — degrada qualidade da audiência.
+     Carregamento lazy (1.5s) pra não competir com LCP/hero. Eventos
+     chamados antes (improvável) entram na fila e disparam depois.
      ═══════════════════════════════════════════════════════════ -->
 <script>
 // Stub do fbq pra capturar chamadas antes do script carregar
@@ -3701,13 +3709,25 @@ if ('requestIdleCallback' in window) {
 <!-- STICKY MOBILE CTA -->
 <script>
 // ═══════════════════════════════════════════════════════════
-// META PIXEL — RASTREAMENTO DE INITIATE CHECKOUT (Pixel ID: 200096279305740)
-// Dispara em qualquer clique em CTA de conversão (form Respondi + WhatsApp)
-// Usa delegação de eventos: 1 listener no document captura tudo, inclusive
-// elementos adicionados dinamicamente (à prova de futuro).
+// META PIXEL — RASTREAMENTO DE EVENTOS DE INTENÇÃO
+// Pixels: 200096279305740 + 958225726998591 (fan-out interno do SDK)
+//
+// EVENTOS ATIVOS NESTA PÁGINA:
+//   • PageView        → no carregamento (linha ~2994)
+//   • InitiateCheckout → clique em qualquer CTA conversor
+//   • AddToCart        → clique no CTA principal (form.respondi.app)
+//
+// IMPORTANTE: o evento "Lead" foi REMOVIDO daqui propositalmente.
+// Lead deve disparar APENAS no submit confirmado do form (thank-you
+// page do Respondi), nunca no clique do botão. Caso contrário a
+// otimização do Meta aprende com a audiência errada (clicadores em
+// vez de preenchedores reais do form).
+//
+// Delegação de eventos: 1 listener no document captura tudo,
+// inclusive elementos adicionados dinamicamente.
 // ═══════════════════════════════════════════════════════════
 (function(){
-  // URLs/domínios que são considerados "checkout" (conversão de lead)
+  // URLs/domínios que são considerados "checkout" (intenção de conversão)
   const CONVERSION_HOSTS = ['form.respondi.app', 'wa.me', 'api.whatsapp.com'];
 
   function isConversionLink(anchor){
@@ -3718,63 +3738,97 @@ if ('requestIdleCallback' in window) {
     } catch(e){ return false; }
   }
 
-  function trackInitiateCheckout(anchor){
+  // Gera event_id único pra preparar deduplicação com Conversions API (CAPI)
+  // quando o backend disparar o mesmo evento server-side no futuro
+  function makeEventId(){
+    if(window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'eik_' + Date.now() + '_' + Math.random().toString(36).slice(2,10);
+  }
+
+  function trackCtaClick(anchor){
     if(typeof fbq !== 'function') return;
-    const isForm = anchor.href.includes('form.respondi.app');
+    const isForm  = anchor.href.includes('form.respondi.app');
     const isWhats = anchor.href.includes('wa.me') || anchor.href.includes('whatsapp.com');
     const ctaText = (anchor.textContent || '').trim().replace(/\s+/g,' ').slice(0,80);
+    const eventId = makeEventId();
 
+    // ── InitiateCheckout: sinal de INTENÇÃO (clique em CTA conversor) ──
+    // Esse evento é uma métrica intermediária — ajuda o Meta a entender
+    // o funil mas NÃO deve ser o evento de otimização principal da campanha.
     fbq('track', 'InitiateCheckout', {
       content_name: isForm ? 'Formulario Respondi' : (isWhats ? 'WhatsApp Direto' : 'CTA Generico'),
-      content_category: isForm ? 'lead_form' : (isWhats ? 'whatsapp_lead' : 'cta'),
+      content_category: isForm ? 'lead_form_intent' : (isWhats ? 'whatsapp_intent' : 'cta_intent'),
       cta_text: ctaText,
       currency: 'BRL'
-    });
+    }, { eventID: eventId });
 
-    // ═════════════════════════════════════════════════════════════════
-    // Eventos adicionais SÓ para o botão "Quero Contratar Serviço da
-    // Eikon" (form.respondi.app/uAUC0yJx) — alimenta otimização de
-    // campanhas Meta com Lead (qualidade) + AddToCart (volume).
-    // ═════════════════════════════════════════════════════════════════
+    // ── AddToCart: proxy de volume APENAS no CTA do form (não no WhatsApp) ──
+    // Útil pra retargeting de "quase-conversores" e como evento secundário
+    // de otimização em campanhas de aprendizado inicial.
     if(isForm){
-      fbq('track', 'Lead', {
-        content_name: 'Quero Contratar Serviço da Eikon',
-        content_category: 'Assessoria Marketing Tattoo',
-        cta_text: ctaText,
-        currency: 'BRL'
-      });
       fbq('track', 'AddToCart', {
-        content_name: 'Quero Contratar Serviço da Eikon',
+        content_name: 'CTA Form Respondi',
         content_category: 'Assessoria Marketing Tattoo',
-        content_type: 'product',
+        content_type: 'service',
         cta_text: ctaText,
         value: 0.00,
         currency: 'BRL'
-      });
+      }, { eventID: eventId });
     }
   }
 
-  // Captura cliques + auxclick (botão do meio) + middle-click (abrir em nova aba)
+  // Captura cliques + auxclick (botão do meio / Cmd+click / Ctrl+click → nova aba)
   ['click','auxclick'].forEach(evt => {
     document.addEventListener(evt, function(e){
       const anchor = e.target.closest('a');
       if(isConversionLink(anchor)){
-        trackInitiateCheckout(anchor);
+        trackCtaClick(anchor);
       }
     }, {capture:true, passive:true});
   });
 })();
 
 // SCROLL PROGRESS — throttled via rAF (1 update por frame em vez de por pixel)
+// ─────────────────────────────────────────────────────────────────────
+// Esse mesmo handler também dispara o evento Meta Pixel "ViewContent" em
+// 50% de scroll (1x por sessão). Reutilizar o tick existente evita criar
+// um segundo listener de scroll concorrente.
+//
+// ViewContent @ 50% = sinal de "engajamento real com a página" — usado
+// como base de audiência customizada no Meta pra retargeting de pessoas
+// que leram a LP (vs. bouncers que saíram em 2s). Audiência quente pra
+// veicular criativo de depoimento, urgência ou prova social.
+// ─────────────────────────────────────────────────────────────────────
 const prog = document.getElementById('progress');
 let _scrollTick = false;
+let _vc50Fired = false;   // ViewContent @ 50% — dispara só 1x por sessão
+
+function _fireViewContent50(){
+  if(_vc50Fired || typeof fbq !== 'function') return;
+  _vc50Fired = true;
+  // event_id pra deduplicação futura via Conversions API (CAPI)
+  const eventId = (window.crypto && crypto.randomUUID)
+    ? crypto.randomUUID()
+    : 'eik_vc50_' + Date.now() + '_' + Math.random().toString(36).slice(2,10);
+  fbq('track', 'ViewContent', {
+    content_name: 'LP Servico Eikon - 50% Scroll',
+    content_category: 'engagement_milestone',
+    content_type: 'service',
+    scroll_depth: 50,
+    currency: 'BRL'
+  }, { eventID: eventId });
+}
+
 window.addEventListener('scroll', () => {
-  if(_scrollTick || !prog) return;
+  if(_scrollTick) return;
   _scrollTick = true;
   requestAnimationFrame(() => {
     const s = document.documentElement.scrollTop;
     const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    prog.style.width = (h > 0 ? (s / h * 100) : 0) + '%';
+    const pct = h > 0 ? (s / h * 100) : 0;
+    if(prog) prog.style.width = pct + '%';
+    // Dispara ViewContent quando passar de 50% (1x por sessão)
+    if(!_vc50Fired && pct >= 50) _fireViewContent50();
     _scrollTick = false;
   });
 }, { passive: true });
