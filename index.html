@@ -608,31 +608,9 @@ body::before{
 }
 .hero-sub strong{color:#ffffff;font-weight:600;}
 
-/* ===== VSL ===== */
-.vsl-outer{
-  width:100%;max-width:860px;margin:0 auto 50px;
-  position:relative;animation:fadeUp .85s ease .45s both;
-}
-@media(max-width:768px){
-  .vsl-outer{max-width:100%;margin:0 auto 20px;}
-  .vsl-wrap{border-radius:14px;}
-  .vsl-wrap > div{aspect-ratio:16/9!important;}
-}
 @media(max-width:480px){
   .hero-btns{margin-bottom:20px;}
 }
-/* vsl-outer::before removed — replaced by animated-border */
-.vsl-wrap{
-  width:100%;border-radius:18px;overflow:hidden;
-  box-shadow:0 0 100px rgba(255,255,255,0.12),0 0 300px rgba(255,255,255,0.04);
-  background:#000000;position:relative;
-}
-.vsl-placeholder{padding:64px 24px;border:1.5px dashed rgba(255,255,255,0.18);border-radius:15px;margin:10px;text-align:center;}
-.vsl-icon{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#27272a,#71717a);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;box-shadow:0 0 50px rgba(255,255,255,0.25);}
-.vsl-icon svg{width:30px;height:30px;fill:#fff;margin-left:5px;}
-.vsl-placeholder strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:8px;background:linear-gradient(90deg,#ffffff,#a1a1aa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.vsl-placeholder span{font-size:13px;color:var(--muted2);}
-.vsl-placeholder code{display:block;margin-top:16px;background:#050505;padding:13px 18px;border-radius:9px;font-size:11px;color:#a1a1aa;border:1px solid rgba(255,255,255,0.08);}
 
 /* ===== HERO BUTTONS ===== */
 .hero-btns{
@@ -1251,7 +1229,6 @@ footer p{
   .hero h1{letter-spacing:-1.5px;margin-bottom:18px;}
   .hero-sub{font-size:15.5px;max-width:100%;margin-bottom:28px;}
   .hero-badge{font-size:10.5px;padding:7px 16px;margin-bottom:24px;}
-  .vsl-outer{margin-bottom:24px;}
   .hero-btns{gap:10px;}
   .btn-primary{padding:15px 30px;font-size:14.5px;}
   .btn-secondary{display:none;}
@@ -2492,15 +2469,20 @@ section.hero-image-only::before{
 }
 
 /* ───────── HERO VIDEO — comportamento idêntico à img anterior ─────────
-   width:100% + height:auto faz o vídeo manter a proporção NATURAL do
-   arquivo MP4. Sem aspect-ratio fixo, sem object-fit, sem crop.
-   Resultado: o vídeo ocupa 100% da largura, altura calculada pelo browser
-   a partir das dimensões reais do vídeo, container colado no próximo bloco. */
+   FIX RESPONSIVO 2026-05:
+   Antes: width:100% + height:auto fazia o vídeo manter proporção natural —
+   isso fazia o vídeo esticar pra 1000px+ em monitores wide, empurrando o
+   CTA abaixo da dobra. Agora: max-height por viewport (vh) + object-fit:
+   cover. O vídeo crop-and-center mantém o assunto principal centralizado
+   sem distorcer, e o botão CTA sempre fica visível no viewport.        */
 .hero-continua-1 .hero-continua__video{
   display:block;
   width:100%;
   height:auto;
   max-width:100%;
+  max-height:82vh;             /* cap default — leaves ~18vh para o CTA */
+  object-fit:cover;            /* crop em vez de stretch */
+  object-position:center center;
   margin:0;
   padding:0;
   border:0;
@@ -2510,6 +2492,52 @@ section.hero-image-only::before{
   -webkit-user-drag:none;
   user-select:none;
   pointer-events:none;
+}
+
+/* DESKTOP WIDE (>=1440px) — monitores largos / 4K
+   Cap mais agressivo: 75vh deixa 25vh (≈270px em 1080p) sobrando para o
+   CTA + stats. Garante hero + botão + linha de stats no primeiro fold. */
+@media (min-width:1440px){
+  .hero-continua-1 .hero-continua__video{
+    max-height:75vh;
+  }
+}
+
+/* DESKTOP STANDARD (1024-1439px) */
+@media (min-width:1024px) and (max-width:1439px){
+  .hero-continua-1 .hero-continua__video{
+    max-height:80vh;
+  }
+}
+
+/* TABLET (641-1023px) */
+@media (min-width:641px) and (max-width:1023px){
+  .hero-continua-1 .hero-continua__video{
+    max-height:72vh;
+  }
+}
+
+/* MOBILE (≤640px) — vídeo precisa caber + CTA + scroll hint visível */
+@media (max-width:640px){
+  .hero-continua-1 .hero-continua__video{
+    max-height:68vh;
+    object-position:center 30%;  /* favorece topo onde fica o logo/texto */
+  }
+}
+
+/* MOBILE SMALL (≤380px) — telas pequenas, cap mais apertado */
+@media (max-width:380px){
+  .hero-continua-1 .hero-continua__video{
+    max-height:62vh;
+  }
+}
+
+/* LANDSCAPE PHONE — celular deitado: vídeo curto, botão em destaque */
+@media (max-width:900px) and (orientation:landscape){
+  .hero-continua-1 .hero-continua__video{
+    max-height:78vh;
+    object-position:center center;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -3057,75 +3085,6 @@ if ('requestIdleCallback' in window) {
 
 <style>
 
-  /* ===== HERO META CTA — agenda cheia / previsível / saber mais (rolagem) ===== */
-  .hero-meta-cta{
-    display:block;
-    text-align:center;
-    margin:0 auto 16px;
-    padding:14px 24px;
-    max-width:520px;
-    text-decoration:none;
-    color:#fff;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.10);
-    border-radius:16px;
-    backdrop-filter:blur(8px);
-    -webkit-backdrop-filter:blur(8px);
-    transition:transform .28s cubic-bezier(.23,1,.32,1),
-               border-color .28s ease,
-               background .28s ease,
-               box-shadow .28s ease;
-  }
-  .hero-meta-cta:hover,
-  .hero-meta-cta:focus-visible{
-    transform:translateY(-2px);
-    border-color:rgba(255,255,255,0.22);
-    background:rgba(255,255,255,0.07);
-    box-shadow:0 8px 32px rgba(0,0,0,0.45),inset 0 1px 0 rgba(255,255,255,0.05);
-    outline:none;
-  }
-  .hero-meta-cta__title{
-    font-family:'Space Grotesk',sans-serif;
-    font-size:.92rem;
-    font-weight:700;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    background:linear-gradient(90deg,#ffffff,#d4d4d8);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-    background-clip:text;
-    line-height:1.3;
-  }
-  .hero-meta-cta__sub{
-    font-size:.78rem;
-    color:#a1a1aa;
-    margin-top:4px;
-    font-weight:500;
-    line-height:1.45;
-  }
-  .hero-meta-cta__more{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    margin-top:8px;
-    font-size:.7rem;
-    font-weight:600;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:rgba(255,255,255,0.85);
-  }
-  .hero-meta-cta__divider{
-    color:rgba(255,255,255,0.4);
-    margin-right:2px;
-  }
-  .hero-meta-cta__arrow{
-    display:inline-block;
-    animation:metaArrowBounce 1.8s ease-in-out infinite;
-  }
-  @keyframes metaArrowBounce{
-    0%,100%{transform:translateY(0);opacity:.85;}
-    50%{transform:translateY(3px);opacity:1;}
-  }
   /* Pulse no botão principal — sutil, não agressivo */
   .hero-cta-overlay .btn-glow{
     position:relative;
@@ -3136,13 +3095,7 @@ if ('requestIdleCallback' in window) {
     50%{box-shadow:0 0 0 8px rgba(255,255,255,0),0 8px 28px rgba(0,0,0,.5);}
   }
   @media(prefers-reduced-motion:reduce){
-    .hero-meta-cta__arrow,.hero-cta-overlay .btn-glow{animation:none;}
-  }
-  @media(max-width:480px){
-    .hero-meta-cta{padding:12px 18px;max-width:100%;}
-    .hero-meta-cta__title{font-size:.82rem;}
-    .hero-meta-cta__sub{font-size:.72rem;}
-    .hero-meta-cta__more{font-size:.65rem;}
+    .hero-cta-overlay .btn-glow{animation:none;}
   }
 
   /* ═══════════════════════════════════════════════════════════════════
@@ -3343,7 +3296,7 @@ if ('requestIdleCallback' in window) {
      preto sólido logo abaixo, mantendo a continuidade visual. -->
 <div class="hero-cta-overlay">
   <div class="stats-cta-btns">
-    <a href="https://form.respondi.app/uAUC0yJx" target="_blank" rel="noopener noreferrer" class="btn-glow">
+    <a href="https://form.respondi.app/uAUC0yJx" target="_blank" rel="noopener noreferrer" class="btn-glow" aria-label="Quero contratar serviço da Eikon Ink Marketing">
       <span style="display:flex;flex-direction:column;align-items:center;line-height:1.25;">
         <span style="font-weight:600;font-size:.82rem;letter-spacing:.04em;">QUERO CONTRATAR SERVIÇO</span>
       </span>
@@ -3572,27 +3525,6 @@ if ('requestIdleCallback' in window) {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════
-     QUEM SOMOS — IMAGEM EM DESTAQUE (após CTA final, antes do footer)
-     ═══════════════════════════════════════════════════════════ -->
-<section class="quem-somos-feature" aria-label="Quem é a Eikon">
-  <div class="quem-somos-feature-img-wrap">
-    <video
-      class="quem-somos-feature-img quem-somos-feature-video"
-      autoplay
-      loop
-      muted
-      playsinline
-      preload="metadata"
-      aria-label="Quem é a Eikon — apresentação institucional"
-      disablepictureinpicture
-      disableremoteplayback
-      style="background:#000">
-      <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/black-1.mp4" type="video/mp4"/>
-    </video>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════
      DEPOIMENTOS DE TEXTO — Movido para baixo da imagem quemsomos.png
      (era abaixo da galeria de vídeos antes)
      ═══════════════════════════════════════════════════════════ -->
@@ -3698,14 +3630,37 @@ if ('requestIdleCallback' in window) {
         Arraste para os lados
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </p>
+  </div>
+</section>
 
-      <!-- CTA pós-carrossel de depoimentos texto -->
-      <div class="cta-after-carousel">
-        <a href="https://form.respondi.app/uAUC0yJx" target="_blank" rel="noopener noreferrer" class="btn-cta-premium" aria-label="Quero contratar serviço da Eikon Ink Marketing">
-          <span>Quero Contratar Serviço da Eikon</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 7l5 5-5 5M6 12h12" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
+<!-- ═══════════════════════════════════════════════════════════
+     QUEM SOMOS — IMAGEM EM DESTAQUE (após CTA final, antes do footer)
+     ═══════════════════════════════════════════════════════════ -->
+<section class="quem-somos-feature" aria-label="Quem é a Eikon">
+  <div class="quem-somos-feature-img-wrap">
+    <video
+      class="quem-somos-feature-img quem-somos-feature-video"
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="metadata"
+      aria-label="Quem é a Eikon — apresentação institucional"
+      disablepictureinpicture
+      disableremoteplayback
+      style="background:#000">
+      <source src="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/black-1.mp4" type="video/mp4"/>
+    </video>
+  </div>
+</section>
+
+<!-- CTA FINAL — abaixo do vídeo institucional, antes do footer -->
+<section class="cta-after-carousel-section" aria-label="Chamada para ação final" style="background:#000;padding:1.5rem 1rem 2rem;">
+  <div class="cta-after-carousel" style="max-width:760px;margin:0 auto;">
+    <a href="https://form.respondi.app/uAUC0yJx" target="_blank" rel="noopener noreferrer" class="btn-cta-premium" aria-label="Quero contratar serviço da Eikon Ink Marketing">
+      <span>Quero Contratar Serviço da Eikon</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M13 7l5 5-5 5M6 12h12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
   </div>
 </section>
 
@@ -3765,7 +3720,6 @@ if ('requestIdleCallback' in window) {
 
   function trackInitiateCheckout(anchor){
     if(typeof fbq !== 'function') return;
-    // Identifica qual CTA disparou (útil para análise no Gerenciador de Eventos)
     const isForm = anchor.href.includes('form.respondi.app');
     const isWhats = anchor.href.includes('wa.me') || anchor.href.includes('whatsapp.com');
     const ctaText = (anchor.textContent || '').trim().replace(/\s+/g,' ').slice(0,80);
@@ -3781,9 +3735,6 @@ if ('requestIdleCallback' in window) {
     // Eventos adicionais SÓ para o botão "Quero Contratar Serviço da
     // Eikon" (form.respondi.app/uAUC0yJx) — alimenta otimização de
     // campanhas Meta com Lead (qualidade) + AddToCart (volume).
-    // Os 3 eventos (InitiateCheckout + Lead + AddToCart) são enviados
-    // automaticamente para os 2 pixels ativos (200096279305740 e
-    // 958225726998591) — o SDK faz fan-out interno.
     // ═════════════════════════════════════════════════════════════════
     if(isForm){
       fbq('track', 'Lead', {
@@ -3814,30 +3765,50 @@ if ('requestIdleCallback' in window) {
   });
 })();
 
-// SCROLL PROGRESS
+// SCROLL PROGRESS — throttled via rAF (1 update por frame em vez de por pixel)
 const prog = document.getElementById('progress');
+let _scrollTick = false;
 window.addEventListener('scroll', () => {
-  const s = document.documentElement.scrollTop;
-  const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  prog.style.width = (s / h * 100) + '%';
-});
+  if(_scrollTick || !prog) return;
+  _scrollTick = true;
+  requestAnimationFrame(() => {
+    const s = document.documentElement.scrollTop;
+    const h = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    prog.style.width = (h > 0 ? (s / h * 100) : 0) + '%';
+    _scrollTick = false;
+  });
+}, { passive: true });
 
-// CURSOR
+// CURSOR — desabilitado em dispositivos touch puros (sem mouse)
+// Usa matchMedia('(hover:none)') que é true APENAS quando o input primário
+// é touch. Híbridos (iPad com mouse, laptop com touchscreen) ficam com
+// hover:hover e mantêm o cursor customizado.
+const _IS_TOUCH = window.matchMedia && window.matchMedia('(hover:none)').matches;
 const cr = document.getElementById('cr'), cd = document.getElementById('cd');
-let mx = 0, my = 0, cx = 0, cy = 0;
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cd.style.transform = `translate(${mx}px,${my}px)`;
-});
-(function a() {
-  cx += (mx - cx) * .085; cy += (my - cy) * .085;
-  cr.style.transform = `translate(${cx}px,${cy}px)`;
-  requestAnimationFrame(a);
-})();
-document.querySelectorAll('a,button,.vpe-card,.result-card,.aud-item,.testimonial-card,.step').forEach(el => {
-  el.addEventListener('mouseenter', () => cr.classList.add('h'));
-  el.addEventListener('mouseleave', () => cr.classList.remove('h'));
-});
+if(!_IS_TOUCH && cr && cd){
+  let mx = 0, my = 0, cx = 0, cy = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cd.style.transform = `translate(${mx}px,${my}px)`;
+  }, { passive: true });
+  (function a() {
+    cx += (mx - cx) * .085; cy += (my - cy) * .085;
+    cr.style.transform = `translate(${cx}px,${cy}px)`;
+    requestAnimationFrame(a);
+  })();
+  // Hover via event delegation (1 listener em vez de centenas)
+  const HOVER_SEL = 'a,button,.vpe-card,.result-card,.aud-item,.testimonial-card,.step';
+  document.addEventListener('mouseover', e => {
+    if(e.target.closest(HOVER_SEL)) cr.classList.add('h');
+  }, { passive: true });
+  document.addEventListener('mouseout', e => {
+    if(e.target.closest(HOVER_SEL) && !e.relatedTarget?.closest(HOVER_SEL)) cr.classList.remove('h');
+  }, { passive: true });
+} else if(cr && cd){
+  // Touch device: esconde cursores customizados pra economizar paint
+  cr.style.display = 'none';
+  cd.style.display = 'none';
+}
 
 // PARTICLES (performance-optimized)
 (function () {
@@ -4340,5 +4311,7 @@ document.addEventListener('visibilitychange', () => {
 })();
 
 </script>
+
+
 </body>
 </html>
