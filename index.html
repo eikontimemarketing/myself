@@ -260,7 +260,7 @@ img,video{max-width:100%;height:auto;}
 
 /* GLOBAL AURORA — 3 camadas de luz branca/cinza orbitando */
 .global-aurora{position:absolute;inset:0;pointer-events:none;overflow:hidden;transform:translateZ(0);}
-.global-aurora__layer{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;transform:translate3d(0,0,0);will-change:transform;mix-blend-mode:screen;}
+.global-aurora__layer{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;transform:translate3d(0,0,0);will-change:transform;}
 .global-aurora__layer--a{top:-20%;left:-15%;width:55vw;height:55vw;max-width:900px;max-height:900px;background:radial-gradient(circle,rgba(255,255,255,.10) 0%,rgba(255,255,255,.04) 35%,transparent 70%);animation:aurora-a 28s ease-in-out infinite alternate;}
 .global-aurora__layer--b{bottom:-25%;right:-20%;width:60vw;height:60vw;max-width:1000px;max-height:1000px;background:radial-gradient(circle,rgba(200,210,225,.08) 0%,rgba(180,190,210,.03) 40%,transparent 75%);animation:aurora-b 36s ease-in-out infinite alternate;}
 .global-aurora__layer--c{top:30%;left:35%;width:40vw;height:40vw;max-width:700px;max-height:700px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 65%);animation:aurora-c 44s ease-in-out infinite alternate;}
@@ -318,7 +318,6 @@ img,video{max-width:100%;height:auto;}
     transparent 72%
   );
   filter:blur(40px);
-  mix-blend-mode:screen;
   pointer-events:none;
   opacity:.9;
   will-change:transform;
@@ -467,11 +466,12 @@ img,video{max-width:100%;height:auto;}
   .cta-after-carousel .btn-cta-premium::after{animation:none !important;}
 }
 
-/* GRAIN overlay — textura sutil (SVG noise) */
+/* GRAIN overlay — textura sutil (SVG noise)
+   mix-blend-mode removido: camada fixa em tela cheia com blend forçava
+   re-mistura a cada scroll (engasgo). Mantida como ruído sutil normal. */
 body::before{
-  content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.04;
+  content:'';position:fixed;inset:0;z-index:1000;pointer-events:none;opacity:.045;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode:overlay;
 }
 
 .bg-grid{display:none;}
@@ -1820,7 +1820,6 @@ footer p{
   z-index:0;
   border-radius:50%;
   filter:blur(60px);
-  mix-blend-mode:screen;
   will-change:transform,opacity;
 }
 /* Orb 1 — luz branca à esquerda (intensidade suave) */
@@ -2745,11 +2744,12 @@ section.hero-image-only::before{
   background:#000;
   object-fit:cover;
   object-position:center center;
-  /* GPU compositor para suavidade */
+  /* GPU compositor para suavidade (translateZ já promove a camada;
+     will-change permanente foi removido — vídeo não anima transform e o
+     will-change fixo só prendia memória de GPU, contribuindo p/ travamento) */
   transform:translateZ(0);
   -webkit-backface-visibility:hidden;
           backface-visibility:hidden;
-  will-change:transform;
   /* Anti-interação acidental */
   -webkit-user-drag:none;
   user-select:none;
@@ -3007,6 +3007,27 @@ function __loadMetaPixel(){
   fbq('init', '200096279305740');   // Pixel 1
   fbq('init', '958225726998591');   // Pixel 2
   fbq('track', 'PageView');
+  // ── GTM: espelha o PageView do Meta no dataLayer ──
+  eikDL('lp_pageview', { content_name: 'LP Servico Eikon' });
+}
+
+// ═══════════════════════════════════════════════════════════
+// GTM dataLayer — COMPLEMENTA o Pixel do Meta
+// ───────────────────────────────────────────────────────────
+// Cada evento de conversão do Meta também é empurrado pro dataLayer
+// do Google Tag Manager (GTM-5Z9PZGKP). No GTM você cria gatilhos
+// "Custom Event" com estes nomes pra acionar Google Ads / GA4:
+//   • lp_pageview      → carregamento da página
+//   • cta_click        → clique em qualquer CTA conversor (= InitiateCheckout)
+//   • lead_intent      → clique no CTA do formulário (= AddToCart)
+//   • scroll_50        → 50% de scroll / engajamento (= ViewContent)
+// O event_id é compartilhado com o Meta pra deduplicação futura via CAPI.
+// ═══════════════════════════════════════════════════════════
+window.dataLayer = window.dataLayer || [];
+function eikDL(eventName, params){
+  try {
+    window.dataLayer.push(Object.assign({ event: eventName }, params || {}));
+  } catch(e){ /* nunca quebra a página por causa de tracking */ }
 }
 // Dispara após LCP (1.5s) OU no primeiro scroll/interação — o que vier antes
 if ('requestIdleCallback' in window) {
@@ -3071,6 +3092,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     loop
     playsinline
     preload="auto"
+    poster="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/herotattooservico.png"
     disablepictureinpicture
     disableremoteplayback
     x-webkit-airplay="deny"
@@ -3430,32 +3452,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </button>
       <div class="cases-carousel" id="cases-carousel">
 
-        <div class="case-card video-case meio" data-reveal="scale" data-stagger="1">
-          <span class="case-bg-number">01</span>
-          <div class="case-header">
-            <span class="case-flag-display" aria-label="Portugal"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="24" height="40" fill="#006600"/><rect x="24" width="36" height="40" fill="#FF0000"/><circle cx="24" cy="20" r="7" fill="#FFD700" stroke="#000" stroke-width=".6"/></svg></span>
-            <span class="case-route">Fabio Castilho Tattoo <span class="case-route-strong">· Portugal</span></span>
-          </div>
-          <div class="video-block" id="ifr_6a037bba9ca1e0db9a6b0bfe_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
-            <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bba9ca1e0db9a6b0bfe_aspect">
-              <iframe title="Depoimento em video de cliente Eikon Ink Marketing" frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bba9ca1e0db9a6b0bfe" loading="lazy" data-lazy-video="6a037bba9ca1e0db9a6b0bfe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
-            </div>
-          </div>
-        </div>
-
-        <div class="case-card video-case meio" data-reveal="scale" data-stagger="2">
-          <span class="case-bg-number">02</span>
-          <div class="case-header">
-            <span class="case-flag-display" aria-label="Portugal"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="24" height="40" fill="#006600"/><rect x="24" width="36" height="40" fill="#FF0000"/><circle cx="24" cy="20" r="7" fill="#FFD700" stroke="#000" stroke-width=".6"/></svg></span>
-            <span class="case-route">João Noslen Tattoo <span class="case-route-strong">· Portugal</span></span>
-          </div>
-          <div class="video-block" id="ifr_6a037bbf40952b53b4fab9e3_wrapper" style="margin:0 auto;width:100%;max-width:400px;border-radius:14px;overflow:hidden;">
-            <div style="position:relative;padding:177.77777777777777% 0 0 0;" id="ifr_6a037bbf40952b53b4fab9e3_aspect">
-              <iframe title="Depoimento em video de cliente Eikon Ink Marketing" frameborder="0" allowfullscreen src="about:blank" id="ifr_6a037bbf40952b53b4fab9e3" loading="lazy" data-lazy-video="6a037bbf40952b53b4fab9e3" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" referrerpolicy="origin"></iframe>
-            </div>
-          </div>
-        </div>
-
         <div class="case-card video-case meio" data-reveal="scale" data-stagger="3">
           <span class="case-bg-number">03</span>
           <div class="case-header">
@@ -3786,6 +3782,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         currency: 'BRL'
       }, { eventID: eventId });
     }
+
+    // ── GTM: espelha o clique no dataLayer (complementa o Meta) ──
+    if(typeof eikDL === 'function'){
+      eikDL('cta_click', {
+        cta_destination: isForm ? 'formulario_respondi' : (isWhats ? 'whatsapp' : 'cta_generico'),
+        cta_text: ctaText,
+        event_id: eventId
+      });
+      if(isForm){
+        eikDL('lead_intent', {
+          content_name: 'CTA Form Respondi',
+          cta_text: ctaText,
+          event_id: eventId
+        });
+      }
+    }
   }
 
   // Captura cliques + auxclick (botão do meio / Cmd+click / Ctrl+click → nova aba)
@@ -3828,6 +3840,10 @@ function _fireViewContent50(){
     scroll_depth: 50,
     currency: 'BRL'
   }, { eventID: eventId });
+  // ── GTM: espelha o engajamento de 50% no dataLayer ──
+  if(typeof eikDL === 'function'){
+    eikDL('scroll_50', { content_name: 'LP Servico Eikon', scroll_depth: 50, event_id: eventId });
+  }
 }
 
 window.addEventListener('scroll', () => {
@@ -3888,7 +3904,14 @@ if(!_IS_TOUCH && cr && cd){
   window.addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(resize, 150); });
   function rnd(a, b) { return a + Math.random() * (b - a); }
   for (let i = 0; i < particleCount; i++) pts.push({ x: rnd(0, W), y: rnd(0, H), vx: rnd(-.15, .15), vy: rnd(-.12, .12), r: rnd(.7, 1.7), a: rnd(.08, .45) });
-  function draw() {
+  // Throttle a ~30fps: partículas se movem devagar, então 30fps é visualmente
+  // idêntico a 60fps mas usa metade da CPU (libera recurso pros vídeos).
+  let _last = 0;
+  const FRAME_MS = 33;
+  function draw(ts) {
+    raf = requestAnimationFrame(draw);
+    if (ts && ts - _last < FRAME_MS) return;
+    _last = ts || 0;
     ctx.clearRect(0, 0, W, H);
     for (let i = 0; i < pts.length; i++) {
       const p = pts[i];
@@ -3909,13 +3932,12 @@ if(!_IS_TOUCH && cr && cd){
         }
       }
     }
-    raf = requestAnimationFrame(draw);
   }
   // Pause when tab not visible
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { cancelAnimationFrame(raf); } else { draw(); }
+    if (document.hidden) { cancelAnimationFrame(raf); } else { raf = requestAnimationFrame(draw); }
   });
-  draw();
+  raf = requestAnimationFrame(draw);
 })();
 
 // TOUCH RIPPLE
@@ -4029,20 +4051,29 @@ const vpeCardObs = new IntersectionObserver(entries => {
 document.querySelectorAll('.vpe-card').forEach(el => vpeCardObs.observe(el));
 
 // LAZY VIDEO PLAY (autoplay only when visible)
+// rootMargin dá folga de 200px e o estado só muda quando realmente cruza
+// o limiar — evita play/pause repetido perto da borda (causa de engasgo).
 const vidObs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     const v = e.target;
-    if (e.isIntersecting) { v.play().catch(() => {}); }
-    else { v.pause(); }
+    if (e.isIntersecting) {
+      v.muted = true;            // garante autoplay (browser bloqueia play não-mutado)
+      const p = v.play();
+      if (p && p.catch) p.catch(() => {});
+    } else {
+      if (!v.paused) v.pause();
+    }
   });
-}, { threshold: .25 });
-document.querySelectorAll('.testimonial-video-frame video, .quem-somos-feature-video').forEach(v => vidObs.observe(v));
+}, { threshold: 0.1, rootMargin: '200px 0px' });
+document.querySelectorAll('.quem-somos-feature-video').forEach(v => vidObs.observe(v));
 
 // Pausa vídeo institucional quando aba inativa (economiza bateria + GPU)
 document.addEventListener('visibilitychange', () => {
   document.querySelectorAll('.quem-somos-feature-video').forEach(v => {
-    if (document.hidden) v.pause();
-    else if (v.getBoundingClientRect().top < window.innerHeight) v.play().catch(() => {});
+    if (document.hidden) { v.pause(); return; }
+    const r = v.getBoundingClientRect();
+    const visivel = r.top < window.innerHeight && r.bottom > 0; // de fato na viewport
+    if (visivel) { v.muted = true; const p = v.play(); if (p && p.catch) p.catch(() => {}); }
   });
 });
 
@@ -4173,14 +4204,28 @@ document.addEventListener('visibilitychange', () => {
     }
 
     if('IntersectionObserver' in window){
+      // Fila escalonada: em vez de carregar todos os players ao mesmo tempo
+      // (pico que congela a página), enfileira e carrega 1 a cada 600ms.
+      // rootMargin menor (120px) = carrega só quando está de fato chegando.
+      const queue = [];
+      let busy = false;
+      function pump(){
+        if(busy) return;
+        const next = queue.shift();
+        if(!next) return;
+        busy = true;
+        loadVideo(next);
+        setTimeout(() => { busy = false; pump(); }, 600);
+      }
       const io = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if(entry.isIntersecting){
-            loadVideo(entry.target);
+            queue.push(entry.target);
             io.unobserve(entry.target);
           }
         });
-      }, {rootMargin:'400px 0px', threshold:0.01});
+        pump();
+      }, {rootMargin:'120px 0px', threshold:0.01});
       iframes.forEach(ifr => io.observe(ifr));
     } else {
       window.addEventListener('load', () => iframes.forEach(loadVideo));
