@@ -6,7 +6,26 @@
 <meta name="theme-color" content="#000000"/>
 <meta name="color-scheme" content="dark"/>
 <meta name="format-detection" content="telephone=no, date=no, address=no, email=no"/>
-<meta name="theme-color" content="#000000"/>
+
+<!-- ▓▓ META PIXEL (Facebook/Instagram Ads) — carregado o quanto antes p/ PageView preciso ▓▓ -->
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin/>
+<link rel="dns-prefetch" href="https://www.facebook.com"/>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1260875599275474');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" alt=""
+src="https://www.facebook.com/tr?id=1260875599275474&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
 
 <!-- Speculation Rules API — pré-renderiza destinos de conversão ao hover/tap -->
 <script type="speculationrules">
@@ -6571,9 +6590,11 @@ iframe[data-lazy-video]{background:#0a0a0a;}
     function loadVideo(iframe){
       if(!iframe.dataset.lazyVideo) return; // já carregado
       const id = iframe.dataset.lazyVideo;
+      // Monta query string preservando params existentes (ex: fbclid, utm_*) sem gerar "?&"
+      const sep = location.search ? location.search + '&' : '?';
       const src = 'https://scripts.converteai.net/' + ACCOUNT + '/players/' + id + '/v4/embed.html'
-                + (location.search || '?')
-                + '&vl=' + encodeURIComponent(location.href);
+                + sep
+                + 'vl=' + encodeURIComponent(location.href);
       iframe.src = src;
       iframe.removeAttribute('data-lazy-video');
     }
@@ -6992,6 +7013,91 @@ iframe[data-lazy-video]{background:#0a0a0a;}
       });
     } catch(e){}
   }, 3000);
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     ▓▓ META PIXEL — EVENTOS DE CONVERSÃO (Método Guest) ▓▓
+     PageView já dispara no <head>. Aqui rastreamos o funil:
+       • InitiateCheckout → clique nos botões de compra (Hub.la R$197/R$497)
+       • Lead            → clique no WhatsApp (intenção de contato)
+       • ViewContent     → quando a seção de investimento entra na tela
+     Implementação 100% defensiva (não quebra se o fbq falhar/for bloqueado)
+     e leve (delegação de evento + IntersectionObserver, zero custo de render).
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+  'use strict';
+
+  function fbTrack(eventName, params){
+    if(typeof window.fbq === 'function'){
+      try{ window.fbq('track', eventName, params || {}); }catch(e){}
+    }
+  }
+
+  /* ── 1. Clique em CTAs: InitiateCheckout (compra) e Lead (WhatsApp) ── */
+  document.addEventListener('click', function(e){
+    var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if(!a) return;
+    var href = a.getAttribute('href') || '';
+
+    // Checkout — botões R$197 / R$497 (Hub.la)
+    if(href.indexOf('pay.hub.la') !== -1){
+      var isPremium = href.indexOf('AiZ62hvlKooA2wiKSAVY') !== -1 || /497/.test(a.textContent || '');
+      fbTrack('InitiateCheckout', {
+        content_name:     isPremium ? 'Método Guest — Acesso Premium' : 'Método Guest — Completo',
+        content_category: 'Infoproduto',
+        content_ids:      [ isPremium ? 'metodo-guest-premium-497' : 'metodo-guest-completo-197' ],
+        currency:         'BRL',
+        value:            isPremium ? 497 : 197
+      });
+      return;
+    }
+
+    // Lead — contato via WhatsApp
+    if(href.indexOf('wa.me') !== -1){
+      fbTrack('Lead', {
+        content_name:     'Contato WhatsApp · Método Guest',
+        content_category: 'Infoproduto'
+      });
+      return;
+    }
+  }, {capture:true, passive:true});
+
+  /* ── 2. ViewContent: dispara uma vez quando a oferta entra na viewport ── */
+  function initViewContent(){
+    var fired = false;
+    function fire(){
+      if(fired) return;
+      fired = true;
+      fbTrack('ViewContent', {
+        content_name:     'Método Guest',
+        content_category: 'Infoproduto',
+        currency:         'BRL',
+        value:            197
+      });
+    }
+
+    var target = document.getElementById('investimento');
+    if(!target || !('IntersectionObserver' in window)){
+      // Fallback: dispara após 20s de permanência na página
+      setTimeout(fire, 20000);
+      return;
+    }
+
+    var io = new IntersectionObserver(function(entries){
+      for(var i=0;i<entries.length;i++){
+        if(entries[i].isIntersecting){ fire(); io.disconnect(); break; }
+      }
+    }, {threshold:0.25});
+    io.observe(target);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initViewContent);
+  } else {
+    initViewContent();
+  }
 })();
 </script>
 </body>
