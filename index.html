@@ -2971,7 +2971,7 @@ section.hero-image-only::before{
 </style>
 
 <!-- ═══════════════════════════════════════════════════════════
-     META PIXEL (Facebook) — IDs: 200096279305740 + 958225726998591
+     META PIXEL (Facebook) — ID: 200096279305740
      Eventos disparados nesta página:
        • PageView         → no carregamento (automático)
        • ViewContent      → quando usuário passa de 50% de scroll (1x/sessão)
@@ -3001,11 +3001,8 @@ function __loadMetaPixel(){
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  // ── DOIS PIXELS META ATIVOS ──
-  // Qualquer fbq('track', ...) é enviado automaticamente para AMBOS os pixels.
-  // Não precisa duplicar chamadas de track — o SDK faz fan-out interno.
-  fbq('init', '200096279305740');   // Pixel 1
-  fbq('init', '958225726998591');   // Pixel 2
+  // ── PIXEL META ÚNICO (oficial da agência) ──
+  fbq('init', '200096279305740');
   fbq('track', 'PageView');
   // ── GTM: espelha o PageView do Meta no dataLayer ──
   eikDL('lp_pageview', { content_name: 'LP Servico Eikon' });
@@ -3049,8 +3046,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- Meta Pixel — fallback noscript (envia PageView via image beacon para usuários sem JS) -->
 <noscript><img height="1" width="1" style="display:none" alt=""
   src="https://www.facebook.com/tr?id=200096279305740&ev=PageView&noscript=1"/></noscript>
-<noscript><img height="1" width="1" style="display:none" alt=""
-  src="https://www.facebook.com/tr?id=958225726998591&ev=PageView&noscript=1"/></noscript>
 
 <!-- NOSCRIPT FALLBACK — avisa o usuário que JS é necessário para algumas features (vídeos lazy-load) -->
 <noscript>
@@ -3717,7 +3712,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>
 // ═══════════════════════════════════════════════════════════
 // META PIXEL — RASTREAMENTO DE EVENTOS DE INTENÇÃO
-// Pixels: 200096279305740 + 958225726998591 (fan-out interno do SDK)
+// Pixel: 200096279305740 (oficial da agência)
 //
 // EVENTOS ATIVOS NESTA PÁGINA:
 //   • PageView        → no carregamento (linha ~2994)
