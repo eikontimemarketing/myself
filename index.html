@@ -83,12 +83,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
 <link rel="preconnect" href="https://www.facebook.com" crossorigin>
 
-<!-- PRELOAD — hero video (LCP candidate) -->
-<link rel="preload" as="video" href="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/HEROSERVICO1video-3.mp4" type="video/mp4" fetchpriority="high">
-<!-- PREFETCH — vídeo institucional "Quem é a Eikon" (below-fold). Baixa em idle,
-     não compete com o hero pela banda inicial. Carrega antes do user scrollar lá. -->
-<link rel="prefetch" as="video" href="https://eikoninkmarketing.com.br/wp-content/uploads/2026/05/black-1.mp4" type="video/mp4" fetchpriority="low">
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap&font-display=swap" rel="stylesheet">
+<!-- PRELOAD do vídeo hero REMOVIDO: forçava baixar o MP4 inteiro antes de
+     renderizar. O poster (herotattooservico.png) já garante o visual imediato,
+     e o vídeo entra assim que estiver pronto. -->
+<!-- PREFETCH do black-1.mp4 REMOVIDO: baixava o 2º vídeo mesmo sem o usuário
+     rolar até lá. O lazy-load da seção já cuida disso na hora certa. -->
+<!-- FONTES: Playfair Display removido (era usado só na seção hero-continua-2,
+     que não existe no HTML). Mantidas apenas Space Grotesk + Inter. -->
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap&font-display=swap" rel="stylesheet">
 <style>
 /* ===== RESET & ROOT ===== */
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -3086,7 +3088,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     muted
     loop
     playsinline
-    preload="auto"
+    preload="metadata"
     poster="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/herotattooservico.png"
     disablepictureinpicture
     disableremoteplayback
@@ -3562,7 +3564,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <p class="testi-text">Sempre fiz questão de entregar acima da expectativa — cliente saía do estúdio falando <em>"ficou melhor do que eu imaginava"</em>. Mas chegou um momento que eu queria crescer e o boca a boca travou. Tentei sozinho a internet, não rolou. Quando entrei pra equipa da EIKON, comecei a desenvolver <strong>conteúdo, posicionamento e constância</strong> — e isso mudou tudo. Hoje eu vejo: <strong>não existe estúdio forte sem tráfego pago e sem posicionamento na internet</strong>. Se você quer levar o seu estúdio pra outro nível, vale a conversa.</p>
           <div class="testi-author">
-            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/gink.jpg" alt="G Ink Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
+            <div class="testi-avatar"><img src="https://cdn.jsdelivr.net/gh/eikontimemarketing/myself@main/metodoguest/gink.jpg" alt="G Ink Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
               <p class="testi-name">G Ink Tattoo</p>
               <p class="testi-route">Conteúdo &amp; Posicionamento</p>
@@ -3582,7 +3584,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <p class="testi-text">Tatuo há mais de 10 anos, hoje moro na Espanha. <strong>Captar cliente na Europa não é fácil</strong> — e acredito que em lugar nenhum do mundo seja. Tentei várias vezes fazer meu próprio anúncio, meu próprio marketing. Sinceramente? <strong>Só gastei dinheiro</strong>. Quando conheci o Flávio e a equipe, começamos a aplicar estratégia específica pro meu estilo (realismo preto e cinza). Em poucos dias vieram os primeiros resultados. Hoje minha agenda tá constante — esse mês e os próximos. <strong>Foca no que faz de melhor: tatuar. Deixa o marketing com profissional.</strong></p>
           <div class="testi-author">
-            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/romario.jpg" alt="Romário Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
+            <div class="testi-avatar"><img src="https://cdn.jsdelivr.net/gh/eikontimemarketing/myself@main/metodoguest/romario.jpg" alt="Romário Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
               <p class="testi-name">Romário Tattoo</p>
               <p class="testi-route">Sevilha <span class="testi-flag" aria-label="Espanha"><svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg></span> Espanha</p>
@@ -3602,7 +3604,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <p class="testi-text">Eu <strong>nunca quis fechar com agência que não fosse especializada em tatuagem</strong>. Pra mim fazia diferença trabalhar com quem entende o produto. Com a ajuda de vocês eu me adaptei muito melhor profissionalmente. Hoje <strong>não preciso ficar preocupado com tráfego, captação ou pesquisando estratégia o tempo todo</strong> — não porque não quero aprender, mas porque não tenho tempo. Focas no que importa: tatuar, evoluir e cuidar da vida pessoal. Sem marketing o tatuador fica perdido — e ter quem cuida disso pra você libera espaço pra crescer de verdade.</p>
           <div class="testi-author">
-            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/lucas.png" alt="Lucas Fabrício Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
+            <div class="testi-avatar"><img src="https://cdn.jsdelivr.net/gh/eikontimemarketing/myself@main/metodoguest/lucas.png" alt="Lucas Fabrício Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
               <p class="testi-name">Lucas Fabrício Tattoo</p>
               <p class="testi-route">Atração &amp; Conversão</p>
@@ -3622,7 +3624,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <p class="testi-text">No começo foi muito complicado pra mim. Pressão profissional, momento difícil na vida pessoal. Já tinha investido em outra empresa <strong>— valor alto, e não funcionou pro meu caso</strong>. Foram anos tentando, sem constância nenhuma. Quando vocês entraram, a realidade mudou: agenda aumentou, agendamento ficou constante, cliente chegando com frequência. Tem comunicação, acompanhamento, estratégia de verdade. E o que mais me marcou? <strong>Fechar um mês inteiro de agenda pela primeira vez.</strong> Trouxe tranquilidade, confiança e a certeza de que <em>finalmente</em> encontrei quem entende o mercado da tattoo.</p>
           <div class="testi-author">
-            <div class="testi-avatar"><img src="https://raw.githubusercontent.com/eikontimemarketing/myself/refs/heads/main/metodoguest/buza.jpg" alt="Buzaranho Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
+            <div class="testi-avatar"><img src="https://cdn.jsdelivr.net/gh/eikontimemarketing/myself@main/metodoguest/buza.jpg" alt="Buzaranho Tattoo" width="48" height="48" loading="lazy" decoding="async"/></div>
             <div class="testi-info">
               <p class="testi-name">Buzaranho Tattoo</p>
               <p class="testi-route">Agenda Cheia &amp; Constância</p>
