@@ -3756,29 +3756,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const ctaText = (anchor.textContent || '').trim().replace(/\s+/g,' ').slice(0,80);
     const eventId = makeEventId();
 
-    // ── InitiateCheckout: sinal de INTENÇÃO (clique em CTA conversor) ──
-    // Esse evento é uma métrica intermediária — ajuda o Meta a entender
-    // o funil mas NÃO deve ser o evento de otimização principal da campanha.
-    fbq('track', 'InitiateCheckout', {
-      content_name: isForm ? 'Formulario Respondi' : (isWhats ? 'WhatsApp Direto' : 'CTA Generico'),
-      content_category: isForm ? 'lead_form_intent' : (isWhats ? 'whatsapp_intent' : 'cta_intent'),
-      cta_text: ctaText,
-      currency: 'BRL'
-    }, { eventID: eventId });
-
-    // ── AddToCart: proxy de volume APENAS no CTA do form (não no WhatsApp) ──
-    // Útil pra retargeting de "quase-conversores" e como evento secundário
-    // de otimização em campanhas de aprendizado inicial.
-    if(isForm){
-      fbq('track', 'AddToCart', {
-        content_name: 'CTA Form Respondi',
-        content_category: 'Assessoria Marketing Tattoo',
-        content_type: 'service',
-        cta_text: ctaText,
-        value: 0.00,
-        currency: 'BRL'
-      }, { eventID: eventId });
-    }
+  
 
     // ── GTM: espelha o clique no dataLayer (complementa o Meta) ──
     if(typeof eikDL === 'function'){
@@ -3787,15 +3765,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         cta_text: ctaText,
         event_id: eventId
       });
-      if(isForm){
-        eikDL('lead_intent', {
-          content_name: 'CTA Form Respondi',
-          cta_text: ctaText,
-          event_id: eventId
-        });
-      }
-    }
-  }
+     
 
   // Captura cliques + auxclick (botão do meio / Cmd+click / Ctrl+click → nova aba)
   ['click','auxclick'].forEach(evt => {
